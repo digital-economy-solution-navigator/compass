@@ -20,7 +20,8 @@
           <div class="pl-3 max-w-[220px]"><a href="index.html"><h1 class="text-base font-semibold text-white leading-tight">AI & Digital for Industry Navigator</h1></a></div>
         </div>
         <div class="flex items-start gap-2">
-          <button type="button" id="search-trigger-mobile" class="px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/70" aria-label="Search">Search</button>
+          <button type="button" id="search-trigger-mobile" class="px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/70 theme-muted" aria-label="Search">Search</button>
+          <button type="button" data-theme-toggle class="px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/70 theme-muted" aria-label="Toggle theme">Light</button>
           <button type="button" id="mobile-menu-btn" class="border border-white/10 rounded-full px-3 py-2 text-white text-lg" aria-label="Menu">
             <span id="mobile-menu-icon">&#9776;</span>
           </button>
@@ -32,13 +33,14 @@
           <div class="pl-4 max-w-[260px]"><a href="index.html"><h1 class="text-base font-semibold text-white leading-tight">AI & Digital for Industry Navigator</h1></a></div>
         </div>
         <div class="flex items-center justify-end space-x-10">
-          <a href="about.html" class="text-sm text-white/70 hover:text-white font-medium">About</a>
-          <a href="data.html" class="text-sm text-white/70 hover:text-white font-medium">Data</a>
-          <a href="methodology.html" class="text-sm text-white/70 hover:text-white font-medium">Methodology</a>
+          <a href="about.html" class="text-sm text-white/70 hover:text-white font-medium theme-muted">About</a>
+          <a href="data.html" class="text-sm text-white/70 hover:text-white font-medium theme-muted">Data</a>
+          <a href="methodology.html" class="text-sm text-white/70 hover:text-white font-medium theme-muted">Methodology</a>
         </div>
         <div class="flex items-center justify-end gap-3">
-          <button type="button" id="search-trigger" class="px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/70 hover:text-white" aria-label="Search">Search</button>
-          <a href="#globe-area" class="bg-[#7c3aed] hover:bg-[#6d28d9] text-white px-4 py-2 rounded-full text-sm font-semibold">Explore</a>
+          <button type="button" id="search-trigger" class="px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/70 hover:text-white theme-muted" aria-label="Search">Search</button>
+          <button type="button" data-theme-toggle class="px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/70 hover:text-white theme-muted" aria-label="Toggle theme">Light</button>
+          <a href="#globe-area" class="bg-[#7c3aed] hover:bg-[#6d28d9] text-white px-4 py-2 rounded-full text-sm font-semibold theme-btn">Explore</a>
         </div>
       </div>
     `;
@@ -63,9 +65,9 @@
     if (!el) return;
     el.innerHTML = `
       <nav class="flex flex-col w-full justify-center space-y-7 pt-[90px] px-6 text-white">
-        <a href="about.html" class="text-base w-full font-medium text-white/80 hover:text-white">About</a>
-        <a href="data.html" class="text-base w-full font-medium text-white/80 hover:text-white">Data</a>
-        <a href="methodology.html" class="text-base w-full font-medium text-white/80 hover:text-white">Methodology</a>
+        <a href="about.html" class="text-base w-full font-medium text-white/80 hover:text-white theme-muted">About</a>
+        <a href="data.html" class="text-base w-full font-medium text-white/80 hover:text-white theme-muted">Data</a>
+        <a href="methodology.html" class="text-base w-full font-medium text-white/80 hover:text-white theme-muted">Methodology</a>
       </nav>
     `;
   }
@@ -286,6 +288,36 @@
     document.getElementById('search-dialog-backdrop')?.classList.add('hidden');
   }
 
+  function initThemeToggle() {
+    var root = document.documentElement;
+    var buttons = Array.prototype.slice.call(document.querySelectorAll('[data-theme-toggle]'));
+    if (!buttons.length) return;
+
+    function applyTheme(mode) {
+      root.classList.toggle('theme-light', mode === 'light');
+      root.classList.toggle('theme-dark', mode !== 'light');
+      buttons.forEach(function (btn) {
+        btn.textContent = mode === 'light' ? 'Dark' : 'Light';
+      });
+    }
+
+    var stored = 'dark';
+    try {
+      stored = localStorage.getItem('theme') || 'dark';
+    } catch (e) {}
+
+    applyTheme(stored);
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var isLight = root.classList.contains('theme-light');
+        var next = isLight ? 'dark' : 'light';
+        try { localStorage.setItem('theme', next); } catch (e) {}
+        applyTheme(next);
+      });
+    });
+  }
+
   function initHeroSearch(countries) {
     const input = document.getElementById('hero-search-input');
     const resultsEl = document.getElementById('hero-search-results');
@@ -493,6 +525,7 @@
         data = d;
         const countries = d.countries || [];
         renderHeader(countries);
+        initThemeToggle();
         renderFooter();
         renderHero();
         let pillar = 'Overall';
@@ -636,6 +669,7 @@
         const globeData = d.globeData || [];
         const country = code ? (globeData.find(function (c) { return c.alpha3 === code; }) || countries.find(function (c) { return c.alpha3 === code; })) : null;
         renderHeader(countries, true);
+        initThemeToggle();
         renderFooter();
         const breadcrumb = document.getElementById('breadcrumb');
         if (breadcrumb) breadcrumb.innerHTML = '<a href="index.html" class="mr-4 text-slate-600 hover:text-[#7c3aed]">Home</a><span class="text-slate-400">/</span><span class="ml-4 text-[#7c3aed] font-medium">' + (country ? country.name : (code ? 'Not found' : 'Country')) + '</span>';

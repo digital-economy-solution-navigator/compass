@@ -154,6 +154,47 @@ input::placeholder {
   background-color: #0b0f14;
 }
 
+.theme-light body,
+.theme-light {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+.theme-light .header-nav-bg-color,
+.theme-light .footer-background-color,
+.theme-light .custom-mobile-bg-color {
+  background-color: #f8fafc;
+}
+
+.theme-light .custom-nav-shadow {
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.08);
+}
+
+.theme-light #globe-overlay-gradient {
+  background: linear-gradient(90deg, rgba(248,250,252,0.95) 0%, rgba(248,250,252,0.65) 50%, rgba(248,250,252,0) 100%);
+}
+
+.theme-light #globe-overlay-glow {
+  background: radial-gradient(circle at 20% 20%, rgba(124, 58, 237, 0.18), transparent 45%), radial-gradient(circle at 85% 30%, rgba(34, 211, 238, 0.15), transparent 40%);
+}
+
+.theme-light .theme-invert {
+  color: #0f172a !important;
+}
+
+.theme-light .theme-muted {
+  color: rgba(15, 23, 42, 0.6) !important;
+}
+
+.theme-light .theme-border {
+  border-color: rgba(15, 23, 42, 0.15) !important;
+}
+
+.theme-light .theme-btn {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+}
+
 .custom-mobile-menu {
   animation: slide-in-left 0.6s ease-in-out forwards;
 }
