@@ -1,0 +1,114 @@
+{
+  "countries": [
+    { "name": "Singapore", "alpha2": "SG", "alpha3": "SGP" },
+    { "name": "Finland", "alpha2": "FI", "alpha3": "FIN" },
+    { "name": "France", "alpha2": "FR", "alpha3": "FRA" },
+    { "name": "Denmark", "alpha2": "DK", "alpha3": "DNK" },
+    { "name": "United States of America", "alpha2": "US", "alpha3": "USA" },
+    { "name": "Germany", "alpha2": "DE", "alpha3": "DEU" },
+    { "name": "Japan", "alpha2": "JP", "alpha3": "JPN" },
+    { "name": "United Kingdom", "alpha2": "GB", "alpha3": "GBR" },
+    { "name": "Canada", "alpha2": "CA", "alpha3": "CAN" },
+    { "name": "Australia", "alpha2": "AU", "alpha3": "AUS" }
+  ],
+  "ancillary": {
+    "pillarNames": ["Overall", "People", "Connectivity", "Government", "Regulation", "Economy", "Digital Public Infrastructure"],
+    "pillarColorMap": {
+      "Overall": { "base": "#6366f1", "triple": ["#FFF", "#a2e0f5", "#6366f1"] },
+      "People": { "base": "#4C9F38", "triple": ["#FFF", "#79ed8a", "#4C9F38"] },
+      "Connectivity": { "base": "#FD6925", "triple": ["#FFF", "#edc26d", "#FD6925"] },
+      "Government": { "base": "#19486A", "triple": ["#FFF", "#54deeb", "#19486A"] },
+      "Regulation": { "base": "#0A97D9", "triple": ["#FFF", "#12c0c9", "#0A97D9"] },
+      "Economy": { "base": "#A21942", "triple": ["#FFF", "#d67240", "#A21942"] },
+      "Digital Public Infrastructure": { "base": "#DE1568", "triple": ["#FFF", "#ffab8a", "#DE1568"] }
+    },
+    "pillars": {
+      "Overall": ["Overall"],
+      "People": ["Education", "Health", "Labour"],
+      "Connectivity": ["Access", "Affordability", "Quality"],
+      "Government": ["Services", "Openness", "Capacity"],
+      "Regulation": ["Policy", "Enforcement", "Coordination"],
+      "Economy": ["Business", "Innovation", "Trade"],
+      "Digital Public Infrastructure": ["Identity", "Payments", "Data Exchange"]
+    }
+  },
+  "definitions": [],
+  "globeData": [
+    {
+      "name": "Singapore",
+      "alpha2": "SG",
+      "alpha3": "SGP",
+      "latitude": 1.352083,
+      "longitude": 103.819836,
+      "region": "Eastern Asia",
+      "subregion": "South-eastern Asia",
+      "unMember": true,
+      "scores": {
+        "Overall": { "score": 4, "stage": { "number": 4, "name": "Scaling", "description": "Digital solutions are being scaled across sectors." } },
+        "People": { "stage": { "number": 4, "name": "Scaling", "description": "" }, "Education": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Health": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Labour": { "stage": { "number": 4, "name": "Scaling", "description": "" } } },
+        "Connectivity": { "stage": { "number": 5, "name": "Optimizing", "description": "" }, "Access": { "stage": { "number": 5, "name": "Optimizing", "description": "" } }, "Affordability": { "stage": { "number": 5, "name": "Optimizing", "description": "" } }, "Quality": { "stage": { "number": 5, "name": "Optimizing", "description": "" } } },
+        "Government": { "stage": { "number": 4, "name": "Scaling", "description": "" }, "Services": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Openness": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Capacity": { "stage": { "number": 4, "name": "Scaling", "description": "" } } },
+        "Regulation": { "stage": { "number": 4, "name": "Scaling", "description": "" }, "Policy": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Enforcement": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Coordination": { "stage": { "number": 4, "name": "Scaling", "description": "" } } },
+        "Economy": { "stage": { "number": 4, "name": "Scaling", "description": "" }, "Business": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Innovation": { "stage": { "number": 5, "name": "Optimizing", "description": "" } }, "Trade": { "stage": { "number": 4, "name": "Scaling", "description": "" } } },
+        "Digital Public Infrastructure": { "stage": { "number": 4, "name": "Scaling", "description": "" }, "Identity": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Payments": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Data Exchange": { "stage": { "number": 4, "name": "Scaling", "description": "" } } }
+      }
+    },
+    {
+      "name": "Finland",
+      "alpha2": "FI",
+      "alpha3": "FIN",
+      "latitude": 61.92411,
+      "longitude": 25.748151,
+      "region": "Northern Europe",
+      "subregion": "Nordic",
+      "unMember": true,
+      "scores": {
+        "Overall": { "score": 4, "stage": { "number": 4, "name": "Scaling", "description": "Digital solutions are being scaled." } },
+        "People": { "stage": { "number": 5, "name": "Optimizing", "description": "" }, "Education": { "stage": { "number": 5, "name": "Optimizing", "description": "" } }, "Health": { "stage": { "number": 5, "name": "Optimizing", "description": "" } }, "Labour": { "stage": { "number": 4, "name": "Scaling", "description": "" } } },
+        "Connectivity": { "stage": { "number": 5, "name": "Optimizing", "description": "" }, "Access": { "stage": { "number": 5, "name": "Optimizing", "description": "" } }, "Affordability": { "stage": { "number": 5, "name": "Optimizing", "description": "" } }, "Quality": { "stage": { "number": 5, "name": "Optimizing", "description": "" } } },
+        "Government": { "stage": { "number": 4, "name": "Scaling", "description": "" }, "Services": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Openness": { "stage": { "number": 5, "name": "Optimizing", "description": "" } }, "Capacity": { "stage": { "number": 4, "name": "Scaling", "description": "" } } },
+        "Regulation": { "stage": { "number": 4, "name": "Scaling", "description": "" }, "Policy": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Enforcement": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Coordination": { "stage": { "number": 4, "name": "Scaling", "description": "" } } },
+        "Economy": { "stage": { "number": 4, "name": "Scaling", "description": "" }, "Business": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Innovation": { "stage": { "number": 5, "name": "Optimizing", "description": "" } }, "Trade": { "stage": { "number": 4, "name": "Scaling", "description": "" } } },
+        "Digital Public Infrastructure": { "stage": { "number": 4, "name": "Scaling", "description": "" }, "Identity": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Payments": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Data Exchange": { "stage": { "number": 4, "name": "Scaling", "description": "" } } }
+      }
+    },
+    {
+      "name": "France",
+      "alpha2": "FR",
+      "alpha3": "FRA",
+      "latitude": 46.227638,
+      "longitude": 2.213749,
+      "region": "Western Europe",
+      "subregion": "Western Europe",
+      "unMember": true,
+      "scores": {
+        "Overall": { "score": 4, "stage": { "number": 4, "name": "Scaling", "description": "" } },
+        "People": { "stage": { "number": 4, "name": "Scaling", "description": "" }, "Education": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Health": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Labour": { "stage": { "number": 4, "name": "Scaling", "description": "" } } },
+        "Connectivity": { "stage": { "number": 4, "name": "Scaling", "description": "" }, "Access": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Affordability": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Quality": { "stage": { "number": 4, "name": "Scaling", "description": "" } } },
+        "Government": { "stage": { "number": 4, "name": "Scaling", "description": "" }, "Services": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Openness": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Capacity": { "stage": { "number": 4, "name": "Scaling", "description": "" } } },
+        "Regulation": { "stage": { "number": 4, "name": "Scaling", "description": "" }, "Policy": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Enforcement": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Coordination": { "stage": { "number": 4, "name": "Scaling", "description": "" } } },
+        "Economy": { "stage": { "number": 4, "name": "Scaling", "description": "" }, "Business": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Innovation": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Trade": { "stage": { "number": 4, "name": "Scaling", "description": "" } } },
+        "Digital Public Infrastructure": { "stage": { "number": 3, "name": "Building", "description": "" }, "Identity": { "stage": { "number": 3, "name": "Building", "description": "" } }, "Payments": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Data Exchange": { "stage": { "number": 3, "name": "Building", "description": "" } } }
+      }
+    },
+    {
+      "name": "United States of America",
+      "alpha2": "US",
+      "alpha3": "USA",
+      "latitude": 37.09024,
+      "longitude": -95.712891,
+      "region": "Americas",
+      "subregion": "Northern America",
+      "unMember": true,
+      "scores": {
+        "Overall": { "score": 4, "stage": { "number": 4, "name": "Scaling", "description": "" } },
+        "People": { "stage": { "number": 3, "name": "Building", "description": "" }, "Education": { "stage": { "number": 3, "name": "Building", "description": "" } }, "Health": { "stage": { "number": 3, "name": "Building", "description": "" } }, "Labour": { "stage": { "number": 3, "name": "Building", "description": "" } } },
+        "Connectivity": { "stage": { "number": 4, "name": "Scaling", "description": "" }, "Access": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Affordability": { "stage": { "number": 3, "name": "Building", "description": "" } }, "Quality": { "stage": { "number": 4, "name": "Scaling", "description": "" } } },
+        "Government": { "stage": { "number": 4, "name": "Scaling", "description": "" }, "Services": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Openness": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Capacity": { "stage": { "number": 4, "name": "Scaling", "description": "" } } },
+        "Regulation": { "stage": { "number": 3, "name": "Building", "description": "" }, "Policy": { "stage": { "number": 3, "name": "Building", "description": "" } }, "Enforcement": { "stage": { "number": 3, "name": "Building", "description": "" } }, "Coordination": { "stage": { "number": 3, "name": "Building", "description": "" } } },
+        "Economy": { "stage": { "number": 5, "name": "Optimizing", "description": "" }, "Business": { "stage": { "number": 5, "name": "Optimizing", "description": "" } }, "Innovation": { "stage": { "number": 5, "name": "Optimizing", "description": "" } }, "Trade": { "stage": { "number": 5, "name": "Optimizing", "description": "" } } },
+        "Digital Public Infrastructure": { "stage": { "number": 3, "name": "Building", "description": "" }, "Identity": { "stage": { "number": 3, "name": "Building", "description": "" } }, "Payments": { "stage": { "number": 4, "name": "Scaling", "description": "" } }, "Data Exchange": { "stage": { "number": 3, "name": "Building", "description": "" } } }
+      }
+    }
+  ]
+}

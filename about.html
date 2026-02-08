@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UNDP Digital Development Compass | About</title>
+  <link rel="shortcut icon" href="assets/favicon.ico" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { theme: { screens: { sm: '300px', md: '768px', lg: '1024px' }, extend: { colors: { brand: { blue: '#5b92e5', 'blue-dark': '#0063AC' } } } } };</script>
+  <link rel="stylesheet" href="css/global.css" />
+</head>
+<body class="flex flex-col h-full">
+  <header class="flex-shrink-0 border-b custom-nav-shadow header-nav-bg-color" id="header"></header>
+  <main class="flex-shrink-0 main px-4 py-8 max-w-4xl mx-auto">
+    <h1 class="text-3xl font-bold mb-4">About</h1>
+    <p class="text-gray-600">This is a static HTML demo of the Digital Development Compass. The full application explores digital progress across nations using UNDP's Digital Transformation Framework.</p>
+  </main>
+  <footer class="footer-background-color text-white" id="footer"></footer>
+  <script src="js/app.js"></script>
+  <script>
+    fetch('data/demo.json').then(function(r){return r.json();}).then(function(d){
+      var header = document.getElementById('header');
+      header.innerHTML = '<div class="lg:hidden p-3 flex items-center justify-between h-[75px]"><div class="flex items-center"><a href="index.html"><img src="assets/undp-logo.svg" alt="UNDP" class="h-[75px] w-[40px]" /></a><div class="pl-3"><a href="index.html"><h1 class="text-base font-semibold" style="color:#000">Digital Development Compass</h1></a></div></div><button type="button" id="mb" class="p-2"><img src="assets/hamburger.svg" width="24" height="24" alt="" /></button></div><div class="hidden lg:flex mx-auto px-6 items-center justify-between"><div class="flex items-center"><a href="index.html"><img src="assets/undp-logo.svg" alt="UNDP" class="h-[122px] w-[60px]" /></a><div class="pl-6"><a href="index.html"><h1 class="text-xl font-semibold" style="color:#000">Digital Development Compass</h1></a></div></div><div class="flex space-x-14"><a href="about.html" class="uppercase text-sm font-semibold tracking-wider text-brand-blue-dark">About</a><a href="data.html" class="uppercase text-sm font-semibold tracking-wider hover:text-brand-blue-dark">Data</a><a href="methodology.html" class="uppercase text-sm font-semibold tracking-wider hover:text-brand-blue-dark">Methodology</a></div></div>';
+      var footer = document.getElementById('footer');
+      var y = new Date().getFullYear();
+      footer.innerHTML = '<div class="max-w-screen-xl mx-auto px-4 lg:px-[140px] pt-12 pb-8"><div class="flex flex-row items-center"><div class="w-[60px]"><img src="assets/undp-white-logo.svg" width="60" height="123" alt="UNDP" /></div><div class="text-xl pl-4"><span>United Nations</span><br/><span>Development Programme</span></div></div><div class="border-t border-white w-full mt-6 pt-6"><p class="text-sm">&copy; '+y+' United Nations Development Programme</p><a href="https://www.undp.org/copyright-terms-use" class="text-base opacity-100 hover:opacity-70">Terms Of Use</a></div></div>';
+    });
+  </script>
+</body>
+</html>

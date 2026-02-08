@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="description" content="UNDP Digital Development Compass" />
+  <title>UNDP Digital Development Compass | Country</title>
+  <link rel="shortcut icon" href="assets/favicon.ico" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        screens: { sm: '300px', md: '768px', lg: '1024px' },
+        extend: {
+          colors: {
+            brand: { blue: '#5b92e5', 'blue-dark': '#0063AC' }
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="css/global.css" />
+</head>
+<body class="flex flex-col h-full">
+  <div id="app" class="flex flex-col h-full">
+    <header class="flex-shrink-0 border-b custom-nav-shadow header-nav-bg-color" id="header"></header>
+    <main class="flex-shrink-0 main">
+      <section class="pt-8 border-b pb-3" id="country-meta">
+        <div class="sm:px-4 sm:mx-auto sm:text-center md:pl-[115px]">
+          <nav id="breadcrumb" class="flex items-center justify-start p-4 text-[11.44px] font-bold"></nav>
+        </div>
+        <div class="container px-4 mx-auto text-center">
+          <div class="mb-10 text-center">
+            <div class="mb-2"><span id="country-flag" class="fp fp-lg"></span></div>
+            <div>
+              <h1 id="country-name" class="text-4xl lg:text-5xl font-medium tracking-tight" style="font-family: SohneBreitFont, sans-serif"></h1>
+              <p id="country-region" class="text-gray-600 text-sm mt-1"></p>
+            </div>
+          </div>
+          <div id="score-ring-container"></div>
+        </div>
+      </section>
+      <section id="pillars-section" class="container px-4 mx-auto py-8"></section>
+    </main>
+    <footer class="footer-background-color text-white" id="footer"></footer>
+  </div>
+  <div id="search-dialog-backdrop" class="fixed inset-0 bg-black/30 z-40 hidden"></div>
+  <div id="search-dialog" class="fixed inset-0 z-50 flex items-start justify-center pt-20 hidden">
+    <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 max-h-[80vh] overflow-hidden">
+      <div class="border-b bg-gray-50 p-4">
+        <label class="text-xs uppercase tracking-wide font-medium text-gray-600 block mb-2">Search countries</label>
+        <input type="text" id="search-input" class="w-full border border-gray-300 rounded px-3 py-2 text-sm" placeholder="Enter country name" />
+      </div>
+      <div id="search-results" class="overflow-y-auto max-h-64"></div>
+    </div>
+  </div>
+  <div id="mobile-menu" class="fixed top-[75px] left-0 h-full w-full custom-mobile-bg-color z-50 shadow-lg transform -translate-x-full transition-transform duration-300" style="top: 75px;"></div>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.initCountryPage) window.initCountryPage();
+    });
+  </script>
+</body>
+</html>

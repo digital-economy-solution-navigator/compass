@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="description" content="UNDP Digital Development Compass" />
+  <title>UNDP Digital Development Compass | Home</title>
+  <link rel="shortcut icon" href="assets/favicon.ico" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        screens: { sm: '300px', md: '768px', lg: '1024px' },
+        extend: {
+          colors: {
+            brand: { blue: '#5b92e5', 'blue-dark': '#0063AC' }
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="css/global.css" />
+</head>
+<body class="flex flex-col h-full">
+  <div id="app" class="flex flex-col h-full">
+    <!-- Header and main content injected by JS or static below -->
+    <header class="flex-shrink-0 border-b custom-nav-shadow header-nav-bg-color" id="header"></header>
+    <main class="flex-shrink-0 main">
+      <section class="h-full flex flex-col">
+        <div class="w-full lg:divide-x grid lg:grid-cols-12 h-full">
+          <div class="items-center justify-center px-6 py-6 lg:px-12 xl:px-16 col-span-full lg:col-span-5">
+            <div class="max-w-2xl flex flex-col justify-center h-full md:mx-auto pt-14">
+              <div id="hero"></div>
+              <div class="mt-8 mb-4" id="pillar-filter"></div>
+            </div>
+          </div>
+          <div class="col-span-full lg:col-span-7 pb-20 lg:pb-0 overflow-hidden relative bg-gradient-to-r from-blue-50 min-h-[320px] lg:min-h-[480px]" id="globe-area">
+            <div id="globe-viz" class="absolute inset-0 w-full h-full min-h-[30em]"></div>
+            <div id="country-card-container" class="absolute lg:bottom-4 lg:right-4 lg:max-w-[340px] hidden z-20"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer-background-color text-white" id="footer"></footer>
+  </div>
+  <div id="search-dialog-backdrop" class="fixed inset-0 bg-black/30 z-40 hidden"></div>
+  <div id="search-dialog" class="fixed inset-0 z-50 flex items-start justify-center pt-20 hidden">
+    <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 max-h-[80vh] overflow-hidden">
+      <div class="border-b bg-gray-50 p-4">
+        <label class="text-xs uppercase tracking-wide font-medium text-gray-600 block mb-2">Search countries</label>
+        <input type="text" id="search-input" class="w-full border border-gray-300 rounded px-3 py-2 text-sm" placeholder="Enter country name" />
+      </div>
+      <div id="search-results" class="overflow-y-auto max-h-64"></div>
+    </div>
+  </div>
+  <div id="mobile-menu" class="fixed top-[75px] left-0 h-full w-full custom-mobile-bg-color z-50 shadow-lg transform -translate-x-full transition-transform duration-300" style="top: 75px;"></div>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/globe.gl@2.45.0/dist/globe.gl.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
