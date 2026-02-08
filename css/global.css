@@ -4,12 +4,49 @@ html {
   height: 100%;
 }
 
+body {
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+}
+
 p {
   line-height: 1.4;
 }
 
 .main {
   min-height: calc(100vh - 100px);
+}
+
+/* Globe: square container centered in the column; explicit size so canvas and view are correct */
+#globe-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+@media (min-width: 1024px) {
+  #globe-area {
+    min-height: 540px;
+  }
+}
+#globe-viz {
+  flex-shrink: 0;
+  width: 400px;
+  height: 400px;
+}
+@media (min-width: 640px) {
+  #globe-viz {
+    width: 480px;
+    height: 480px;
+  }
+}
+@media (min-width: 1024px) {
+  #globe-viz {
+    width: 520px;
+    height: 520px;
+  }
+}
+#globe-viz canvas {
+  display: block;
 }
 
 .data-table [role="columnheader"] {
@@ -39,7 +76,7 @@ p {
 .url-styling {
   position: relative;
   padding-bottom: 1px;
-  border-bottom: 2px solid #D12800;
+  border-bottom: 2px solid #0d9488;
 }
 
 .url-styling::after {
@@ -49,7 +86,7 @@ p {
   left: 0;
   width: 100%;
   height: 2px;
-  background-color: #D12800;
+  background-color: #0d9488;
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.5s ease-in-out;
@@ -85,23 +122,27 @@ input::placeholder {
 }
 
 .custom-nav-shadow {
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
 }
 
 .header-nav-bg-color {
-  background-color: #FAFAFA;
+  background-color: #ffffff;
 }
 
 .footer-background-color {
-  background-color: #006eb5;
+  background-color: #f8fafc;
 }
 
 .button-bg-color {
-  background-color: #4F95DD;
+  background-color: #0d9488;
+}
+
+.button-bg-color:hover {
+  background-color: #0f766e;
 }
 
 .custom-mobile-bg-color {
-  background-color: rgba(247, 247, 247);
+  background-color: #f9fafb;
 }
 
 .custom-mobile-menu {

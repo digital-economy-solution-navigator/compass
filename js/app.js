@@ -17,7 +17,7 @@
       <div class="lg:hidden p-3 flex items-center justify-between h-[75px]">
         <div class="flex items-center">
           <div><a href="index.html" class="block relative z-[100] h-[75px] w-[40px] object-contain"><img src="${LOGO_HEADER}" alt="UNIDO Logo" class="h-full w-auto object-contain" /></a></div>
-          <div class="pl-3 md:pl-6 w-4"><a href="index.html"><h1 class="text-base font-semibold lg:text-xl" style="color:#000">AI & Digital for Industry Navigator</h1></a></div>
+          <div class="pl-3 md:pl-6 w-4"><a href="index.html"><h1 class="text-base font-semibold lg:text-xl text-gray-900">AI & Digital for Industry Navigator</h1></a></div>
         </div>
         <div class="flex items-start">
           <button type="button" id="mobile-menu-btn" class="header-nav-bg-color font-semibold px-5 py-4 flex items-center text-xl" aria-label="Menu">
@@ -29,14 +29,14 @@
       <div class="hidden mx-auto px-6 lg:flex lg:items-center lg:justify-between lg:space-x-4">
         <div class="flex items-center">
           <div class="h-[115px] flex-shrink-0"><a href="index.html" class="block relative z-[100] h-[122px] w-[60px] object-contain"><img src="${LOGO_HEADER}" alt="UNIDO Logo" class="h-full w-auto object-contain" /></a></div>
-          <div class="pl-6 w-4"><a href="index.html"><h1 class="text-base font-semibold lg:text-xl" style="color:#000">AI & Digital for Industry Navigator</h1></a></div>
+          <div class="pl-6 w-4"><a href="index.html"><h1 class="text-base font-semibold lg:text-xl text-gray-900">AI & Digital for Industry Navigator</h1></a></div>
         </div>
         <div class="flex items-center justify-end space-x-14">
-          <a href="about.html" class="uppercase text-sm hover:text-brand-blue-dark font-semibold tracking-wider">About</a>
-          <a href="data.html" class="uppercase text-sm hover:text-brand-blue-dark font-semibold tracking-wider">Data</a>
-          <a href="methodology.html" class="uppercase text-sm hover:text-brand-blue-dark font-semibold tracking-wider">Methodology</a>
+          <a href="about.html" class="text-sm text-gray-600 hover:text-accent font-medium">About</a>
+          <a href="data.html" class="text-sm text-gray-600 hover:text-accent font-medium">Data</a>
+          <a href="methodology.html" class="text-sm text-gray-600 hover:text-accent font-medium">Methodology</a>
         </div>
-        <div class="flex items-center justify-end pr-16"><button type="button" id="search-trigger" class="p-2 font-semibold uppercase text-sm" aria-label="Search">Search</button></div>
+        <div class="flex items-center justify-end pr-16"><button type="button" id="search-trigger" class="p-2 font-medium text-sm text-gray-600 hover:text-accent" aria-label="Search">Search</button></div>
       </div>
     `;
     const menuBtn = document.getElementById('mobile-menu-btn');
@@ -60,9 +60,9 @@
     if (!el) return;
     el.innerHTML = `
       <nav class="flex flex-col w-full justify-center space-y-9 pt-[90px] px-6">
-        <a href="about.html" class="uppercase text-base w-full font-bold tracking-extra-tight">About</a>
-        <a href="data.html" class="uppercase text-base w-full font-bold tracking-extra-tight">Data</a>
-        <a href="methodology.html" class="uppercase text-base w-full font-bold tracking-extra-tight">Methodology</a>
+        <a href="about.html" class="text-base w-full font-medium text-gray-700 hover:text-accent">About</a>
+        <a href="data.html" class="text-base w-full font-medium text-gray-700 hover:text-accent">Data</a>
+        <a href="methodology.html" class="text-base w-full font-medium text-gray-700 hover:text-accent">Methodology</a>
       </nav>
     `;
   }
@@ -72,30 +72,26 @@
     if (!footer) return;
     const year = new Date().getFullYear();
     footer.innerHTML = `
-      <div class="max-w-screen-xl mx-auto px-4 lg:px-[140px] h-[440px] sm:h-[440px] md:h-[435px] lg:h-[333px] pt-12 md:pt-[52px] lg:pt-[52px]">
-        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between pb-8 md:pb-12 lg:pb-12">
-          <div class="flex flex-row items-center space-x-0 mb-0 md:mb-4 lg:mb-0">
-            <div class="w-[60px] flex-shrink-0"><img src="${LOGO_FOOTER}" width="60" height="123" alt="UNIDO Logo" class="object-contain" /></div>
-            <div class="text-xl md:text-[25px] md:leading-[1.15] pl-4 font-normal md:text-left lg:text-left">
-              <span>United Nations</span><br /><span>Industrial Development Organization</span>
+      <div class="max-w-screen-xl mx-auto px-4 lg:px-16 py-8">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+          <div class="flex flex-row items-center space-x-0">
+            <div class="w-[48px] flex-shrink-0"><img src="${LOGO_HEADER}" width="48" height="60" alt="UNIDO Logo" class="object-contain" /></div>
+            <div class="text-base pl-3 font-normal text-slate-700">
+              <span>United Nations Industrial Development Organization</span>
             </div>
           </div>
-          <div class="hidden md:block lg:block">
-            <div class="flex justify-center space-x-8 mb-6">
-              <a href="https://www.facebook.com/UNIDO" target="_blank" rel="noopener noreferrer">Facebook</a>
-              <a href="https://www.linkedin.com/company/unido" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-              <a href="https://www.instagram.com/unido" target="_blank" rel="noopener noreferrer">Instagram</a>
-              <a href="https://twitter.com/UNIDO" target="_blank" rel="noopener noreferrer">X</a>
-              <a href="https://www.youtube.com/unido" target="_blank" rel="noopener noreferrer">YouTube</a>
-            </div>
+          <div class="flex flex-wrap justify-center lg:justify-end gap-6">
+            <a href="https://www.facebook.com/UNIDO" target="_blank" rel="noopener noreferrer" class="text-sm text-slate-600 hover:text-accent">Facebook</a>
+            <a href="https://www.linkedin.com/company/unido" target="_blank" rel="noopener noreferrer" class="text-sm text-slate-600 hover:text-accent">LinkedIn</a>
+            <a href="https://www.instagram.com/unido" target="_blank" rel="noopener noreferrer" class="text-sm text-slate-600 hover:text-accent">Instagram</a>
+            <a href="https://twitter.com/UNIDO" target="_blank" rel="noopener noreferrer" class="text-sm text-slate-600 hover:text-accent">X</a>
+            <a href="https://www.youtube.com/unido" target="_blank" rel="noopener noreferrer" class="text-sm text-slate-600 hover:text-accent">YouTube</a>
           </div>
         </div>
-        <div class="border-t border-white w-full"></div>
-        <div class="flex flex-col lg:flex-row justify-between items-start w-full pt-[34px] text-center lg:text-left pb-5 md:mb-6 pl-0 sm:pl-4 md:pl-0 lg:pl-0">
-          <p class="text-sm md:text-base font-normal lg:order-1 mb-2 lg:mb-0">&copy; ${year} United Nations Industrial Development Organization</p>
-          <a href="https://www.unido.org" class="text-base font-normal order-1 lg:order-2 mb-2 lg:mb-0 opacity-100 hover:opacity-70">Terms Of Use</a>
+        <div class="border-t border-slate-200 w-full mt-6 pt-6 flex flex-col sm:flex-row justify-between items-center gap-2 text-sm text-slate-600">
+          <p>&copy; ${year} United Nations Industrial Development Organization</p>
+          <a href="https://www.unido.org" class="hover:text-accent">Terms of use</a>
         </div>
-        <div class="md:hidden lg:hidden"><div class="flex space-x-8 pl-12"><a href="https://www.facebook.com/UNIDO" target="_blank" rel="noopener noreferrer">Facebook</a><a href="https://www.linkedin.com/company/unido" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="https://www.instagram.com/unido" target="_blank" rel="noopener noreferrer">Instagram</a><a href="https://twitter.com/UNIDO" target="_blank" rel="noopener noreferrer">X</a><a href="https://www.youtube.com/unido" target="_blank" rel="noopener noreferrer">YouTube</a></div></div>
       </div>
     `;
   }
@@ -105,8 +101,8 @@
     if (!hero) return;
     hero.innerHTML = `
       <div>
-        <h1 class="text-[40px] sm:text-[40px] md:text-[35px] lg:text-[35px] leading-[1.1] font-bold">Is your nation ready to navigate digital transformation?</h1>
-        <p class="text-[16px] sm:text-[16px] md:text-[20px] lg:text-[20px] leading-7 mt-4 text-left" style="color:#333333">Explore your nation's digital progress using the world's largest database of digital development data. The AI & Digital for Industry Navigator lets you discover and compare progress across a range of key issues.</p>
+        <h1 class="text-[40px] sm:text-[40px] md:text-[35px] lg:text-[35px] leading-[1.1] font-bold text-gray-900">Is your nation ready to navigate digital transformation?</h1>
+        <p class="text-[16px] sm:text-[16px] md:text-[20px] lg:text-[20px] leading-7 mt-4 text-left text-gray-600">Explore your nation's digital progress using the world's largest database of digital development data. The AI & Digital for Industry Navigator lets you discover and compare progress across a range of key issues.</p>
       </div>
     `;
   }
@@ -117,7 +113,7 @@
     const ancillary = data.ancillary;
     container.innerHTML = `
       <fieldset>
-        <h6 class="text-[16px] leading-[18px] tracking-normal font-bold text-[#333333] block uppercase pb-3">Filter by pillar</h6>
+        <h6 class="text-[16px] leading-[18px] font-semibold text-gray-700 block pb-3">Filter by pillar</h6>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2" id="pillar-radios"></div>
       </fieldset>
     `;
@@ -126,13 +122,12 @@
       const color = ancillary.pillarColorMap[pillar].base;
       const checked = pillar === selectedPillar;
       const label = document.createElement('label');
-      label.className = 'p-4 font-bold cursor-pointer flex items-center rounded-md overflow-hidden transition-all relative text-sm group border';
-      label.style.borderColor = checked ? color : '';
+      label.className = 'p-3 font-medium cursor-pointer flex items-center rounded-lg overflow-hidden transition-all relative text-sm group border ' + (checked ? 'border-accent bg-accent/5' : 'border-gray-200 bg-gray-50 hover:border-gray-300');
+      label.style.borderColor = checked ? '' : '';
       label.innerHTML = `
-        <div class="absolute w-full h-full inset-0 z-0 opacity-0 group-hover:opacity-20 transition-opacity flex-shrink-0" style="background-color:${color};${checked ? 'opacity:0.1' : ''}"></div>
-        <div class="w-3 h-3 rounded-full mr-2 flex-shrink-0" style="background-color:${color}"></div>
+        <div class="w-2.5 h-2.5 rounded-full mr-2 flex-shrink-0" style="background-color:${checked ? '#0d9488' : color}"></div>
         <input type="radio" name="pillar-radio" value="${pillar}" class="sr-only" ${checked ? 'checked' : ''} />
-        <p style="color:${checked ? color : ''};font-weight:600" id="${pillar}">${pillar}</p>
+        <p class="${checked ? 'text-accent font-semibold' : 'text-gray-700'}" id="${pillar}">${pillar}</p>
       `;
       label.querySelector('input').addEventListener('change', function () { onChange(pillar); });
       radios.appendChild(label);
@@ -218,9 +213,9 @@
     const flagUrl = 'https://flagcdn.com/w80/' + (country.alpha2 || '').toLowerCase() + '.png';
     const readinessHtml = renderReadinessScale(scores, pillar, function () {});
     return `
-      <div class="border-gray-200 shadow-lg pb-0 w-full flex-1 border rounded-lg flex flex-col items-center bg-white overflow-hidden">
+      <div class="border border-gray-200 shadow-sm pb-0 w-full flex-1 rounded-xl flex flex-col items-center bg-white overflow-hidden">
         <div class="p-4 flex flex-col items-center">
-          <a href="country.html?code=${country.alpha3}#${country.alpha3}">
+          <a href="country.html?code=${country.alpha3}#${country.alpha3}" class="text-gray-900 hover:text-accent">
             <div class="flex flex-col items-center group cursor-pointer">
               <div class="flex-shrink-0"><img src="${flagUrl}" alt="" width="48" height="36" style="object-fit:cover" /></div>
               <div class="flex-1 ml-2"><h3 class="text-xl"><span class="group-hover:underline">${country.name}</span></h3></div>
@@ -228,7 +223,7 @@
           </a>
           <div class="py-4 flex items-center justify-center text-center w-full" id="country-card-gauge"></div>
         </div>
-        ${showFooterLink ? `<div class="mb-4"><a href="country.html?code=${country.alpha3}#${country.alpha3}" class="bg-[#006EB5] hover:button-bg-color text-base uppercase font-bold px-6 py-4 text-white flex-shrink-0 inline-flex items-center">view more</a></div>` : ''}
+        ${showFooterLink ? `<div class="mb-4"><a href="country.html?code=${country.alpha3}#${country.alpha3}" class="bg-accent hover:bg-accent-hover text-base font-semibold px-6 py-3 text-white rounded-lg inline-flex items-center transition-colors">View more</a></div>` : ''}
         <div class="w-full flex-1 flex flex-col justify-end">${readinessHtml}</div>
       </div>
     `;
@@ -245,9 +240,7 @@
     container.classList.remove('hidden');
     container.innerHTML = `
       <div class="flex justify-end mb-2">
-        <button type="button" id="close-country-card" class="text-brand-blue flex items-center p-2" aria-label="Close">
-          <span class="uppercase text-xs tracking-widest font-medium">Close</span>
-        </button>
+        <button type="button" id="close-country-card" class="text-gray-600 hover:text-accent flex items-center p-2 text-sm font-medium" aria-label="Close">Close</button>
       </div>
       ${renderCountryCard(country, pillar, true)}
     `;
@@ -284,18 +277,24 @@
     const q = (query || '').toLowerCase().trim();
     const list = q ? data.countries.filter(function (c) { return c.name.toLowerCase().indexOf(q) !== -1; }) : data.countries.slice(0, 20);
     resultsEl.innerHTML = list.map(function (c) {
-      return '<a href="country.html?code=' + c.alpha3 + '#' + c.alpha3 + '" class="block px-4 py-3 border-b hover:bg-gray-50">' + c.name + '</a>';
+      return '<a href="country.html?code=' + c.alpha3 + '#' + c.alpha3 + '" class="block px-4 py-3 border-b border-gray-100 text-gray-700 hover:bg-gray-50 hover:text-accent">' + c.name + '</a>';
     }).join('') || '<p class="p-4 text-gray-500">No countries found</p>';
   }
 
+  function toHex(s) {
+    if (typeof s !== 'string') return s;
+    var t = s.replace(/^["']|["']$/g, '').trim();
+    return /^#[0-9A-Fa-f]{3,8}$/.test(t) ? t : s;
+  }
   function makePillarScales(ancillary) {
     const scales = {};
     ancillary.pillarNames.forEach(function (p) {
-      const triple = ancillary.pillarColorMap[p] && ancillary.pillarColorMap[p].triple;
-      if (triple && triple.length >= 2) {
-        scales[p] = d3.scaleLinear().domain([0, 2.5, 5]).range(triple).interpolate(d3.interpolateLab).clamp(true);
+      const raw = ancillary.pillarColorMap[p] && ancillary.pillarColorMap[p].triple;
+      if (raw && raw.length >= 2) {
+        const triple = raw.map(toHex);
+        scales[p] = d3.scaleLinear().domain([0, 2.5, 5]).range(triple).interpolate(d3.interpolateRgb).clamp(true);
       } else {
-        scales[p] = function () { return '#eee'; };
+        scales[p] = function () { return '#c7d7ed'; };
       }
     });
     return scales;
@@ -341,18 +340,21 @@
         var p = pillarRef.current;
         var score = d.scores && d.scores[p] && d.scores[p].score;
         var isActive = activeCountryIdRef.current === d.alpha3;
-        var color = isActive ? (pillarScales[p] ? pillarScales[p](6) : '#6366f1') : (score ? (pillarScales[p] ? pillarScales[p](score) : '#eee') : '#eee');
+        var defaultColor = '#c7d7ed';
+        var numScore = score != null && score !== '' ? Number(score) : NaN;
+        var useScale = pillarScales[p] && !Number.isNaN(numScore);
+        var color = isActive ? (pillarScales[p] ? pillarScales[p](6) : '#6366f1') : (useScale ? pillarScales[p](numScore) : defaultColor);
         return new THREE.MeshPhysicalMaterial({
           color: color,
-          roughness: 0.5,
-          reflectivity: 1.2,
-          opacity: activeCountryIdRef.current ? (activeCountryIdRef.current === d.alpha3 ? 1 : 0.9) : 1,
+          roughness: 0.65,
+          reflectivity: 0.35,
+          opacity: activeCountryIdRef.current ? (activeCountryIdRef.current === d.alpha3 ? 1 : 0.92) : 1,
           side: THREE.DoubleSide
         });
       })
-      .polygonAltitude(function (d) { return activeCountryIdRef.current === d.alpha3 ? 0.035 : 0.01; })
-      .polygonSideColor(function () { return 'rgba(255,255,255,255)'; })
-      .polygonStrokeColor(function () { return '#111'; })
+      .polygonAltitude(function (d) { return activeCountryIdRef.current === d.alpha3 ? 0.032 : 0.008; })
+      .polygonSideColor(function () { return 'rgba(203, 215, 237, 0.98)'; })
+      .polygonStrokeColor(function () { return '#64748b'; })
       .polygonLabel(function (d) {
         if (!d || !d.unMember) return '';
         return '<div class="bg-white rounded-md shadow-lg px-4 py-1 uppercase text-xs tracking-widest font-medium text-black"><span>' + d.name + '</span></div>';
@@ -373,7 +375,7 @@
             ctrl.autoRotateSpeed = -0.25;
             ctrl.enableZoom = false;
           }
-          globe.pointOfView({ altitude: 1.9 }, 0);
+          globe.pointOfView({ lat: 0, lng: 0, altitude: 1.55 }, 0);
           var scene = globe.scene && globe.scene();
           if (scene) {
             setTimeout(function () {
@@ -460,7 +462,7 @@
         const pillarFilterContainer = document.getElementById('pillar-filter');
         const selectEl = document.createElement('div');
         selectEl.className = 'mt-4';
-        selectEl.innerHTML = '<label class="block text-[16px] font-bold text-[#333333] uppercase pb-2">Select a country</label><select id="country-select" class="w-full border border-gray-300 rounded px-3 py-2"><option value="">-- Choose --</option>' + globeData.map(function (c) { return '<option value="' + c.alpha3 + '">' + c.name + '</option>'; }).join('') + '</select>';
+        selectEl.innerHTML = '<label class="block text-[16px] font-semibold text-gray-700 pb-2">Select a country</label><select id="country-select" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-gray-700 focus:border-accent focus:ring-1 focus:ring-accent"><option value="">— Choose —</option>' + globeData.map(function (c) { return '<option value="' + c.alpha3 + '">' + c.name + '</option>'; }).join('') + '</select>';
         function updatePillar(p) {
           pillar = p;
           pillarRef.current = pillar;
@@ -529,7 +531,7 @@
         renderHeader(countries, true);
         renderFooter();
         const breadcrumb = document.getElementById('breadcrumb');
-        if (breadcrumb) breadcrumb.innerHTML = '<a href="index.html" class="mr-4 text-black hover:text-red-500 uppercase">Home</a><span class="text-[#D12800]">/</span><span class="ml-4 text-[#D12800] uppercase">' + (country ? country.name : (code ? 'Not found' : 'Country')) + '</span>';
+        if (breadcrumb) breadcrumb.innerHTML = '<a href="index.html" class="mr-4 text-gray-700 hover:text-accent">Home</a><span class="text-gray-400">/</span><span class="ml-4 text-accent font-medium">' + (country ? country.name : (code ? 'Not found' : 'Country')) + '</span>';
         const flagEl = document.getElementById('country-flag');
         if (flagEl) {
           flagEl.innerHTML = '';
@@ -548,7 +550,7 @@
         const ringContainer = document.getElementById('score-ring-container');
         const pillarsSection = document.getElementById('pillars-section');
         if (!country) {
-          if (ringContainer) ringContainer.innerHTML = '<p class="text-gray-500 py-4"><a href="index.html" class="text-brand-blue hover:underline">Go to home</a> to select a country from the globe or search.</p>';
+          if (ringContainer) ringContainer.innerHTML = '<p class="text-gray-500 py-4"><a href="index.html" class="text-accent hover:underline">Go to home</a> to select a country from the globe or search.</p>';
           if (pillarsSection) pillarsSection.innerHTML = '';
           document.getElementById('search-dialog-backdrop') && document.getElementById('search-dialog-backdrop').addEventListener('click', closeSearch);
           document.getElementById('search-input') && document.getElementById('search-input').addEventListener('input', function () { fillSearchResults(this.value); });
@@ -613,7 +615,7 @@
         var msg = document.getElementById('country-name');
         if (msg) msg.textContent = 'Could not load data';
         var region = document.getElementById('country-region');
-        if (region) region.innerHTML = 'Open this demo from a local server (e.g. <code>node serve.js</code> in the html-demo folder). <a href="index.html" class="text-brand-blue underline">Back to home</a>';
+        if (region) region.innerHTML = 'Open this demo from a local server (e.g. <code>node serve.js</code> in the html-demo folder). <a href="index.html" class="text-accent underline">Back to home</a>';
         var ring = document.getElementById('score-ring-container');
         if (ring) ring.innerHTML = '';
         var pillarsEl = document.getElementById('pillars-section');
