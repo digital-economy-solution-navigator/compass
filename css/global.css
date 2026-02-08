@@ -19,13 +19,13 @@ p {
 /* Globe: full-bleed hero background */
 #globe-area {
   position: relative;
-  min-height: 70vh;
+  min-height: 38vh;
   height: 100%;
   overflow: hidden;
 }
 @media (min-width: 1024px) {
   #globe-area {
-    min-height: 72vh;
+    min-height: 42vh;
   }
 }
 #globe-viz {
