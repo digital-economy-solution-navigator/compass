@@ -17,15 +17,21 @@ p {
 }
 
 /* Globe: full-bleed hero background */
+.landing-fit {
+  --landing-header-h: 72px;
+  --landing-footer-h: 44px;
+  --landing-pillar-h: 54px;
+}
+
 #globe-area {
   position: relative;
-  min-height: 38vh;
-  height: 100%;
+  height: calc(100vh - var(--landing-header-h) - var(--landing-footer-h) - var(--landing-pillar-h));
+  min-height: clamp(220px, 34vh, 360px);
   overflow: hidden;
 }
 @media (min-width: 1024px) {
   #globe-area {
-    min-height: 42vh;
+    min-height: clamp(260px, 36vh, 380px);
   }
 }
 #globe-viz {
@@ -34,6 +40,14 @@ p {
 }
 #globe-viz canvas {
   display: block;
+}
+
+@media (max-width: 640px) {
+  .landing-fit {
+    --landing-header-h: 64px;
+    --landing-footer-h: 40px;
+    --landing-pillar-h: 68px;
+  }
 }
 
 .country-card-dark .text-gray-600 {

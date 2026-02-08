@@ -137,9 +137,9 @@
       const color = ancillary.pillarColorMap[pillar].base;
       const checked = pillar === selectedPillar;
       const label = document.createElement('label');
-      label.className = 'px-4 py-2 font-medium cursor-pointer flex items-center rounded-full transition-all text-sm border ' + (checked ? 'border-[#7c3aed] bg-[#7c3aed]/10 text-[#7c3aed]' : 'border-white/40 bg-white/80 text-gray-800 hover:border-white/70');
+      label.className = 'px-3 py-1.5 font-medium cursor-pointer flex items-center rounded-full transition-all text-xs border ' + (checked ? 'border-[#7c3aed] bg-[#7c3aed]/10 text-[#7c3aed]' : 'border-white/40 bg-white/80 text-gray-800 hover:border-white/70');
       label.innerHTML = `
-        <div class="w-2.5 h-2.5 rounded-full mr-2 flex-shrink-0" style="background-color:${checked ? '#7c3aed' : color}"></div>
+        <div class="w-2 h-2 rounded-full mr-2 flex-shrink-0" style="background-color:${checked ? '#7c3aed' : color}"></div>
         <input type="radio" name="pillar-radio" value="${pillar}" class="sr-only" ${checked ? 'checked' : ''} />
         <p class="${checked ? 'text-[#7c3aed] font-semibold' : 'text-gray-800'}" id="${pillar}">${pillar}</p>
       `;
