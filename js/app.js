@@ -16,8 +16,8 @@
     header.innerHTML = `
       <div class="lg:hidden p-4 flex items-center justify-between h-[72px]">
         <div class="flex items-center">
-          <div><a href="index.html" class="block relative z-[100] h-[56px] w-[40px] object-contain"><img src="${LOGO_HEADER}" alt="UNIDO Logo" class="h-full w-auto object-contain" /></a></div>
-          <div class="pl-3 w-4"><a href="index.html"><h1 class="text-base font-semibold text-white">AI & Digital for Industry Navigator</h1></a></div>
+          <div><a href="index.html" class="block relative z-[100] h-[48px] w-[48px] object-contain"><img src="${LOGO_HEADER}" alt="UNIDO Logo" class="h-full w-auto object-contain" /></a></div>
+          <div class="pl-3 max-w-[220px]"><a href="index.html"><h1 class="text-base font-semibold text-white leading-tight">AI & Digital for Industry Navigator</h1></a></div>
         </div>
         <div class="flex items-start gap-2">
           <button type="button" id="search-trigger-mobile" class="px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/70" aria-label="Search">Search</button>
@@ -28,8 +28,8 @@
       </div>
       <div class="hidden mx-auto px-6 lg:flex lg:items-center lg:justify-between lg:space-x-4 py-5">
         <div class="flex items-center">
-          <div class="h-[80px] flex-shrink-0"><a href="index.html" class="block relative z-[100] h-[80px] w-[50px] object-contain"><img src="${LOGO_HEADER}" alt="UNIDO Logo" class="h-full w-auto object-contain" /></a></div>
-          <div class="pl-4 w-4"><a href="index.html"><h1 class="text-base font-semibold text-white">AI & Digital for Industry Navigator</h1></a></div>
+          <div class="h-[64px] flex-shrink-0"><a href="index.html" class="block relative z-[100] h-[64px] w-[56px] object-contain"><img src="${LOGO_HEADER}" alt="UNIDO Logo" class="h-full w-auto object-contain" /></a></div>
+          <div class="pl-4 max-w-[260px]"><a href="index.html"><h1 class="text-base font-semibold text-white leading-tight">AI & Digital for Industry Navigator</h1></a></div>
         </div>
         <div class="flex items-center justify-end space-x-10">
           <a href="about.html" class="text-sm text-white/70 hover:text-white font-medium">About</a>
