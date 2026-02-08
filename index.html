@@ -29,64 +29,21 @@
     <!-- Header and main content injected by JS or static below -->
     <header class="flex-shrink-0 border-b custom-nav-shadow header-nav-bg-color" id="header"></header>
     <main class="flex-1 bg-[#0b0f14]">
-      <section class="relative overflow-hidden">
-        <div class="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-[#7c3aed]/30 blur-[90px]"></div>
-        <div class="absolute -bottom-24 right-0 h-80 w-80 rounded-full bg-[#22d3ee]/20 blur-[110px]"></div>
-        <div class="max-w-screen-xl mx-auto px-6 lg:px-12 py-16 lg:py-24 grid lg:grid-cols-12 gap-10 items-center">
-          <div class="lg:col-span-5 text-white">
-            <div class="inline-flex items-center gap-2 text-[11px] tracking-[0.24em] uppercase text-white/60">
-              <span class="h-1.5 w-1.5 rounded-full bg-[#7c3aed]"></span>
-              AI & Digital for Industry
-            </div>
-            <div id="hero" class="mt-5"></div>
-            <div class="mt-8" id="pillar-filter"></div>
-            <div class="mt-6 flex flex-wrap gap-3">
-              <a href="#globe-area" class="bg-[#7c3aed] hover:bg-[#6d28d9] text-white px-5 py-3 rounded-full text-sm font-semibold">Explore the globe</a>
-              <a href="methodology.html" class="border border-white/20 text-white/80 hover:text-white px-5 py-3 rounded-full text-sm font-semibold">Methodology</a>
-            </div>
-          </div>
-          <div class="lg:col-span-7">
-            <div class="rounded-[28px] border border-white/10 bg-white/5 backdrop-blur-xl p-6 shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
-              <div id="globe-area" class="relative">
-                <div id="globe-viz" class="mx-auto"></div>
-                <div id="country-card-container" class="absolute right-4 top-4 lg:max-w-[340px] hidden z-20"></div>
-              </div>
-              <div class="mt-6 grid grid-cols-3 gap-4 text-white/70 text-[10px] uppercase tracking-[0.2em]">
-                <div class="rounded-xl border border-white/10 px-4 py-3">
-                  <p class="text-white text-lg font-semibold">192</p>
-                  <p>Countries</p>
-                </div>
-                <div class="rounded-xl border border-white/10 px-4 py-3">
-                  <p class="text-white text-lg font-semibold">7</p>
-                  <p>Pillars</p>
-                </div>
-                <div class="rounded-xl border border-white/10 px-4 py-3">
-                  <p class="text-white text-lg font-semibold">5</p>
-                  <p>Stages</p>
-                </div>
-              </div>
-            </div>
+      <section class="relative min-h-[70vh] overflow-hidden">
+        <div id="globe-area" class="absolute inset-0">
+          <div id="globe-viz"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-[#0b0f14]/95 via-[#0b0f14]/60 to-transparent pointer-events-none"></div>
+          <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(124,58,237,0.35),transparent_45%),radial-gradient(circle_at_85%_30%,rgba(34,211,238,0.25),transparent_40%)] pointer-events-none"></div>
+        </div>
+        <div class="relative z-10 max-w-screen-xl mx-auto px-6 lg:px-12 py-10 lg:py-12">
+          <div class="rounded-2xl border border-white/60 bg-white/90 backdrop-blur-xl p-4 shadow-[0_16px_40px_rgba(0,0,0,0.35)]">
+            <div id="pillar-filter"></div>
           </div>
         </div>
+        <div id="country-card-container" class="absolute left-1/2 -translate-x-1/2 bottom-6 sm:left-6 sm:translate-x-0 w-[320px] sm:w-[340px] max-w-[90vw] hidden z-20"></div>
       </section>
       <section class="bg-white text-gray-900">
-        <div class="max-w-screen-xl mx-auto px-6 lg:px-12 py-16 lg:py-20 grid lg:grid-cols-3 gap-6">
-          <div class="rounded-2xl border border-gray-200 p-6 shadow-sm">
-            <p class="text-xs tracking-[0.2em] uppercase text-gray-400">Signal</p>
-            <h3 class="text-xl font-semibold mt-2">See the global picture fast</h3>
-            <p class="text-gray-600 mt-3">Scan readiness across pillars and compare momentum by region without leaving the map.</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 p-6 shadow-sm">
-            <p class="text-xs tracking-[0.2em] uppercase text-gray-400">Focus</p>
-            <h3 class="text-xl font-semibold mt-2">Zoom into country detail</h3>
-            <p class="text-gray-600 mt-3">Open a country card for a quick snapshot, then dive into the full score breakdown.</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 p-6 shadow-sm">
-            <p class="text-xs tracking-[0.2em] uppercase text-gray-400">Action</p>
-            <h3 class="text-xl font-semibold mt-2">Compare, share, decide</h3>
-            <p class="text-gray-600 mt-3">Use the data to align programs, target investment, and track impact across time.</p>
-          </div>
-        </div>
+
       </section>
     </main>
     <footer class="footer-background-color text-white" id="footer"></footer>

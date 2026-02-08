@@ -104,8 +104,19 @@
     if (!hero) return;
     hero.innerHTML = `
       <div>
-        <h1 class="text-[44px] sm:text-[46px] md:text-[42px] lg:text-[44px] leading-[1.05] font-semibold text-white">Turn digital readiness into a clear national playbook.</h1>
-        <p class="text-[16px] sm:text-[16px] md:text-[18px] lg:text-[18px] leading-7 mt-5 text-left text-white/70">The AI & Digital for Industry Navigator helps you scan global readiness, surface gaps, and compare progress across pillars that matter for industrial transformation.</p>
+        <h1 class="text-[38px] sm:text-[40px] md:text-[42px] lg:text-[44px] leading-[1.05] font-semibold text-white">Search a country to start the analysis.</h1>
+        <p class="text-[15px] sm:text-[16px] md:text-[17px] lg:text-[18px] leading-7 mt-4 text-left text-white/70">Jump directly into a country snapshot, then explore pillars, stages, and regional benchmarks.</p>
+        <div class="mt-6 space-y-3">
+          <div class="flex flex-col sm:flex-row gap-3">
+            <input type="text" id="hero-search-input" class="w-full flex-1 rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white/90 placeholder:text-white/40 focus:border-[#7c3aed] focus:ring-1 focus:ring-[#7c3aed]" placeholder="Search country or ISO3 code" />
+            <button type="button" id="hero-search-btn" class="bg-[#7c3aed] hover:bg-[#6d28d9] text-white px-5 py-3 rounded-2xl text-sm font-semibold">Search</button>
+          </div>
+          <div id="hero-search-results" class="text-sm text-white/70"></div>
+        </div>
+        <div class="mt-6">
+          <p class="text-[11px] uppercase tracking-[0.24em] text-white/50">Quick picks</p>
+          <div id="hero-quick-picks" class="mt-3 flex flex-wrap gap-2"></div>
+        </div>
       </div>
     `;
   }
@@ -116,8 +127,9 @@
     const ancillary = data.ancillary;
     container.innerHTML = `
       <fieldset>
-        <h6 class="text-xs tracking-[0.2em] uppercase text-white/60 block pb-3">Filter by pillar</h6>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2" id="pillar-radios"></div>
+        <div class="overflow-x-auto">
+          <div class="flex gap-2 min-w-max" id="pillar-radios"></div>
+        </div>
       </fieldset>
     `;
     const radios = document.getElementById('pillar-radios');
@@ -125,11 +137,11 @@
       const color = ancillary.pillarColorMap[pillar].base;
       const checked = pillar === selectedPillar;
       const label = document.createElement('label');
-      label.className = 'p-3 font-medium cursor-pointer flex items-center rounded-xl overflow-hidden transition-all relative text-sm group border ' + (checked ? 'border-[#7c3aed] bg-[#7c3aed]/15 text-white' : 'border-white/10 bg-white/5 text-white/70 hover:border-white/30');
+      label.className = 'px-4 py-2 font-medium cursor-pointer flex items-center rounded-full transition-all text-sm border ' + (checked ? 'border-[#7c3aed] bg-[#7c3aed]/15 text-[#7c3aed]' : 'border-gray-300 bg-white text-gray-800 hover:border-gray-400');
       label.innerHTML = `
         <div class="w-2.5 h-2.5 rounded-full mr-2 flex-shrink-0" style="background-color:${checked ? '#7c3aed' : color}"></div>
         <input type="radio" name="pillar-radio" value="${pillar}" class="sr-only" ${checked ? 'checked' : ''} />
-        <p class="${checked ? 'text-white font-semibold' : 'text-white/70'}" id="${pillar}">${pillar}</p>
+        <p class="${checked ? 'text-[#7c3aed] font-semibold' : 'text-gray-800'}" id="${pillar}">${pillar}</p>
       `;
       label.querySelector('input').addEventListener('change', function () { onChange(pillar); });
       radios.appendChild(label);
@@ -237,6 +249,7 @@
     if (!country) {
       container.classList.add('hidden');
       container.innerHTML = '';
+      container.removeAttribute('style');
       return;
     }
     container.classList.remove('hidden');
@@ -271,6 +284,60 @@
   function closeSearch() {
     document.getElementById('search-dialog')?.classList.add('hidden');
     document.getElementById('search-dialog-backdrop')?.classList.add('hidden');
+  }
+
+  function initHeroSearch(countries) {
+    const input = document.getElementById('hero-search-input');
+    const resultsEl = document.getElementById('hero-search-results');
+    const quickEl = document.getElementById('hero-quick-picks');
+    const btn = document.getElementById('hero-search-btn');
+    if (!input || !resultsEl || !quickEl) return;
+
+    const list = (countries || []).slice().sort(function (a, b) {
+      return a.name.localeCompare(b.name);
+    });
+    const quick = list.slice(0, 8);
+    quickEl.innerHTML = quick.map(function (c) {
+      return '<a href="country.html?code=' + c.alpha3 + '#' + c.alpha3 + '" class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/10 text-white/80 hover:text-white hover:bg-white/20">' + c.name + '</a>';
+    }).join('');
+
+    function renderResults(matches) {
+      if (!matches.length) {
+        resultsEl.innerHTML = '<p class="text-white/50">No matches yet. Try another name or ISO3 code.</p>';
+        return;
+      }
+      resultsEl.innerHTML = '<div class="grid gap-2">' + matches.slice(0, 6).map(function (c) {
+        return '<a class="px-4 py-2 rounded-xl border border-white/10 bg-white/5 text-white/80 hover:text-white hover:border-white/30" href="country.html?code=' + c.alpha3 + '#' + c.alpha3 + '">' + c.name + '</a>';
+      }).join('') + '</div>';
+    }
+
+    function findMatches(value) {
+      const q = (value || '').trim().toLowerCase();
+      if (!q) return [];
+      return list.filter(function (c) {
+        return c.name.toLowerCase().indexOf(q) !== -1 ||
+          (c.alpha3 || '').toLowerCase() === q ||
+          (c.alpha2 || '').toLowerCase() === q;
+      });
+    }
+
+    input.addEventListener('input', function () {
+      const matches = findMatches(input.value);
+      resultsEl.innerHTML = matches.length ? '' : '';
+      if (input.value.trim()) renderResults(matches);
+      else resultsEl.innerHTML = '';
+    });
+
+    if (btn) {
+      btn.addEventListener('click', function () {
+        const matches = findMatches(input.value);
+        if (matches.length === 1) {
+          window.location.href = 'country.html?code=' + matches[0].alpha3 + '#' + matches[0].alpha3;
+          return;
+        }
+        renderResults(matches);
+      });
+    }
   }
 
   function fillSearchResults(query) {
@@ -361,13 +428,13 @@
         if (!d || !d.unMember) return '';
         return '<div class="bg-white rounded-md shadow-lg px-4 py-1 uppercase text-xs tracking-widest font-medium text-black"><span>' + d.name + '</span></div>';
       })
-      .onPolygonClick(function (d) {
+      .onPolygonClick(function (d, event) {
         if (!d.unMember) return;
         if (d.alpha3 === activeCountryIdRef.current) {
           window.location.href = 'country.html?code=' + d.alpha3 + '#' + d.alpha3;
           return;
         }
-        onCountrySelect(d.alpha3);
+        onCountrySelect(d.alpha3, event);
       })
       .onGlobeReady(function () {
         try {
@@ -431,6 +498,7 @@
         let pillar = 'Overall';
         let activeCountry = null;
         const globeData = d.globeData || [];
+        initHeroSearch(globeData);
         var pillarRef = { current: pillar };
         var activeCountryIdRef = { current: null };
         var globeInstance = null;
@@ -465,11 +533,37 @@
           });
           return { geojson: gf, name: c.name, alpha2: c.alpha2, alpha3: c.alpha3, latitude: c.latitude, longitude: c.longitude, unMember: c.unMember !== false, scores: scores };
         });
-        globeInstance = initGlobe(globeData, geojson, data.ancillary, pillarRef, activeCountryIdRef, function (alpha3) {
+        function positionCountryCard(event) {
+          var container = document.getElementById('country-card-container');
+          if (!container) return;
+          if (!event || typeof event.clientX !== 'number' || typeof event.clientY !== 'number') {
+            container.style.position = '';
+            container.style.left = '';
+            container.style.top = '';
+            container.style.right = '';
+            container.style.bottom = '';
+            container.style.transform = '';
+            return;
+          }
+          var margin = 16;
+          var width = container.offsetWidth || 320;
+          var height = container.offsetHeight || 360;
+          var x = Math.min(window.innerWidth - width - margin, Math.max(margin, event.clientX - width / 2));
+          var y = Math.min(window.innerHeight - height - margin, Math.max(margin, event.clientY - height / 2));
+          container.style.position = 'fixed';
+          container.style.left = x + 'px';
+          container.style.top = y + 'px';
+          container.style.right = 'auto';
+          container.style.bottom = 'auto';
+          container.style.transform = 'none';
+        }
+
+        globeInstance = initGlobe(globeData, geojson, data.ancillary, pillarRef, activeCountryIdRef, function (alpha3, event) {
           activeCountry = globeData.find(function (c) { return c.alpha3 === alpha3; }) || null;
           var sel = document.getElementById('country-select');
           if (sel) sel.value = alpha3 || '';
           showCountryCard(activeCountry, pillar);
+          positionCountryCard(event);
           refreshGlobe();
         });
         if (!globeInstance) {
@@ -479,7 +573,7 @@
         const pillarFilterContainer = document.getElementById('pillar-filter');
         const selectEl = document.createElement('div');
         selectEl.className = 'mt-4';
-        selectEl.innerHTML = '<label class="block text-xs tracking-[0.2em] uppercase text-white/60 pb-2">Select a country</label><select id="country-select" class="w-full border border-white/10 rounded-xl px-3 py-2 bg-white/5 text-white/80 focus:border-[#7c3aed] focus:ring-1 focus:ring-[#7c3aed]"><option value="">— Choose —</option>' + globeData.map(function (c) { return '<option value="' + c.alpha3 + '">' + c.name + '</option>'; }).join('') + '</select>';
+        selectEl.innerHTML = '';
         function updatePillar(p) {
           pillar = p;
           pillarRef.current = pillar;
@@ -490,13 +584,6 @@
         }
         renderPillarFilter(pillar, updatePillar);
         pillarFilterContainer.appendChild(selectEl);
-        document.getElementById('country-select').addEventListener('change', function () {
-          const code = this.value;
-          activeCountry = code ? globeData.find(function (c) { return c.alpha3 === code; }) || null : null;
-          activeCountryIdRef.current = activeCountry ? activeCountry.alpha3 : null;
-          showCountryCard(activeCountry, pillar);
-          refreshGlobe();
-        });
         window.setActiveCountry = function (c) {
           activeCountry = c;
           try {
@@ -642,10 +729,10 @@
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function () {
-      if (document.getElementById('hero')) initIndexPage();
+      if (document.getElementById('hero') || document.getElementById('globe-viz')) initIndexPage();
     });
   } else {
-    if (document.getElementById('hero')) initIndexPage();
+    if (document.getElementById('hero') || document.getElementById('globe-viz')) initIndexPage();
   }
 
   window.openSearch = openSearch;
