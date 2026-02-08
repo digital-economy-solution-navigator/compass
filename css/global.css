@@ -16,34 +16,27 @@ p {
   min-height: calc(100vh - 100px);
 }
 
-/* Globe: square container centered in the column; explicit size so canvas and view are correct */
+/* Globe: responsive square, centered and contained */
 #globe-area {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 400px;
+  min-height: 360px;
+  overflow: hidden;
 }
 @media (min-width: 1024px) {
   #globe-area {
-    min-height: 540px;
+    min-height: 520px;
   }
 }
 #globe-viz {
   flex-shrink: 0;
-  width: 400px;
-  height: 400px;
-}
-@media (min-width: 640px) {
-  #globe-viz {
-    width: 480px;
-    height: 480px;
-  }
-}
-@media (min-width: 1024px) {
-  #globe-viz {
-    width: 520px;
-    height: 520px;
-  }
+  width: min(100%, 520px);
+  aspect-ratio: 1 / 1;
+  height: auto;
+  max-width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
 }
 #globe-viz canvas {
   display: block;

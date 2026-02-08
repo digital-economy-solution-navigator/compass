@@ -396,6 +396,21 @@
           }
         } catch (e) { console.warn('Globe ready setup:', e); }
       });
+    function applyGlobeSize() {
+      var w = globeEl.clientWidth;
+      var h = globeEl.clientHeight;
+      if (w && h) {
+        globe.width(w);
+        globe.height(h);
+      }
+    }
+    applyGlobeSize();
+    if (typeof ResizeObserver !== 'undefined') {
+      var ro = new ResizeObserver(function () { applyGlobeSize(); });
+      ro.observe(globeEl);
+    } else {
+      window.addEventListener('resize', applyGlobeSize);
+    }
     return globe;
   }
 
