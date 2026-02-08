@@ -506,7 +506,7 @@
           if (globeInstance && mergedForGlobe) {
             pillarRef.current = pillar;
             activeCountryIdRef.current = activeCountry ? activeCountry.alpha3 : null;
-            globeInstance.polygonsData(mergedForGlobe);
+            globeInstance.polygonsData(mergedForGlobe.slice());
             if (activeCountry && activeCountry.latitude != null) {
               if (globeInstance.controls) { var c = globeInstance.controls(); if (c) c.autoRotate = false; }
               globeInstance.pointOfView({ lat: activeCountry.latitude, lng: activeCountry.longitude, altitude: 1.5 }, 1200);
@@ -532,6 +532,9 @@
             if (scores[p] && scores[p].stage && scores[p].stage.number !== undefined && scores[p].score === undefined) scores[p].score = scores[p].stage.number;
           });
           return { geojson: gf, name: c.name, alpha2: c.alpha2, alpha3: c.alpha3, latitude: c.latitude, longitude: c.longitude, unMember: c.unMember !== false, scores: scores };
+        }).filter(function (d) {
+          var g = d.geojson && d.geojson.geometry;
+          return g && typeof g.type === 'string';
         });
         function positionCountryCard(event) {
           var container = document.getElementById('country-card-container');
@@ -580,7 +583,7 @@
           renderPillarFilter(pillar, updatePillar);
           pillarFilterContainer.appendChild(selectEl);
           if (activeCountry) showCountryCard(activeCountry, pillar);
-          if (globeInstance && mergedForGlobe) globeInstance.polygonsData(mergedForGlobe);
+          if (globeInstance && mergedForGlobe) globeInstance.polygonsData(mergedForGlobe.slice());
         }
         renderPillarFilter(pillar, updatePillar);
         pillarFilterContainer.appendChild(selectEl);
