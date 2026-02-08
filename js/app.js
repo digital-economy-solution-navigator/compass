@@ -1,7 +1,8 @@
 (function () {
   'use strict';
 
-  const ASSETS = 'assets';
+  const LOGO_HEADER = 'https://www.unido.org/themes/custom/unido_radix/logo.svg';
+  const LOGO_FOOTER = 'https://www.unido.org/sites/default/files/2022-12/unido-logo-white.png';
   let data = null;
 
   function getData() {
@@ -15,27 +16,27 @@
     header.innerHTML = `
       <div class="lg:hidden p-3 flex items-center justify-between h-[75px]">
         <div class="flex items-center">
-          <div><a href="index.html" class="block relative z-[100] h-[75px] w-[40px]"><img src="${ASSETS}/undp-logo.svg" alt="UNDP Logo" /></a></div>
-          <div class="pl-3 md:pl-6 w-4"><a href="index.html"><h1 class="text-base font-semibold lg:text-xl" style="color:#000">Digital Development Compass</h1></a></div>
+          <div><a href="index.html" class="block relative z-[100] h-[75px] w-[40px] object-contain"><img src="${LOGO_HEADER}" alt="UNIDO Logo" class="h-full w-auto object-contain" /></a></div>
+          <div class="pl-3 md:pl-6 w-4"><a href="index.html"><h1 class="text-base font-semibold lg:text-xl" style="color:#000">AI & Digital for Industry Navigator</h1></a></div>
         </div>
         <div class="flex items-start">
-          <button type="button" id="mobile-menu-btn" class="header-nav-bg-color font-semibold px-5 py-4 flex items-center" aria-label="Menu">
-            <img src="${ASSETS}/hamburger.svg" width="24" height="24" alt="" id="mobile-menu-icon" />
+          <button type="button" id="mobile-menu-btn" class="header-nav-bg-color font-semibold px-5 py-4 flex items-center text-xl" aria-label="Menu">
+            <span id="mobile-menu-icon">&#9776;</span>
           </button>
-          <button type="button" id="search-trigger-mobile" class="p-2" aria-label="Search"><img src="${ASSETS}/search.svg" width="24" height="24" alt="" /></button>
+          <button type="button" id="search-trigger-mobile" class="p-2 font-semibold" aria-label="Search">Search</button>
         </div>
       </div>
       <div class="hidden mx-auto px-6 lg:flex lg:items-center lg:justify-between lg:space-x-4">
         <div class="flex items-center">
-          <div class="h-[115px] flex-shrink-0"><a href="index.html" class="block relative z-[100] h-[122px] w-[60px]"><img src="${ASSETS}/undp-logo.svg" alt="UNDP Logo" /></a></div>
-          <div class="pl-6 w-4"><a href="index.html"><h1 class="text-base font-semibold lg:text-xl" style="color:#000">Digital Development Compass</h1></a></div>
+          <div class="h-[115px] flex-shrink-0"><a href="index.html" class="block relative z-[100] h-[122px] w-[60px] object-contain"><img src="${LOGO_HEADER}" alt="UNIDO Logo" class="h-full w-auto object-contain" /></a></div>
+          <div class="pl-6 w-4"><a href="index.html"><h1 class="text-base font-semibold lg:text-xl" style="color:#000">AI & Digital for Industry Navigator</h1></a></div>
         </div>
         <div class="flex items-center justify-end space-x-14">
           <a href="about.html" class="uppercase text-sm hover:text-brand-blue-dark font-semibold tracking-wider">About</a>
           <a href="data.html" class="uppercase text-sm hover:text-brand-blue-dark font-semibold tracking-wider">Data</a>
           <a href="methodology.html" class="uppercase text-sm hover:text-brand-blue-dark font-semibold tracking-wider">Methodology</a>
         </div>
-        <div class="flex items-center justify-end pr-16"><button type="button" id="search-trigger" class="p-2" aria-label="Search"><img src="${ASSETS}/search.svg" width="24" height="24" alt="" /></button></div>
+        <div class="flex items-center justify-end pr-16"><button type="button" id="search-trigger" class="p-2 font-semibold uppercase text-sm" aria-label="Search">Search</button></div>
       </div>
     `;
     const menuBtn = document.getElementById('mobile-menu-btn');
@@ -46,7 +47,7 @@
         const open = !menu.classList.contains('-translate-x-full');
         menu.classList.toggle('-translate-x-full', open);
         menu.classList.toggle('translate-x-0', !open);
-        if (menuIcon) menuIcon.src = open ? ASSETS + '/hamburger.svg' : ASSETS + '/times-blue.svg';
+        if (menuIcon) menuIcon.textContent = open ? '\u2630' : '\u00D7';
       });
     }
     document.getElementById('search-trigger')?.addEventListener('click', openSearch);
@@ -74,27 +75,27 @@
       <div class="max-w-screen-xl mx-auto px-4 lg:px-[140px] h-[440px] sm:h-[440px] md:h-[435px] lg:h-[333px] pt-12 md:pt-[52px] lg:pt-[52px]">
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between pb-8 md:pb-12 lg:pb-12">
           <div class="flex flex-row items-center space-x-0 mb-0 md:mb-4 lg:mb-0">
-            <div class="w-[60px] flex-shrink-0"><img src="${ASSETS}/undp-white-logo.svg" width="60" height="123" alt="UNDP Logo" /></div>
+            <div class="w-[60px] flex-shrink-0"><img src="${LOGO_FOOTER}" width="60" height="123" alt="UNIDO Logo" class="object-contain" /></div>
             <div class="text-xl md:text-[25px] md:leading-[1.15] pl-4 font-normal md:text-left lg:text-left">
-              <span>United Nations</span><br /><span>Development Programme</span>
+              <span>United Nations</span><br /><span>Industrial Development Organization</span>
             </div>
           </div>
           <div class="hidden md:block lg:block">
             <div class="flex justify-center space-x-8 mb-6">
-              <a href="https://www.facebook.com/UNDP" target="_blank" rel="noopener noreferrer">Facebook</a>
-              <a href="https://www.linkedin.com/company/undp" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-              <a href="https://www.instagram.com/UNDP" target="_blank" rel="noopener noreferrer"><img height="20" width="20" src="${ASSETS}/instagram-brands-solid.svg" alt="Instagram" /></a>
-              <a href="https://twitter.com/UNDP" target="_blank" rel="noopener noreferrer"><img height="20" width="20" src="${ASSETS}/x-twitter-brands-solid.svg" alt="X" /></a>
-              <a href="https://www.youtube.com/user/undp" target="_blank" rel="noopener noreferrer">YouTube</a>
+              <a href="https://www.facebook.com/UNIDO" target="_blank" rel="noopener noreferrer">Facebook</a>
+              <a href="https://www.linkedin.com/company/unido" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <a href="https://www.instagram.com/unido" target="_blank" rel="noopener noreferrer">Instagram</a>
+              <a href="https://twitter.com/UNIDO" target="_blank" rel="noopener noreferrer">X</a>
+              <a href="https://www.youtube.com/unido" target="_blank" rel="noopener noreferrer">YouTube</a>
             </div>
           </div>
         </div>
         <div class="border-t border-white w-full"></div>
         <div class="flex flex-col lg:flex-row justify-between items-start w-full pt-[34px] text-center lg:text-left pb-5 md:mb-6 pl-0 sm:pl-4 md:pl-0 lg:pl-0">
-          <p class="text-sm md:text-base font-normal lg:order-1 mb-2 lg:mb-0">&copy; ${year} United Nations Development Programme</p>
-          <a href="https://www.undp.org/copyright-terms-use" class="text-base font-normal order-1 lg:order-2 mb-2 lg:mb-0 opacity-100 hover:opacity-70">Terms Of Use</a>
+          <p class="text-sm md:text-base font-normal lg:order-1 mb-2 lg:mb-0">&copy; ${year} United Nations Industrial Development Organization</p>
+          <a href="https://www.unido.org" class="text-base font-normal order-1 lg:order-2 mb-2 lg:mb-0 opacity-100 hover:opacity-70">Terms Of Use</a>
         </div>
-        <div class="md:hidden lg:hidden"><div class="flex space-x-8 pl-12"><a href="https://www.facebook.com/UNDP" target="_blank" rel="noopener noreferrer">Facebook</a><a href="https://www.linkedin.com/company/undp" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="https://www.instagram.com/UNDP" target="_blank" rel="noopener noreferrer"><img height="20" width="20" src="${ASSETS}/instagram-brands-solid.svg" alt="Instagram" /></a><a href="https://twitter.com/UNDP" target="_blank" rel="noopener noreferrer"><img height="20" width="20" src="${ASSETS}/x-twitter-brands-solid.svg" alt="X" /></a><a href="https://www.youtube.com/user/undp" target="_blank" rel="noopener noreferrer">YouTube</a></div></div>
+        <div class="md:hidden lg:hidden"><div class="flex space-x-8 pl-12"><a href="https://www.facebook.com/UNIDO" target="_blank" rel="noopener noreferrer">Facebook</a><a href="https://www.linkedin.com/company/unido" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="https://www.instagram.com/unido" target="_blank" rel="noopener noreferrer">Instagram</a><a href="https://twitter.com/UNIDO" target="_blank" rel="noopener noreferrer">X</a><a href="https://www.youtube.com/unido" target="_blank" rel="noopener noreferrer">YouTube</a></div></div>
       </div>
     `;
   }
@@ -105,7 +106,7 @@
     hero.innerHTML = `
       <div>
         <h1 class="text-[40px] sm:text-[40px] md:text-[35px] lg:text-[35px] leading-[1.1] font-bold">Is your nation ready to navigate digital transformation?</h1>
-        <p class="text-base md:text-[20px] lg:text-[20px] leading-7 mt-4 text-left" style="color:#333333">Explore your nation's digital progress using the world's largest database of digital development data. Leveraging the pillars of UNDP's Digital Transformation Framework, the Digital Development Compass lets you discover and compare progress across a range of key issues.</p>
+        <p class="text-[16px] sm:text-[16px] md:text-[20px] lg:text-[20px] leading-7 mt-4 text-left" style="color:#333333">Explore your nation's digital progress using the world's largest database of digital development data. The AI & Digital for Industry Navigator lets you discover and compare progress across a range of key issues.</p>
       </div>
     `;
   }
@@ -187,7 +188,7 @@
         </svg>
         <div class="text-center relative">
           <div class="pt-3"><span class="text-xs text-white font-medium uppercase tracking-widest py-0.5 px-3 rounded-full" style="background:${primaryColor}">${pillar}</span></div>
-          <div class="mt-4"><p class="text-sm font-medium uppercase tracking-widest" style="color:${primaryColor}">Stage ${stageNum}: ${stageName}</p><p class="font-medium text-lg">Overall</p><p class="text-sm text-gray-600">${overallStage?.description || ''}</p></div>
+          <div class="mt-4"><p class="text-sm font-medium uppercase tracking-widest" style="color:${primaryColor}">Stage ${stageNum}: ${stageName}</p><p class="font-medium text-lg">${pillar === 'Overall' ? 'Overall' : pillar}</p><p class="text-sm text-gray-600">${overallStage?.description || ''}</p></div>
         </div>
       </div>
     `;
@@ -316,6 +317,9 @@
         }
       });
       return { geojson: geojsonFeature, name: c.name, alpha2: c.alpha2, alpha3: c.alpha3, latitude: c.latitude, longitude: c.longitude, unMember: c.unMember !== false, scores: scores };
+    }).filter(function (d) {
+      var g = d.geojson && d.geojson.geometry;
+      return g && typeof g.type === 'string';
     });
     const pillarScales = makePillarScales(ancillary);
     const globeEl = document.getElementById('globe-viz');
@@ -329,7 +333,10 @@
       .showGlobe(true)
       .globeMaterial(new THREE.MeshPhysicalMaterial({ color: '#fff' }))
       .polygonsData(merged)
-      .polygonGeoJsonGeometry(function (d) { return d.geojson && d.geojson.geometry; })
+      .polygonGeoJsonGeometry(function (d) {
+        var g = d && d.geojson && d.geojson.geometry;
+        return (g && typeof g.type === 'string') ? g : undefined;
+      })
       .polygonCapMaterial(function (d) {
         var p = pillarRef.current;
         var score = d.scores && d.scores[p] && d.scores[p].score;
@@ -339,7 +346,8 @@
           color: color,
           roughness: 0.5,
           reflectivity: 1.2,
-          opacity: activeCountryIdRef.current ? (activeCountryIdRef.current === d.alpha3 ? 1 : 0.9) : 1
+          opacity: activeCountryIdRef.current ? (activeCountryIdRef.current === d.alpha3 ? 1 : 0.9) : 1,
+          side: THREE.DoubleSide
         });
       })
       .polygonAltitude(function (d) { return activeCountryIdRef.current === d.alpha3 ? 0.035 : 0.01; })
@@ -388,10 +396,14 @@
   }
 
   function initIndexPage() {
-    Promise.all([fetch('data/demo.json').then(function (r) { return r.json(); }), fetch('data/country-geojson.json').then(function (r) { return r.json(); })])
+    Promise.all([
+        fetch('data/demo.json').then(function (r) { if (!r.ok) throw new Error('demo.json failed'); return r.json(); }),
+        fetch('data/country-geojson.json').then(function (r) { if (!r.ok) throw new Error('country-geojson.json failed'); return r.json(); })
+      ])
       .then(function (results) {
         var d = results[0];
-        var geojson = results[1];
+        var geojson = results[1] || { type: 'FeatureCollection', features: [] };
+        if (!geojson.features || !geojson.features.length) console.warn('country-geojson.json has no features');
         data = d;
         const countries = d.countries || [];
         renderHeader(countries);
@@ -441,6 +453,10 @@
           showCountryCard(activeCountry, pillar);
           refreshGlobe();
         });
+        if (!globeInstance) {
+          var globeEl = document.getElementById('globe-viz');
+          if (globeEl) globeEl.innerHTML = '<div class="flex items-center justify-center h-full text-gray-500 p-4">No country data for globe. Ensure data/country-geojson.json is loaded and matches demo.json.</div>';
+        }
         const pillarFilterContainer = document.getElementById('pillar-filter');
         const selectEl = document.createElement('div');
         selectEl.className = 'mt-4';

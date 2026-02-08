@@ -1,12 +1,12 @@
 // Quick local server to avoid CORS when opening the demo.
 // Run: node serve.js
-// Then open http://localhost:3456
+// Then open http://localhost:8080 (or set PORT env var)
 
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const PORT = 3456;
+const PORT = process.env.PORT || 8080;
 const MIMES = {
   '.html': 'text/html',
   '.css': 'text/css',
