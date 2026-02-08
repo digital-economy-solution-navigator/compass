@@ -8,7 +8,7 @@
   <link rel="shortcut icon" href="https://www.unido.org/themes/custom/unido_radix/favicon.ico" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -16,7 +16,7 @@
         screens: { sm: '300px', md: '768px', lg: '1024px' },
         extend: {
           colors: {
-            accent: { DEFAULT: '#0d9488', hover: '#0f766e' }
+            accent: { DEFAULT: '#7c3aed', hover: '#6d28d9' }
           }
         }
       }
@@ -28,30 +28,75 @@
   <div id="app" class="flex flex-col h-full">
     <!-- Header and main content injected by JS or static below -->
     <header class="flex-shrink-0 border-b custom-nav-shadow header-nav-bg-color" id="header"></header>
-    <main class="flex-shrink-0 main">
-      <section class="h-full flex flex-col">
-        <div class="w-full lg:divide-x grid lg:grid-cols-12 h-full">
-          <div class="items-center justify-center px-6 py-6 lg:px-12 xl:px-16 col-span-full lg:col-span-5">
-            <div class="max-w-2xl flex flex-col justify-center h-full md:mx-auto pt-14">
-              <div id="hero"></div>
-              <div class="mt-8 mb-4" id="pillar-filter"></div>
+    <main class="flex-1 bg-[#0b0f14]">
+      <section class="relative overflow-hidden">
+        <div class="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-[#7c3aed]/30 blur-[90px]"></div>
+        <div class="absolute -bottom-24 right-0 h-80 w-80 rounded-full bg-[#22d3ee]/20 blur-[110px]"></div>
+        <div class="max-w-screen-xl mx-auto px-6 lg:px-12 py-16 lg:py-24 grid lg:grid-cols-12 gap-10 items-center">
+          <div class="lg:col-span-5 text-white">
+            <div class="inline-flex items-center gap-2 text-[11px] tracking-[0.24em] uppercase text-white/60">
+              <span class="h-1.5 w-1.5 rounded-full bg-[#7c3aed]"></span>
+              AI & Digital for Industry
+            </div>
+            <div id="hero" class="mt-5"></div>
+            <div class="mt-8" id="pillar-filter"></div>
+            <div class="mt-6 flex flex-wrap gap-3">
+              <a href="#globe-area" class="bg-[#7c3aed] hover:bg-[#6d28d9] text-white px-5 py-3 rounded-full text-sm font-semibold">Explore the globe</a>
+              <a href="methodology.html" class="border border-white/20 text-white/80 hover:text-white px-5 py-3 rounded-full text-sm font-semibold">Methodology</a>
             </div>
           </div>
-          <div class="col-span-full lg:col-span-7 pb-20 lg:pb-0 overflow-hidden relative bg-slate-50" id="globe-area">
-            <div id="globe-viz"></div>
-            <div id="country-card-container" class="absolute lg:bottom-4 lg:right-4 lg:max-w-[340px] hidden z-20"></div>
+          <div class="lg:col-span-7">
+            <div class="rounded-[28px] border border-white/10 bg-white/5 backdrop-blur-xl p-6 shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
+              <div id="globe-area" class="relative">
+                <div id="globe-viz" class="mx-auto"></div>
+                <div id="country-card-container" class="absolute right-4 top-4 lg:max-w-[340px] hidden z-20"></div>
+              </div>
+              <div class="mt-6 grid grid-cols-3 gap-4 text-white/70 text-[10px] uppercase tracking-[0.2em]">
+                <div class="rounded-xl border border-white/10 px-4 py-3">
+                  <p class="text-white text-lg font-semibold">192</p>
+                  <p>Countries</p>
+                </div>
+                <div class="rounded-xl border border-white/10 px-4 py-3">
+                  <p class="text-white text-lg font-semibold">7</p>
+                  <p>Pillars</p>
+                </div>
+                <div class="rounded-xl border border-white/10 px-4 py-3">
+                  <p class="text-white text-lg font-semibold">5</p>
+                  <p>Stages</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="bg-white text-gray-900">
+        <div class="max-w-screen-xl mx-auto px-6 lg:px-12 py-16 lg:py-20 grid lg:grid-cols-3 gap-6">
+          <div class="rounded-2xl border border-gray-200 p-6 shadow-sm">
+            <p class="text-xs tracking-[0.2em] uppercase text-gray-400">Signal</p>
+            <h3 class="text-xl font-semibold mt-2">See the global picture fast</h3>
+            <p class="text-gray-600 mt-3">Scan readiness across pillars and compare momentum by region without leaving the map.</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200 p-6 shadow-sm">
+            <p class="text-xs tracking-[0.2em] uppercase text-gray-400">Focus</p>
+            <h3 class="text-xl font-semibold mt-2">Zoom into country detail</h3>
+            <p class="text-gray-600 mt-3">Open a country card for a quick snapshot, then dive into the full score breakdown.</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200 p-6 shadow-sm">
+            <p class="text-xs tracking-[0.2em] uppercase text-gray-400">Action</p>
+            <h3 class="text-xl font-semibold mt-2">Compare, share, decide</h3>
+            <p class="text-gray-600 mt-3">Use the data to align programs, target investment, and track impact across time.</p>
           </div>
         </div>
       </section>
     </main>
-    <footer class="footer-background-color text-slate-700" id="footer"></footer>
+    <footer class="footer-background-color text-white" id="footer"></footer>
   </div>
   <div id="search-dialog-backdrop" class="fixed inset-0 bg-black/30 z-40 hidden"></div>
   <div id="search-dialog" class="fixed inset-0 z-50 flex items-start justify-center pt-20 hidden">
-    <div class="bg-white rounded-xl border border-gray-200 shadow-lg max-w-md w-full mx-4 max-h-[80vh] overflow-hidden">
-      <div class="border-b border-gray-100 bg-gray-50/80 p-4">
-        <label class="text-sm font-medium text-gray-600 block mb-2">Search countries</label>
-        <input type="text" id="search-input" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-700 focus:border-accent focus:ring-1 focus:ring-accent" placeholder="Enter country name" />
+    <div class="bg-[#0f172a] text-white rounded-2xl border border-white/10 shadow-2xl max-w-md w-full mx-4 max-h-[80vh] overflow-hidden">
+      <div class="border-b border-white/10 bg-white/5 p-4">
+        <label class="text-xs uppercase tracking-[0.2em] text-white/60 block mb-2">Search countries</label>
+        <input type="text" id="search-input" class="w-full border border-white/10 rounded-xl px-3 py-2 text-sm text-white/80 bg-black/30 focus:border-[#7c3aed] focus:ring-1 focus:ring-[#7c3aed]" placeholder="Enter country name" />
       </div>
       <div id="search-results" class="overflow-y-auto max-h-64"></div>
     </div>

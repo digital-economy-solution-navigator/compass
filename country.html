@@ -6,7 +6,7 @@
   <meta name="description" content="AI & Digital for Industry Navigator - UNIDO" />
   <title>AI & Digital for Industry Navigator | Country</title>
   <link rel="shortcut icon" href="https://www.unido.org/themes/custom/unido_radix/favicon.ico" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /><link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -14,7 +14,7 @@
         screens: { sm: '300px', md: '768px', lg: '1024px' },
         extend: {
           colors: {
-            accent: { DEFAULT: '#0d9488', hover: '#0f766e' }
+            accent: { DEFAULT: '#7c3aed', hover: '#6d28d9' }
           }
         }
       }
@@ -43,14 +43,14 @@
       </section>
       <section id="pillars-section" class="container px-4 mx-auto py-8"></section>
     </main>
-    <footer class="footer-background-color text-slate-700" id="footer"></footer>
+    <footer class="footer-background-color text-white" id="footer"></footer>
   </div>
   <div id="search-dialog-backdrop" class="fixed inset-0 bg-black/30 z-40 hidden"></div>
   <div id="search-dialog" class="fixed inset-0 z-50 flex items-start justify-center pt-20 hidden">
-    <div class="bg-white rounded-xl border border-gray-200 shadow-lg max-w-md w-full mx-4 max-h-[80vh] overflow-hidden">
-      <div class="border-b border-gray-100 bg-gray-50/80 p-4">
-        <label class="text-sm font-medium text-gray-600 block mb-2">Search countries</label>
-        <input type="text" id="search-input" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-700 focus:border-accent focus:ring-1 focus:ring-accent" placeholder="Enter country name" />
+    <div class="bg-[#0f172a] text-white rounded-2xl border border-white/10 shadow-2xl max-w-md w-full mx-4 max-h-[80vh] overflow-hidden">
+      <div class="border-b border-white/10 bg-white/5 p-4">
+        <label class="text-xs uppercase tracking-[0.2em] text-white/60 block mb-2">Search countries</label>
+        <input type="text" id="search-input" class="w-full border border-white/10 rounded-xl px-3 py-2 text-sm text-white/80 bg-black/30 focus:border-[#7c3aed] focus:ring-1 focus:ring-[#7c3aed]" placeholder="Enter country name" />
       </div>
       <div id="search-results" class="overflow-y-auto max-h-64"></div>
     </div>

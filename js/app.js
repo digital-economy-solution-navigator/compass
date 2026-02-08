@@ -14,29 +14,32 @@
     if (!header) return;
     const mobileMenuOpen = false;
     header.innerHTML = `
-      <div class="lg:hidden p-3 flex items-center justify-between h-[75px]">
+      <div class="lg:hidden p-4 flex items-center justify-between h-[72px]">
         <div class="flex items-center">
-          <div><a href="index.html" class="block relative z-[100] h-[75px] w-[40px] object-contain"><img src="${LOGO_HEADER}" alt="UNIDO Logo" class="h-full w-auto object-contain" /></a></div>
-          <div class="pl-3 md:pl-6 w-4"><a href="index.html"><h1 class="text-base font-semibold lg:text-xl text-gray-900">AI & Digital for Industry Navigator</h1></a></div>
+          <div><a href="index.html" class="block relative z-[100] h-[56px] w-[40px] object-contain"><img src="${LOGO_HEADER}" alt="UNIDO Logo" class="h-full w-auto object-contain" /></a></div>
+          <div class="pl-3 w-4"><a href="index.html"><h1 class="text-base font-semibold text-white">AI & Digital for Industry Navigator</h1></a></div>
         </div>
-        <div class="flex items-start">
-          <button type="button" id="mobile-menu-btn" class="header-nav-bg-color font-semibold px-5 py-4 flex items-center text-xl" aria-label="Menu">
+        <div class="flex items-start gap-2">
+          <button type="button" id="search-trigger-mobile" class="px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/70" aria-label="Search">Search</button>
+          <button type="button" id="mobile-menu-btn" class="border border-white/10 rounded-full px-3 py-2 text-white text-lg" aria-label="Menu">
             <span id="mobile-menu-icon">&#9776;</span>
           </button>
-          <button type="button" id="search-trigger-mobile" class="p-2 font-semibold" aria-label="Search">Search</button>
         </div>
       </div>
-      <div class="hidden mx-auto px-6 lg:flex lg:items-center lg:justify-between lg:space-x-4">
+      <div class="hidden mx-auto px-6 lg:flex lg:items-center lg:justify-between lg:space-x-4 py-5">
         <div class="flex items-center">
-          <div class="h-[115px] flex-shrink-0"><a href="index.html" class="block relative z-[100] h-[122px] w-[60px] object-contain"><img src="${LOGO_HEADER}" alt="UNIDO Logo" class="h-full w-auto object-contain" /></a></div>
-          <div class="pl-6 w-4"><a href="index.html"><h1 class="text-base font-semibold lg:text-xl text-gray-900">AI & Digital for Industry Navigator</h1></a></div>
+          <div class="h-[80px] flex-shrink-0"><a href="index.html" class="block relative z-[100] h-[80px] w-[50px] object-contain"><img src="${LOGO_HEADER}" alt="UNIDO Logo" class="h-full w-auto object-contain" /></a></div>
+          <div class="pl-4 w-4"><a href="index.html"><h1 class="text-base font-semibold text-white">AI & Digital for Industry Navigator</h1></a></div>
         </div>
-        <div class="flex items-center justify-end space-x-14">
-          <a href="about.html" class="text-sm text-gray-600 hover:text-accent font-medium">About</a>
-          <a href="data.html" class="text-sm text-gray-600 hover:text-accent font-medium">Data</a>
-          <a href="methodology.html" class="text-sm text-gray-600 hover:text-accent font-medium">Methodology</a>
+        <div class="flex items-center justify-end space-x-10">
+          <a href="about.html" class="text-sm text-white/70 hover:text-white font-medium">About</a>
+          <a href="data.html" class="text-sm text-white/70 hover:text-white font-medium">Data</a>
+          <a href="methodology.html" class="text-sm text-white/70 hover:text-white font-medium">Methodology</a>
         </div>
-        <div class="flex items-center justify-end pr-16"><button type="button" id="search-trigger" class="p-2 font-medium text-sm text-gray-600 hover:text-accent" aria-label="Search">Search</button></div>
+        <div class="flex items-center justify-end gap-3">
+          <button type="button" id="search-trigger" class="px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/70 hover:text-white" aria-label="Search">Search</button>
+          <a href="#globe-area" class="bg-[#7c3aed] hover:bg-[#6d28d9] text-white px-4 py-2 rounded-full text-sm font-semibold">Explore</a>
+        </div>
       </div>
     `;
     const menuBtn = document.getElementById('mobile-menu-btn');
@@ -59,10 +62,10 @@
     const el = document.getElementById('mobile-menu');
     if (!el) return;
     el.innerHTML = `
-      <nav class="flex flex-col w-full justify-center space-y-9 pt-[90px] px-6">
-        <a href="about.html" class="text-base w-full font-medium text-gray-700 hover:text-accent">About</a>
-        <a href="data.html" class="text-base w-full font-medium text-gray-700 hover:text-accent">Data</a>
-        <a href="methodology.html" class="text-base w-full font-medium text-gray-700 hover:text-accent">Methodology</a>
+      <nav class="flex flex-col w-full justify-center space-y-7 pt-[90px] px-6 text-white">
+        <a href="about.html" class="text-base w-full font-medium text-white/80 hover:text-white">About</a>
+        <a href="data.html" class="text-base w-full font-medium text-white/80 hover:text-white">Data</a>
+        <a href="methodology.html" class="text-base w-full font-medium text-white/80 hover:text-white">Methodology</a>
       </nav>
     `;
   }
@@ -72,25 +75,25 @@
     if (!footer) return;
     const year = new Date().getFullYear();
     footer.innerHTML = `
-      <div class="max-w-screen-xl mx-auto px-4 lg:px-16 py-8">
+      <div class="max-w-screen-xl mx-auto px-6 lg:px-12 py-10 text-white">
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <div class="flex flex-row items-center space-x-0">
-            <div class="w-[48px] flex-shrink-0"><img src="${LOGO_HEADER}" width="48" height="60" alt="UNIDO Logo" class="object-contain" /></div>
-            <div class="text-base pl-3 font-normal text-slate-700">
+            <div class="w-[48px] flex-shrink-0"><img src="${LOGO_FOOTER}" width="48" height="60" alt="UNIDO Logo" class="object-contain" /></div>
+            <div class="text-sm pl-3 font-normal text-white/70">
               <span>United Nations Industrial Development Organization</span>
             </div>
           </div>
-          <div class="flex flex-wrap justify-center lg:justify-end gap-6">
-            <a href="https://www.facebook.com/UNIDO" target="_blank" rel="noopener noreferrer" class="text-sm text-slate-600 hover:text-accent">Facebook</a>
-            <a href="https://www.linkedin.com/company/unido" target="_blank" rel="noopener noreferrer" class="text-sm text-slate-600 hover:text-accent">LinkedIn</a>
-            <a href="https://www.instagram.com/unido" target="_blank" rel="noopener noreferrer" class="text-sm text-slate-600 hover:text-accent">Instagram</a>
-            <a href="https://twitter.com/UNIDO" target="_blank" rel="noopener noreferrer" class="text-sm text-slate-600 hover:text-accent">X</a>
-            <a href="https://www.youtube.com/unido" target="_blank" rel="noopener noreferrer" class="text-sm text-slate-600 hover:text-accent">YouTube</a>
+          <div class="flex flex-wrap justify-center lg:justify-end gap-6 text-sm text-white/60">
+            <a href="https://www.facebook.com/UNIDO" target="_blank" rel="noopener noreferrer" class="hover:text-white">Facebook</a>
+            <a href="https://www.linkedin.com/company/unido" target="_blank" rel="noopener noreferrer" class="hover:text-white">LinkedIn</a>
+            <a href="https://www.instagram.com/unido" target="_blank" rel="noopener noreferrer" class="hover:text-white">Instagram</a>
+            <a href="https://twitter.com/UNIDO" target="_blank" rel="noopener noreferrer" class="hover:text-white">X</a>
+            <a href="https://www.youtube.com/unido" target="_blank" rel="noopener noreferrer" class="hover:text-white">YouTube</a>
           </div>
         </div>
-        <div class="border-t border-slate-200 w-full mt-6 pt-6 flex flex-col sm:flex-row justify-between items-center gap-2 text-sm text-slate-600">
-          <p>&copy; ${year} United Nations Industrial Development Organization</p>
-          <a href="https://www.unido.org" class="hover:text-accent">Terms of use</a>
+        <div class="border-t border-white/10 w-full mt-6 pt-6 flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-white/50 uppercase tracking-[0.2em]">
+          <p>&copy; ${year} UNIDO</p>
+          <a href="https://www.unido.org" class="hover:text-white">Terms of use</a>
         </div>
       </div>
     `;
@@ -101,8 +104,8 @@
     if (!hero) return;
     hero.innerHTML = `
       <div>
-        <h1 class="text-[40px] sm:text-[40px] md:text-[35px] lg:text-[35px] leading-[1.1] font-bold text-gray-900">Is your nation ready to navigate digital transformation?</h1>
-        <p class="text-[16px] sm:text-[16px] md:text-[20px] lg:text-[20px] leading-7 mt-4 text-left text-gray-600">Explore your nation's digital progress using the world's largest database of digital development data. The AI & Digital for Industry Navigator lets you discover and compare progress across a range of key issues.</p>
+        <h1 class="text-[44px] sm:text-[46px] md:text-[42px] lg:text-[44px] leading-[1.05] font-semibold text-white">Turn digital readiness into a clear national playbook.</h1>
+        <p class="text-[16px] sm:text-[16px] md:text-[18px] lg:text-[18px] leading-7 mt-5 text-left text-white/70">The AI & Digital for Industry Navigator helps you scan global readiness, surface gaps, and compare progress across pillars that matter for industrial transformation.</p>
       </div>
     `;
   }
@@ -113,7 +116,7 @@
     const ancillary = data.ancillary;
     container.innerHTML = `
       <fieldset>
-        <h6 class="text-[16px] leading-[18px] font-semibold text-gray-700 block pb-3">Filter by pillar</h6>
+        <h6 class="text-xs tracking-[0.2em] uppercase text-white/60 block pb-3">Filter by pillar</h6>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2" id="pillar-radios"></div>
       </fieldset>
     `;
@@ -122,12 +125,11 @@
       const color = ancillary.pillarColorMap[pillar].base;
       const checked = pillar === selectedPillar;
       const label = document.createElement('label');
-      label.className = 'p-3 font-medium cursor-pointer flex items-center rounded-lg overflow-hidden transition-all relative text-sm group border ' + (checked ? 'border-accent bg-accent/5' : 'border-gray-200 bg-gray-50 hover:border-gray-300');
-      label.style.borderColor = checked ? '' : '';
+      label.className = 'p-3 font-medium cursor-pointer flex items-center rounded-xl overflow-hidden transition-all relative text-sm group border ' + (checked ? 'border-[#7c3aed] bg-[#7c3aed]/15 text-white' : 'border-white/10 bg-white/5 text-white/70 hover:border-white/30');
       label.innerHTML = `
-        <div class="w-2.5 h-2.5 rounded-full mr-2 flex-shrink-0" style="background-color:${checked ? '#0d9488' : color}"></div>
+        <div class="w-2.5 h-2.5 rounded-full mr-2 flex-shrink-0" style="background-color:${checked ? '#7c3aed' : color}"></div>
         <input type="radio" name="pillar-radio" value="${pillar}" class="sr-only" ${checked ? 'checked' : ''} />
-        <p class="${checked ? 'text-accent font-semibold' : 'text-gray-700'}" id="${pillar}">${pillar}</p>
+        <p class="${checked ? 'text-white font-semibold' : 'text-white/70'}" id="${pillar}">${pillar}</p>
       `;
       label.querySelector('input').addEventListener('change', function () { onChange(pillar); });
       radios.appendChild(label);
@@ -193,14 +195,14 @@
     if (!data) return '';
     const ancillary = data.ancillary;
     const pillars = ancillary.pillarNames;
-    let html = '<div class="flex h-6 border-t px-1">';
+    let html = '<div class="flex h-6 border-t border-white/10 px-1">';
     pillars.forEach(function (pillar) {
       const info = scores && scores[pillar];
       const stage = info?.stage;
       const percent = (stage && stage.number) ? stage.number * 20 : 0;
       const color = ancillary.pillarColorMap[pillar].base;
       const active = pillar === activePillar;
-      html += `<button type="button" class="relative flex-1 h-full appearance-none focus:outline-none transition-opacity border border-b-0 ${active ? 'bg-gray-100 border-gray-100' : 'border-white'}" title="${pillar}: ${stage ? stage.name : 'No Data'}" data-pillar="${pillar}"><div class="absolute left-0 bottom-0 right-0" style="height:${percent}%;background:${color}"></div></button>`;
+      html += `<button type="button" class="relative flex-1 h-full appearance-none focus:outline-none transition-opacity border border-b-0 ${active ? 'bg-white/10 border-white/20' : 'border-white/10'}" title="${pillar}: ${stage ? stage.name : 'No Data'}" data-pillar="${pillar}"><div class="absolute left-0 bottom-0 right-0" style="height:${percent}%;background:${color}"></div></button>`;
     });
     html += '</div>';
     return html;
@@ -213,9 +215,9 @@
     const flagUrl = 'https://flagcdn.com/w80/' + (country.alpha2 || '').toLowerCase() + '.png';
     const readinessHtml = renderReadinessScale(scores, pillar, function () {});
     return `
-      <div class="border border-gray-200 shadow-sm pb-0 w-full flex-1 rounded-xl flex flex-col items-center bg-white overflow-hidden">
+      <div class="country-card-dark border border-white/10 shadow-xl pb-0 w-full flex-1 rounded-2xl flex flex-col items-center bg-black/40 backdrop-blur-xl overflow-hidden text-white">
         <div class="p-4 flex flex-col items-center">
-          <a href="country.html?code=${country.alpha3}#${country.alpha3}" class="text-gray-900 hover:text-accent">
+          <a href="country.html?code=${country.alpha3}#${country.alpha3}" class="text-white hover:text-[#c4b5fd]">
             <div class="flex flex-col items-center group cursor-pointer">
               <div class="flex-shrink-0"><img src="${flagUrl}" alt="" width="48" height="36" style="object-fit:cover" /></div>
               <div class="flex-1 ml-2"><h3 class="text-xl"><span class="group-hover:underline">${country.name}</span></h3></div>
@@ -223,7 +225,7 @@
           </a>
           <div class="py-4 flex items-center justify-center text-center w-full" id="country-card-gauge"></div>
         </div>
-        ${showFooterLink ? `<div class="mb-4"><a href="country.html?code=${country.alpha3}#${country.alpha3}" class="bg-accent hover:bg-accent-hover text-base font-semibold px-6 py-3 text-white rounded-lg inline-flex items-center transition-colors">View more</a></div>` : ''}
+        ${showFooterLink ? `<div class="mb-4"><a href="country.html?code=${country.alpha3}#${country.alpha3}" class="bg-[#7c3aed] hover:bg-[#6d28d9] text-sm font-semibold px-5 py-3 text-white rounded-full inline-flex items-center transition-colors">View more</a></div>` : ''}
         <div class="w-full flex-1 flex flex-col justify-end">${readinessHtml}</div>
       </div>
     `;
@@ -240,7 +242,7 @@
     container.classList.remove('hidden');
     container.innerHTML = `
       <div class="flex justify-end mb-2">
-        <button type="button" id="close-country-card" class="text-gray-600 hover:text-accent flex items-center p-2 text-sm font-medium" aria-label="Close">Close</button>
+        <button type="button" id="close-country-card" class="text-white/60 hover:text-white flex items-center p-2 text-xs uppercase tracking-[0.2em]" aria-label="Close">Close</button>
       </div>
       ${renderCountryCard(country, pillar, true)}
     `;
@@ -277,8 +279,8 @@
     const q = (query || '').toLowerCase().trim();
     const list = q ? data.countries.filter(function (c) { return c.name.toLowerCase().indexOf(q) !== -1; }) : data.countries.slice(0, 20);
     resultsEl.innerHTML = list.map(function (c) {
-      return '<a href="country.html?code=' + c.alpha3 + '#' + c.alpha3 + '" class="block px-4 py-3 border-b border-gray-100 text-gray-700 hover:bg-gray-50 hover:text-accent">' + c.name + '</a>';
-    }).join('') || '<p class="p-4 text-gray-500">No countries found</p>';
+      return '<a href="country.html?code=' + c.alpha3 + '#' + c.alpha3 + '" class="block px-4 py-3 border-b border-white/10 text-white/80 hover:bg-white/5 hover:text-white">' + c.name + '</a>';
+    }).join('') || '<p class="p-4 text-white/60">No countries found</p>';
   }
 
   function toHex(s) {
@@ -330,7 +332,7 @@
       .atmosphereColor('#DCE9FE')
       .backgroundColor('rgba(0,0,0,0)')
       .showGlobe(true)
-      .globeMaterial(new THREE.MeshPhysicalMaterial({ color: '#fff' }))
+      .globeMaterial(new THREE.MeshPhysicalMaterial({ color: '#0f172a' }))
       .polygonsData(merged)
       .polygonGeoJsonGeometry(function (d) {
         var g = d && d.geojson && d.geojson.geometry;
@@ -340,7 +342,7 @@
         var p = pillarRef.current;
         var score = d.scores && d.scores[p] && d.scores[p].score;
         var isActive = activeCountryIdRef.current === d.alpha3;
-        var defaultColor = '#c7d7ed';
+        var defaultColor = '#1f2937';
         var numScore = score != null && score !== '' ? Number(score) : NaN;
         var useScale = pillarScales[p] && !Number.isNaN(numScore);
         var color = isActive ? (pillarScales[p] ? pillarScales[p](6) : '#6366f1') : (useScale ? pillarScales[p](numScore) : defaultColor);
@@ -353,8 +355,8 @@
         });
       })
       .polygonAltitude(function (d) { return activeCountryIdRef.current === d.alpha3 ? 0.032 : 0.008; })
-      .polygonSideColor(function () { return 'rgba(203, 215, 237, 0.98)'; })
-      .polygonStrokeColor(function () { return '#64748b'; })
+      .polygonSideColor(function () { return 'rgba(255, 255, 255, 0.08)'; })
+      .polygonStrokeColor(function () { return '#94a3b8'; })
       .polygonLabel(function (d) {
         if (!d || !d.unMember) return '';
         return '<div class="bg-white rounded-md shadow-lg px-4 py-1 uppercase text-xs tracking-widest font-medium text-black"><span>' + d.name + '</span></div>';
@@ -462,7 +464,7 @@
         const pillarFilterContainer = document.getElementById('pillar-filter');
         const selectEl = document.createElement('div');
         selectEl.className = 'mt-4';
-        selectEl.innerHTML = '<label class="block text-[16px] font-semibold text-gray-700 pb-2">Select a country</label><select id="country-select" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-gray-700 focus:border-accent focus:ring-1 focus:ring-accent"><option value="">— Choose —</option>' + globeData.map(function (c) { return '<option value="' + c.alpha3 + '">' + c.name + '</option>'; }).join('') + '</select>';
+        selectEl.innerHTML = '<label class="block text-xs tracking-[0.2em] uppercase text-white/60 pb-2">Select a country</label><select id="country-select" class="w-full border border-white/10 rounded-xl px-3 py-2 bg-white/5 text-white/80 focus:border-[#7c3aed] focus:ring-1 focus:ring-[#7c3aed]"><option value="">— Choose —</option>' + globeData.map(function (c) { return '<option value="' + c.alpha3 + '">' + c.name + '</option>'; }).join('') + '</select>';
         function updatePillar(p) {
           pillar = p;
           pillarRef.current = pillar;
@@ -531,7 +533,7 @@
         renderHeader(countries, true);
         renderFooter();
         const breadcrumb = document.getElementById('breadcrumb');
-        if (breadcrumb) breadcrumb.innerHTML = '<a href="index.html" class="mr-4 text-gray-700 hover:text-accent">Home</a><span class="text-gray-400">/</span><span class="ml-4 text-accent font-medium">' + (country ? country.name : (code ? 'Not found' : 'Country')) + '</span>';
+        if (breadcrumb) breadcrumb.innerHTML = '<a href="index.html" class="mr-4 text-slate-600 hover:text-[#7c3aed]">Home</a><span class="text-slate-400">/</span><span class="ml-4 text-[#7c3aed] font-medium">' + (country ? country.name : (code ? 'Not found' : 'Country')) + '</span>';
         const flagEl = document.getElementById('country-flag');
         if (flagEl) {
           flagEl.innerHTML = '';
