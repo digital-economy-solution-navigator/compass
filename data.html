@@ -5,9 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AI & Digital for Industry Navigator | Data</title>
   <link rel="shortcut icon" href="https://www.unido.org/themes/custom/unido_radix/favicon.ico" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config = { theme: { screens: { sm: '300px', md: '768px', lg: '1024px' }, extend: { colors: { accent: { DEFAULT: '#00A3E0', hover: '#0891B2' } } } } };</script>
+  <script>
+    tailwind.config = {
+      theme: {
+        screens: { sm: '300px', md: '768px', lg: '1024px' },
+        extend: {
+          colors: {
+            accent: { DEFAULT: '#00A3E0', hover: '#0891B2' }
+          }
+        }
+      }
+    };
+  </script>
   <link rel="stylesheet" href="css/global.css" />
   <script>
     // Apply theme immediately to prevent flash
@@ -22,30 +35,145 @@
   </script>
 </head>
 <body class="flex flex-col h-full">
-  <header class="flex-shrink-0 border-b custom-nav-shadow header-nav-bg-color" id="header"></header>
-  <main class="flex-shrink-0 main px-4 py-8 max-w-4xl mx-auto">
-    <h1 class="text-3xl font-bold mb-4" style="color: var(--text);">Data</h1>
-    <p class="mb-4" style="color: var(--muted);">Demo data table. The full app provides filtering and sorting by pillars and indicators.</p>
-    <div class="overflow-x-auto rounded" style="border: var(--border);">
-      <table class="w-full text-sm data-table">
-        <thead><tr><th class="p-2 text-left">Country</th><th class="p-2 text-left">Overall Tier</th></tr></thead>
-        <tbody id="data-tbody"></tbody>
-      </table>
+  <div id="app" class="flex flex-col h-full">
+    <header class="flex-shrink-0 border-b custom-nav-shadow header-nav-bg-color" id="header"></header>
+    <main class="flex-1 theme-bg theme-text overflow-hidden">
+      <div class="flex flex-col lg:flex-row h-full">
+        <!-- Filter Sidebar -->
+        <aside id="data-filters-sidebar" class="lg:w-80 lg:border-r lg:h-full lg:overflow-y-auto border-b lg:border-b-0 theme-border" style="background-color: var(--card-bg);">
+          <div class="p-6">
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="text-xl font-bold" style="color: var(--text);">Filters</h2>
+              <button id="toggle-filters-mobile" class="lg:hidden px-3 py-1 rounded border text-sm theme-border theme-text" style="background-color: var(--controls-bg);">
+                Hide
+              </button>
+            </div>
+            <div id="data-filters"></div>
+          </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+          <!-- Header Bar -->
+          <div class="flex-shrink-0 px-4 lg:px-6 py-4 border-b theme-border" style="background-color: var(--card-bg);">
+            <div class="flex items-center justify-between flex-wrap gap-4">
+              <div>
+                <h1 class="text-2xl lg:text-3xl font-bold mb-1" style="color: var(--text);">Data</h1>
+                <p class="text-sm" style="color: var(--muted);">
+                  Showing <span id="result-count" class="font-semibold" style="color: var(--text);">0</span> of 
+                  <span id="total-count" class="font-semibold" style="color: var(--text);">0</span> countries
+                </p>
+              </div>
+              <button id="toggle-filters-mobile-show" class="lg:hidden px-4 py-2 rounded-lg border text-sm font-medium theme-border theme-text" style="background-color: var(--controls-bg);">
+                Show Filters
+              </button>
+            </div>
+            <!-- Filter Badges -->
+            <div id="filter-badges" class="mt-4"></div>
+          </div>
+
+          <!-- Table Container -->
+          <div class="flex-1 overflow-auto">
+            <div id="data-table-container" class="p-4 lg:p-6"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="footer-background-color theme-text" id="footer"></footer>
+  </div>
+  <div id="search-dialog-backdrop" class="fixed inset-0 bg-black/30 z-40 hidden"></div>
+  <div id="search-dialog" class="fixed inset-0 z-50 flex items-start justify-center pt-20 hidden">
+    <div class="rounded-2xl shadow-2xl max-w-md w-full mx-4 max-h-[80vh] overflow-hidden" style="background: var(--card-bg); color: var(--text); border: var(--border);">
+      <div class="p-4" style="border-bottom: var(--border); background: var(--panel);">
+        <label class="text-xs uppercase tracking-[0.2em] block mb-2" style="color: var(--muted);">Search countries</label>
+        <input type="text" id="search-input" class="w-full rounded-xl px-3 py-2 text-sm" style="border: var(--border); color: var(--text); background: var(--controls-bg);" placeholder="Enter country name" />
+      </div>
+      <div id="search-results" class="overflow-y-auto max-h-64"></div>
     </div>
-  </main>
-  <footer class="footer-background-color theme-text" id="footer"></footer>
+  </div>
+  <div id="mobile-menu" class="fixed top-[75px] left-0 h-full w-full custom-mobile-bg-color z-50 shadow-lg transform -translate-x-full transition-transform duration-300" style="top: 75px;"></div>
   <script src="js/app.js"></script>
+  <script src="js/data-table.js"></script>
+  <script src="js/data-filters.js"></script>
   <script>
-    fetch('data/demo.json').then(function(r){return r.json();}).then(function(d){
-      var header = document.getElementById('header');
-      header.innerHTML = '<div class="lg:hidden p-4 flex items-center justify-between h-[72px]"><div class="flex items-center"><div><a href="index.html" class="block relative z-[100] h-[48px] w-[48px] object-contain"><img src="https://www.unido.org/themes/custom/unido_radix/logo.svg" alt="UNIDO Logo" class="h-full w-auto object-contain" /></a></div><div class="pl-3 max-w-[220px]"><a href="index.html"><h1 class="text-base font-semibold text-white leading-tight">AI & Digital for Industry Navigator</h1></a></div></div><div class="flex items-start gap-2"><button type="button" id="search-trigger-mobile" class="px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/70 theme-muted" aria-label="Search">Search</button><button type="button" data-theme-toggle class="px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/70 theme-muted" aria-label="Toggle theme">Light</button><button type="button" id="mobile-menu-btn" class="border border-white/10 rounded-full px-3 py-2 text-white text-lg" aria-label="Menu"><span id="mobile-menu-icon">&#9776;</span></button></div></div><div class="hidden mx-auto px-6 lg:flex lg:items-center lg:justify-between lg:space-x-4 py-5"><div class="flex items-center"><div class="h-[64px] flex-shrink-0"><a href="index.html" class="block relative z-[100] h-[64px] w-[56px] object-contain"><img src="https://www.unido.org/themes/custom/unido_radix/logo.svg" alt="UNIDO Logo" class="h-full w-auto object-contain" /></a></div><div class="pl-4 max-w-[260px]"><a href="index.html"><h1 class="text-base font-semibold text-white leading-tight">AI & Digital for Industry Navigator</h1></a></div></div><div class="flex items-center justify-end space-x-10"><a href="about.html" class="text-sm text-white/70 hover:text-white font-medium theme-muted">About</a><a href="data.html" class="text-sm text-white/70 hover:text-white font-medium theme-muted">Data</a><a href="methodology.html" class="text-sm text-white/70 hover:text-white font-medium theme-muted">Methodology</a><a href="evidence.html" class="text-sm text-white/70 hover:text-white font-medium theme-muted">Submit Evidence</a></div><div class="flex items-center justify-end gap-3"><button type="button" id="search-trigger" class="px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/70 hover:text-white theme-muted" aria-label="Search">Search</button><button type="button" data-theme-toggle class="px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/70 hover:text-white theme-muted" aria-label="Toggle theme">Light</button><a href="#globe-area" class="bg-[#7c3aed] hover:bg-[#6d28d9] text-white px-4 py-2 rounded-full text-sm font-semibold theme-btn">Explore</a></div></div>';
-      var footer = document.getElementById('footer');
-      var y = new Date().getFullYear();
-      footer.innerHTML = '<div class="max-w-screen-xl mx-auto px-6 lg:px-12 py-4 text-white"><div class="flex items-center justify-between text-xs text-white/60 uppercase tracking-[0.2em]"><div class="flex items-center gap-3"><img src="https://www.unido.org/sites/default/files/2022-12/unido-logo-white.png" width="32" height="40" alt="UNIDO" class="object-contain" /><span>&copy; '+y+' UNIDO</span></div><a href="https://www.unido.org" class="hover:text-white">Terms of use</a></div></div>';
-      var tbody = document.getElementById('data-tbody');
-      (d.globeData || []).forEach(function(c){ var row = document.createElement('tr'); row.innerHTML = '<td class="p-2 border-t"><a href="country.html?code='+c.alpha3+'#'+c.alpha3+'" class="text-[#7c3aed] hover:underline">'+c.name+'</a></td><td class="p-2 border-t">'+(c.scores && c.scores.Overall && c.scores.Overall.tier ? c.scores.Overall.tier.name : '-')+'</td>'; tbody.appendChild(row); });
-      if (window.initThemeToggle) window.initThemeToggle();
-    });
+    let data = null;
+    let schema = null;
+
+    // Initialize page
+    async function initDataPage() {
+      try {
+        // Load data
+        const response = await fetch('data/demo.json');
+        data = await response.json();
+        
+        // Load schema for pillar colors
+        const schemaResponse = await fetch('data/aidin-schema.json');
+        schema = await schemaResponse.json();
+
+        // Render header and footer
+        if (window.renderHeader && data.countries) {
+          window.renderHeader(data.countries, false);
+        }
+        if (window.renderFooter) {
+          window.renderFooter();
+        }
+
+        // Initialize filters
+        if (window.DataFilters) {
+          window.DataFilters.init(data, schema, (filteredData) => {
+            // Update table with filtered data
+            if (window.DataTable) {
+              window.DataTable.updateFilteredData(filteredData);
+            }
+            // Update result count
+            const resultCount = document.getElementById('result-count');
+            const totalCount = document.getElementById('total-count');
+            if (resultCount) resultCount.textContent = filteredData.length;
+            if (totalCount) totalCount.textContent = (data.globeData || []).length;
+          });
+        }
+
+        // Initialize table
+        if (window.DataTable) {
+          window.DataTable.init(data, schema);
+          // Set initial counts
+          const resultCount = document.getElementById('result-count');
+          const totalCount = document.getElementById('total-count');
+          if (resultCount) resultCount.textContent = (data.globeData || []).length;
+          if (totalCount) totalCount.textContent = (data.globeData || []).length;
+        }
+
+        // Mobile filter toggle
+        const toggleFiltersMobile = document.getElementById('toggle-filters-mobile');
+        const toggleFiltersMobileShow = document.getElementById('toggle-filters-mobile-show');
+        const filtersSidebar = document.getElementById('data-filters-sidebar');
+
+        if (toggleFiltersMobile) {
+          toggleFiltersMobile.addEventListener('click', () => {
+            filtersSidebar.classList.add('hidden');
+          });
+        }
+
+        if (toggleFiltersMobileShow) {
+          toggleFiltersMobileShow.addEventListener('click', () => {
+            filtersSidebar.classList.remove('hidden');
+          });
+        }
+
+        // Initialize theme toggle
+        if (window.initThemeToggle) {
+          window.initThemeToggle();
+        }
+      } catch (error) {
+        console.error('Error initializing data page:', error);
+        const container = document.getElementById('data-table-container');
+        if (container) {
+          container.innerHTML = '<p class="p-8 text-center" style="color: var(--error);">Error loading data. Please refresh the page.</p>';
+        }
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', initDataPage);
   </script>
 </body>
 </html>
