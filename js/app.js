@@ -9,6 +9,10 @@
     return data;
   }
 
+  function setData(newData) {
+    data = newData;
+  }
+
   function renderHeader(countries, isCountryPage) {
     const header = document.getElementById('header');
     if (!header) return;
@@ -136,9 +140,9 @@
     
     container.innerHTML = `
       <fieldset>
-        <div class="space-y-4">
+        <div class="flex flex-col lg:flex-row lg:gap-6 space-y-4 lg:space-y-0">
           ${enablingPillars.length > 0 ? `
-            <div>
+            <div class="flex-1">
               <p class="text-xs uppercase tracking-[0.2em] mb-2 theme-muted">Enabling Pillars</p>
               <div class="overflow-x-auto">
                 <div class="flex gap-2 min-w-max" id="pillar-radios-enabling"></div>
@@ -146,7 +150,7 @@
             </div>
           ` : ''}
           ${outcomePillars.length > 0 ? `
-            <div>
+            <div class="flex-1">
               <p class="text-xs uppercase tracking-[0.2em] mb-2 theme-muted">Outcome Pillars</p>
               <div class="overflow-x-auto">
                 <div class="flex gap-2 min-w-max" id="pillar-radios-outcome"></div>
@@ -352,30 +356,35 @@
     document.getElementById('search-dialog-backdrop')?.classList.add('hidden');
   }
 
+  function applyTheme(mode) {
+    var root = document.documentElement;
+    var body = document.body;
+    root.setAttribute('data-theme', mode);
+    root.classList.toggle('theme-light', mode === 'light');
+    root.classList.toggle('theme-dark', mode !== 'light');
+    body.classList.toggle('theme-light', mode === 'light');
+    body.classList.toggle('theme-dark', mode !== 'light');
+    var buttons = Array.prototype.slice.call(document.querySelectorAll('[data-theme-toggle]'));
+    buttons.forEach(function (btn) {
+      btn.textContent = mode === 'light' ? 'Dark' : 'Light';
+    });
+  }
+
   function initThemeToggle() {
     var root = document.documentElement;
     var body = document.body;
     var buttons = Array.prototype.slice.call(document.querySelectorAll('[data-theme-toggle]'));
-    if (!buttons.length) return;
 
-    function applyTheme(mode) {
-      root.setAttribute('data-theme', mode);
-      root.classList.toggle('theme-light', mode === 'light');
-      root.classList.toggle('theme-dark', mode !== 'light');
-      body.classList.toggle('theme-light', mode === 'light');
-      body.classList.toggle('theme-dark', mode !== 'light');
-      buttons.forEach(function (btn) {
-        btn.textContent = mode === 'light' ? 'Dark' : 'Light';
-      });
-    }
-
+    // Load saved theme or default to dark
     var stored = 'dark';
     try {
       stored = localStorage.getItem('theme') || 'dark';
     } catch (e) {}
 
+    // Apply theme immediately
     applyTheme(stored);
 
+    // Set up toggle handlers
     buttons.forEach(function (btn) {
       btn.addEventListener('click', function () {
         var current = root.getAttribute('data-theme') || 'dark';
@@ -385,6 +394,21 @@
       });
     });
   }
+
+  // Apply theme immediately on script load (before DOMContentLoaded) to prevent flash
+  (function() {
+    try {
+      var stored = localStorage.getItem('theme') || 'dark';
+      var root = document.documentElement;
+      root.setAttribute('data-theme', stored);
+      root.classList.toggle('theme-light', stored === 'light');
+      root.classList.toggle('theme-dark', stored !== 'light');
+      if (document.body) {
+        document.body.classList.toggle('theme-light', stored === 'light');
+        document.body.classList.toggle('theme-dark', stored !== 'light');
+      }
+    } catch (e) {}
+  })();
 
   function initHeroSearch(countries) {
     const input = document.getElementById('hero-search-input');
@@ -442,9 +466,11 @@
 
   function fillSearchResults(query) {
     const resultsEl = document.getElementById('search-results');
-    if (!resultsEl || !data) return;
+    if (!resultsEl) return;
+    const searchData = data || (window.getData && window.getData()) || window._tempSearchData;
+    if (!searchData || !searchData.countries) return;
     const q = (query || '').toLowerCase().trim();
-    const list = q ? data.countries.filter(function (c) { return c.name.toLowerCase().indexOf(q) !== -1; }) : data.countries.slice(0, 20);
+    const list = q ? searchData.countries.filter(function (c) { return c.name.toLowerCase().indexOf(q) !== -1; }) : searchData.countries.slice(0, 20);
     resultsEl.innerHTML = list.map(function (c) {
       return '<a href="country.html?code=' + c.alpha3 + '#' + c.alpha3 + '" class="block px-4 py-3 border-b border-white/10 text-white/80 hover:bg-white/5 hover:text-white">' + c.name + '</a>';
     }).join('') || '<p class="p-4 text-white/60">No countries found</p>';
@@ -855,4 +881,8 @@
   window.closeSearch = closeSearch;
   window.initCountryPage = initCountryPage;
   window.getData = getData;
+  window.setData = setData;
+  window.renderHeader = renderHeader;
+  window.renderFooter = renderFooter;
+  window.fillSearchResults = fillSearchResults;
 })();

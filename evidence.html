@@ -23,6 +23,17 @@
     };
   </script>
   <link rel="stylesheet" href="css/global.css" />
+  <script>
+    // Apply theme immediately to prevent flash
+    (function() {
+      try {
+        var theme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.classList.toggle('theme-light', theme === 'light');
+        document.documentElement.classList.toggle('theme-dark', theme !== 'light');
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body class="flex flex-col h-full">
   <div id="app" class="flex flex-col h-full">
@@ -134,10 +145,22 @@
     </main>
     <footer class="footer-background-color theme-text" id="footer"></footer>
   </div>
+  <div id="search-dialog-backdrop" class="fixed inset-0 bg-black/30 z-40 hidden"></div>
+  <div id="search-dialog" class="fixed inset-0 z-50 flex items-start justify-center pt-20 hidden">
+    <div class="rounded-2xl shadow-2xl max-w-md w-full mx-4 max-h-[80vh] overflow-hidden" style="background: var(--card-bg); color: var(--text); border: var(--border);">
+      <div class="p-4" style="border-bottom: var(--border); background: var(--panel);">
+        <label class="text-xs uppercase tracking-[0.2em] block mb-2" style="color: var(--muted);">Search countries</label>
+        <input type="text" id="search-input" class="w-full rounded-xl px-3 py-2 text-sm" style="border: var(--border); color: var(--text); background: var(--controls-bg);" placeholder="Enter country name" />
+      </div>
+      <div id="search-results" class="overflow-y-auto max-h-64"></div>
+    </div>
+  </div>
+  <div id="mobile-menu" class="fixed top-[75px] left-0 h-full w-full custom-mobile-bg-color z-50 shadow-lg transform -translate-x-full transition-transform duration-300" style="top: 75px;"></div>
   <script src="js/app.js"></script>
   <script src="js/evidence-portal.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      if (window.initThemeToggle) window.initThemeToggle();
       if (window.initEvidencePage) window.initEvidencePage();
     });
   </script>

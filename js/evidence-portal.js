@@ -11,20 +11,27 @@
   /**
    * Initialize evidence page
    */
-  function initEvidencePage() {
-    loadCountries();
-    setupFormHandlers();
-  }
-
-  /**
-   * Load countries list
-   */
-  async function loadCountries() {
+  async function initEvidencePage() {
+    // Load data and render header/footer
     try {
       const response = await fetch('data/demo.json');
       const data = await response.json();
       countriesData = data;
       
+      // Set global data variable for search functionality
+      if (window.setData && typeof window.setData === 'function') {
+        window.setData(data);
+      }
+      
+      // Render header and footer using shared functions
+      if (window.renderHeader && data.countries) {
+        window.renderHeader(data.countries, false);
+      }
+      if (window.renderFooter) {
+        window.renderFooter();
+      }
+      
+      // Populate country dropdown
       const countrySelect = document.getElementById('country');
       if (countrySelect && data.countries) {
         data.countries.forEach(country => {
@@ -35,9 +42,15 @@
         });
       }
     } catch (error) {
-      console.error('Error loading countries:', error);
+      console.error('Error initializing evidence page:', error);
+      // Still render header/footer even if data fails
+      if (window.renderHeader) window.renderHeader([], false);
+      if (window.renderFooter) window.renderFooter();
     }
+    
+    setupFormHandlers();
   }
+
 
   /**
    * Setup form handlers
