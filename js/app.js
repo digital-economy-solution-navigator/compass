@@ -22,7 +22,7 @@
         <div class="flex items-start gap-2">
           <button type="button" id="search-trigger-mobile" class="px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/70 theme-muted" aria-label="Search">Search</button>
           <button type="button" data-theme-toggle class="px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/70 theme-muted" aria-label="Toggle theme">Light</button>
-          <button type="button" id="mobile-menu-btn" class="border border-white/10 rounded-full px-3 py-2 text-white text-lg" aria-label="Menu">
+          <button type="button" id="mobile-menu-btn" class="border rounded-full px-3 py-2 text-lg theme-text theme-border" aria-label="Menu">
             <span id="mobile-menu-icon">&#9776;</span>
           </button>
         </div>
@@ -40,7 +40,7 @@
         <div class="flex items-center justify-end gap-3">
           <button type="button" id="search-trigger" class="px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/70 hover:text-white theme-muted" aria-label="Search">Search</button>
           <button type="button" data-theme-toggle class="px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/70 hover:text-white theme-muted" aria-label="Toggle theme">Light</button>
-          <a href="#globe-area" class="bg-[#7c3aed] hover:bg-[#6d28d9] text-white px-4 py-2 rounded-full text-sm font-semibold theme-btn">Explore</a>
+          <a href="#globe-area" class="text-white px-4 py-2 rounded-full text-sm font-semibold theme-btn" style="background-color: var(--button-primary);" onmouseover="this.style.backgroundColor='var(--button-primary-hover)'" onmouseout="this.style.backgroundColor='var(--button-primary)'">Explore</a>
         </div>
       </div>
     `;
@@ -106,17 +106,17 @@
     if (!hero) return;
     hero.innerHTML = `
       <div>
-        <h1 class="text-[38px] sm:text-[40px] md:text-[42px] lg:text-[44px] leading-[1.05] font-semibold text-white">Search a country to start the analysis.</h1>
-        <p class="text-[15px] sm:text-[16px] md:text-[17px] lg:text-[18px] leading-7 mt-4 text-left text-white/70">Jump directly into a country snapshot, then explore pillars, stages, and regional benchmarks.</p>
+        <h1 class="text-[38px] sm:text-[40px] md:text-[42px] lg:text-[44px] leading-[1.05] font-semibold theme-text">Search a country to start the analysis.</h1>
+        <p class="text-[15px] sm:text-[16px] md:text-[17px] lg:text-[18px] leading-7 mt-4 text-left theme-muted">Jump directly into a country snapshot, then explore pillars, stages, and regional benchmarks.</p>
         <div class="mt-6 space-y-3">
           <div class="flex flex-col sm:flex-row gap-3">
-            <input type="text" id="hero-search-input" class="w-full flex-1 rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white/90 placeholder:text-white/40 focus:border-[#7c3aed] focus:ring-1 focus:ring-[#7c3aed]" placeholder="Search country or ISO3 code" />
-            <button type="button" id="hero-search-btn" class="bg-[#7c3aed] hover:bg-[#6d28d9] text-white px-5 py-3 rounded-2xl text-sm font-semibold">Search</button>
+            <input type="text" id="hero-search-input" class="w-full flex-1 rounded-2xl border px-4 py-3 text-sm theme-text theme-border" style="background-color: var(--controls-bg);" placeholder="Search country or ISO3 code" />
+            <button type="button" id="hero-search-btn" class="text-white px-5 py-3 rounded-2xl text-sm font-semibold theme-button">Search</button>
           </div>
-          <div id="hero-search-results" class="text-sm text-white/70"></div>
+          <div id="hero-search-results" class="text-sm theme-muted"></div>
         </div>
         <div class="mt-6">
-          <p class="text-[11px] uppercase tracking-[0.24em] text-white/50">Quick picks</p>
+          <p class="text-[11px] uppercase tracking-[0.24em] theme-muted">Quick picks</p>
           <div id="hero-quick-picks" class="mt-3 flex flex-wrap gap-2"></div>
         </div>
       </div>
@@ -139,11 +139,26 @@
       const color = ancillary.pillarColorMap[pillar].base;
       const checked = pillar === selectedPillar;
       const label = document.createElement('label');
-      label.className = 'px-3 py-1.5 font-medium cursor-pointer flex items-center rounded-full transition-all text-xs border ' + (checked ? 'border-[#7c3aed] bg-[#7c3aed]/10 text-[#7c3aed]' : 'border-white/40 bg-white/80 text-gray-800 hover:border-white/70');
+      if (checked) {
+        label.className = 'px-3 py-1.5 font-medium cursor-pointer flex items-center rounded-full transition-all text-xs border';
+        label.style.borderColor = 'var(--pillar-active)';
+        label.style.backgroundColor = 'rgba(0, 163, 224, 0.1)';
+        label.style.color = 'var(--pillar-active)';
+      } else {
+        label.className = 'px-3 py-1.5 font-medium cursor-pointer flex items-center rounded-full transition-all text-xs border theme-border';
+        label.style.backgroundColor = 'var(--pillar-inactive-bg)';
+        label.style.color = 'var(--pillar-inactive-text)';
+        label.addEventListener('mouseenter', function() {
+          label.style.borderColor = 'var(--border)';
+        });
+        label.addEventListener('mouseleave', function() {
+          label.style.borderColor = 'var(--border)';
+        });
+      }
       label.innerHTML = `
-        <div class="w-2 h-2 rounded-full mr-2 flex-shrink-0" style="background-color:${checked ? '#7c3aed' : color}"></div>
+        <div class="w-2 h-2 rounded-full mr-2 flex-shrink-0" style="background-color:${checked ? 'var(--pillar-active)' : color}"></div>
         <input type="radio" name="pillar-radio" value="${pillar}" class="sr-only" ${checked ? 'checked' : ''} />
-        <p class="${checked ? 'text-[#7c3aed] font-semibold' : 'text-gray-800'}" id="${pillar}">${pillar}</p>
+        <p class="${checked ? 'font-semibold' : ''}" style="color: inherit;" id="${pillar}">${pillar}</p>
       `;
       label.querySelector('input').addEventListener('change', function () { onChange(pillar); });
       radios.appendChild(label);
@@ -209,14 +224,16 @@
     if (!data) return '';
     const ancillary = data.ancillary;
     const pillars = ancillary.pillarNames;
-    let html = '<div class="flex h-6 border-t border-white/10 px-1">';
+    let html = '<div class="flex h-6 border-t px-1 theme-border">';
     pillars.forEach(function (pillar) {
       const info = scores && scores[pillar];
       const stage = info?.stage;
       const percent = (stage && stage.number) ? stage.number * 20 : 0;
       const color = ancillary.pillarColorMap[pillar].base;
       const active = pillar === activePillar;
-      html += `<button type="button" class="relative flex-1 h-full appearance-none focus:outline-none transition-opacity border border-b-0 ${active ? 'bg-white/10 border-white/20' : 'border-white/10'}" title="${pillar}: ${stage ? stage.name : 'No Data'}" data-pillar="${pillar}"><div class="absolute left-0 bottom-0 right-0" style="height:${percent}%;background:${color}"></div></button>`;
+      const borderStyle = active ? 'border-color: var(--panel-strong);' : 'border-color: var(--border);';
+      const bgStyle = active ? 'background-color: var(--panel-strong);' : '';
+      html += `<button type="button" class="relative flex-1 h-full appearance-none focus:outline-none transition-opacity border border-b-0" style="${borderStyle} ${bgStyle}" title="${pillar}: ${stage ? stage.name : 'No Data'}" data-pillar="${pillar}"><div class="absolute left-0 bottom-0 right-0" style="height:${percent}%;background:${color}"></div></button>`;
     });
     html += '</div>';
     return html;
@@ -229,9 +246,9 @@
     const flagUrl = 'https://flagcdn.com/w80/' + (country.alpha2 || '').toLowerCase() + '.png';
     const readinessHtml = renderReadinessScale(scores, pillar, function () {});
     return `
-      <div class="country-card-dark border border-white/10 shadow-xl pb-0 w-full flex-1 rounded-2xl flex flex-col items-center bg-black/40 backdrop-blur-xl overflow-hidden text-white">
+      <div class="country-card-dark border shadow-xl pb-0 w-full flex-1 rounded-2xl flex flex-col items-center backdrop-blur-xl overflow-hidden theme-border theme-card theme-text" style="background-color: var(--card-bg);">
         <div class="p-4 flex flex-col items-center">
-          <a href="country.html?code=${country.alpha3}#${country.alpha3}" class="text-white hover:text-[#c4b5fd]">
+          <a href="country.html?code=${country.alpha3}#${country.alpha3}" class="theme-text" style="color: var(--text);" onmouseover="this.style.color='var(--link-hover)'" onmouseout="this.style.color='var(--text)'">
             <div class="flex flex-col items-center group cursor-pointer">
               <div class="flex-shrink-0"><img src="${flagUrl}" alt="" width="48" height="36" style="object-fit:cover" /></div>
               <div class="flex-1 ml-2"><h3 class="text-xl"><span class="group-hover:underline">${country.name}</span></h3></div>
@@ -239,7 +256,7 @@
           </a>
           <div class="py-4 flex items-center justify-center text-center w-full" id="country-card-gauge"></div>
         </div>
-        ${showFooterLink ? `<div class="mb-4"><a href="country.html?code=${country.alpha3}#${country.alpha3}" class="bg-[#7c3aed] hover:bg-[#6d28d9] text-sm font-semibold px-5 py-3 text-white rounded-full inline-flex items-center transition-colors">View more</a></div>` : ''}
+        ${showFooterLink ? `<div class="mb-4"><a href="country.html?code=${country.alpha3}#${country.alpha3}" class="text-sm font-semibold px-5 py-3 text-white rounded-full inline-flex items-center transition-colors theme-button" style="background-color: var(--button-primary);" onmouseover="this.style.backgroundColor='var(--button-primary-hover)'" onmouseout="this.style.backgroundColor='var(--button-primary)'">View more</a></div>` : ''}
         <div class="w-full flex-1 flex flex-col justify-end">${readinessHtml}</div>
       </div>
     `;
@@ -290,12 +307,16 @@
 
   function initThemeToggle() {
     var root = document.documentElement;
+    var body = document.body;
     var buttons = Array.prototype.slice.call(document.querySelectorAll('[data-theme-toggle]'));
     if (!buttons.length) return;
 
     function applyTheme(mode) {
+      root.setAttribute('data-theme', mode);
       root.classList.toggle('theme-light', mode === 'light');
       root.classList.toggle('theme-dark', mode !== 'light');
+      body.classList.toggle('theme-light', mode === 'light');
+      body.classList.toggle('theme-dark', mode !== 'light');
       buttons.forEach(function (btn) {
         btn.textContent = mode === 'light' ? 'Dark' : 'Light';
       });
@@ -310,8 +331,8 @@
 
     buttons.forEach(function (btn) {
       btn.addEventListener('click', function () {
-        var isLight = root.classList.contains('theme-light');
-        var next = isLight ? 'dark' : 'light';
+        var current = root.getAttribute('data-theme') || 'dark';
+        var next = current === 'light' ? 'dark' : 'light';
         try { localStorage.setItem('theme', next); } catch (e) {}
         applyTheme(next);
       });
@@ -387,6 +408,10 @@
     var t = s.replace(/^["']|["']$/g, '').trim();
     return /^#[0-9A-Fa-f]{3,8}$/.test(t) ? t : s;
   }
+  function getCSSVariable(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+
   function makePillarScales(ancillary) {
     const scales = {};
     ancillary.pillarNames.forEach(function (p) {
@@ -424,14 +449,21 @@
     const pillarScales = makePillarScales(ancillary);
     const globeEl = document.getElementById('globe-viz');
     if (!globeEl || merged.length === 0) return null;
+    const globeAtmosphere = getCSSVariable('--globe-atmosphere') || '#DCE9FE';
+    const globeMaterial = getCSSVariable('--globe-material') || '#0f172a';
+    const globeDefault = getCSSVariable('--globe-default') || '#1f2937';
+    const globeActive = getCSSVariable('--globe-active') || '#6366f1';
+    const globeStroke = getCSSVariable('--globe-stroke') || '#94a3b8';
+    const polygonSideColor = getCSSVariable('--panel') || 'rgba(255, 255, 255, 0.08)';
+    
     const globe = new Globe(globeEl)
       .showGraticules(true)
       .showAtmosphere(true)
       .atmosphereAltitude(0.23)
-      .atmosphereColor('#DCE9FE')
+      .atmosphereColor(globeAtmosphere)
       .backgroundColor('rgba(0,0,0,0)')
       .showGlobe(true)
-      .globeMaterial(new THREE.MeshPhysicalMaterial({ color: '#0f172a' }))
+      .globeMaterial(new THREE.MeshPhysicalMaterial({ color: globeMaterial }))
       .polygonsData(merged)
       .polygonGeoJsonGeometry(function (d) {
         var g = d && d.geojson && d.geojson.geometry;
@@ -441,10 +473,10 @@
         var p = pillarRef.current;
         var score = d.scores && d.scores[p] && d.scores[p].score;
         var isActive = activeCountryIdRef.current === d.alpha3;
-        var defaultColor = '#1f2937';
+        var defaultColor = globeDefault;
         var numScore = score != null && score !== '' ? Number(score) : NaN;
         var useScale = pillarScales[p] && !Number.isNaN(numScore);
-        var color = isActive ? (pillarScales[p] ? pillarScales[p](6) : '#6366f1') : (useScale ? pillarScales[p](numScore) : defaultColor);
+        var color = isActive ? (pillarScales[p] ? pillarScales[p](6) : globeActive) : (useScale ? pillarScales[p](numScore) : defaultColor);
         return new THREE.MeshPhysicalMaterial({
           color: color,
           roughness: 0.65,
@@ -454,8 +486,8 @@
         });
       })
       .polygonAltitude(function (d) { return activeCountryIdRef.current === d.alpha3 ? 0.032 : 0.008; })
-      .polygonSideColor(function () { return 'rgba(255, 255, 255, 0.08)'; })
-      .polygonStrokeColor(function () { return '#94a3b8'; })
+      .polygonSideColor(function () { return polygonSideColor; })
+      .polygonStrokeColor(function () { return globeStroke; })
       .polygonLabel(function (d) {
         if (!d || !d.unMember) return '';
         return '<div class="bg-white rounded-md shadow-lg px-4 py-1 uppercase text-xs tracking-widest font-medium text-black"><span>' + d.name + '</span></div>';
@@ -672,7 +704,7 @@
         initThemeToggle();
         renderFooter();
         const breadcrumb = document.getElementById('breadcrumb');
-        if (breadcrumb) breadcrumb.innerHTML = '<a href="index.html" class="mr-4 text-slate-600 hover:text-[#7c3aed]">Home</a><span class="text-slate-400">/</span><span class="ml-4 text-[#7c3aed] font-medium">' + (country ? country.name : (code ? 'Not found' : 'Country')) + '</span>';
+        if (breadcrumb) breadcrumb.innerHTML = '<a href="index.html" class="mr-4 theme-muted" style="color: var(--muted);" onmouseover="this.style.color=\'var(--button-primary)\'" onmouseout="this.style.color=\'var(--muted)\'">Home</a><span class="theme-muted" style="color: var(--muted); opacity: 0.6;">/</span><span class="ml-4 font-medium" style="color: var(--button-primary);">' + (country ? country.name : (code ? 'Not found' : 'Country')) + '</span>';
         const flagEl = document.getElementById('country-flag');
         if (flagEl) {
           flagEl.innerHTML = '';
@@ -691,7 +723,7 @@
         const ringContainer = document.getElementById('score-ring-container');
         const pillarsSection = document.getElementById('pillars-section');
         if (!country) {
-          if (ringContainer) ringContainer.innerHTML = '<p class="text-gray-500 py-4"><a href="index.html" class="text-accent hover:underline">Go to home</a> to select a country from the globe or search.</p>';
+          if (ringContainer) ringContainer.innerHTML = '<p class="py-4 theme-muted" style="color: var(--muted);"><a href="index.html" class="hover:underline" style="color: var(--button-primary);" onmouseover="this.style.textDecoration=\'underline\'" onmouseout="this.style.textDecoration=\'none\'">Go to home</a> to select a country from the globe or search.</p>';
           if (pillarsSection) pillarsSection.innerHTML = '';
           document.getElementById('search-dialog-backdrop') && document.getElementById('search-dialog-backdrop').addEventListener('click', closeSearch);
           document.getElementById('search-input') && document.getElementById('search-input').addEventListener('input', function () { fillSearchResults(this.value); });

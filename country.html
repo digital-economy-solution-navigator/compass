@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -14,7 +14,7 @@
         screens: { sm: '300px', md: '768px', lg: '1024px' },
         extend: {
           colors: {
-            accent: { DEFAULT: '#7c3aed', hover: '#6d28d9' }
+            accent: { DEFAULT: '#00A3E0', hover: '#0891B2' }
           }
         }
       }
@@ -26,16 +26,16 @@
   <div id="app" class="flex flex-col h-full">
     <header class="flex-shrink-0 border-b custom-nav-shadow header-nav-bg-color" id="header"></header>
     <main class="flex-shrink-0 main">
-      <section class="pt-8 border-b pb-3" id="country-meta">
+      <section class="pt-8 pb-3" id="country-meta" style="border-bottom: var(--border);">
         <div class="sm:px-4 sm:mx-auto sm:text-center md:pl-[115px]">
-          <nav id="breadcrumb" class="flex items-center justify-start p-4 text-[11.44px] font-bold"></nav>
+          <nav id="breadcrumb" class="flex items-center justify-start p-4 text-[11.44px] font-bold" style="color: var(--text);"></nav>
         </div>
         <div class="container px-4 mx-auto text-center">
           <div class="mb-10 text-center">
             <div class="mb-2"><span id="country-flag" class="fp fp-lg"></span></div>
             <div>
-              <h1 id="country-name" class="text-4xl lg:text-5xl font-semibold tracking-tight text-gray-900"></h1>
-              <p id="country-region" class="text-gray-600 text-sm mt-1"></p>
+              <h1 id="country-name" class="text-4xl lg:text-5xl font-semibold tracking-tight" style="color: var(--text);"></h1>
+              <p id="country-region" class="text-sm mt-1" style="color: var(--muted);"></p>
             </div>
           </div>
           <div id="score-ring-container"></div>
@@ -43,14 +43,14 @@
       </section>
       <section id="pillars-section" class="container px-4 mx-auto py-8"></section>
     </main>
-    <footer class="footer-background-color text-white" id="footer"></footer>
+    <footer class="footer-background-color theme-text" id="footer"></footer>
   </div>
   <div id="search-dialog-backdrop" class="fixed inset-0 bg-black/30 z-40 hidden"></div>
   <div id="search-dialog" class="fixed inset-0 z-50 flex items-start justify-center pt-20 hidden">
-    <div class="bg-[#0f172a] text-white rounded-2xl border border-white/10 shadow-2xl max-w-md w-full mx-4 max-h-[80vh] overflow-hidden">
-      <div class="border-b border-white/10 bg-white/5 p-4">
-        <label class="text-xs uppercase tracking-[0.2em] text-white/60 block mb-2">Search countries</label>
-        <input type="text" id="search-input" class="w-full border border-white/10 rounded-xl px-3 py-2 text-sm text-white/80 bg-black/30 focus:border-[#7c3aed] focus:ring-1 focus:ring-[#7c3aed]" placeholder="Enter country name" />
+    <div class="rounded-2xl shadow-2xl max-w-md w-full mx-4 max-h-[80vh] overflow-hidden" style="background: var(--card-bg); color: var(--text); border: var(--border);">
+      <div class="p-4" style="border-bottom: var(--border); background: var(--panel);">
+        <label class="text-xs uppercase tracking-[0.2em] block mb-2" style="color: var(--muted);">Search countries</label>
+        <input type="text" id="search-input" class="w-full rounded-xl px-3 py-2 text-sm" style="border: var(--border); color: var(--text); background: var(--controls-bg);" placeholder="Enter country name" />
       </div>
       <div id="search-results" class="overflow-y-auto max-h-64"></div>
     </div>

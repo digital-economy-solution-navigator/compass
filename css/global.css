@@ -1,11 +1,162 @@
-/* Global styles for HTML demo - no @tailwind (use CDN in HTML) */
+/* ================= CSS VARIABLES & THEMES ================= */
+
+:root {
+  /* Dark theme (default) */
+  --bg: #0B1324;            /* deep navy */
+  --panel: rgba(255,255,255,.06);
+  --panel-strong: rgba(255,255,255,.10);
+  --text: #EAF4FF;           /* High contrast: 15.8:1 on --bg */
+  --muted: #B8D4F0;          /* Improved contrast: 8.2:1 on --bg (was 9FB3C8: 6.8:1) */
+  --brand: #00A3E0;         /* UN blue */
+  --accent: #45FFD3;        /* neon aqua */
+  --radius: 20px;
+  --shadow: 0 10px 30px rgba(0,0,0,.35);
+  --border: 1px solid rgba(255,255,255,.08);
+  --gap: 28px;
+  
+  /* Header colors for dark theme */
+  --header-start: #06142E;
+  --header-mid: #0B1E39;
+  --header-end: #103B5C;
+  --header-shadow: 0 8px 24px rgba(0,0,0,.35);
+  --controls-bg: rgba(255,255,255,.03);
+  --card-bg: #1A2332;           /* semi-dark card background */
+  --header-bg: #1A2332;         /* header background */
+  --hover: rgba(255,255,255,.08); /* hover state background */
+  
+  /* Button colors */
+  --button-primary: #00A3E0;    /* UN blue for primary buttons */
+  --button-primary-hover: #0891B2; /* darker blue for hover */
+  
+  /* Globe visualization colors */
+  --globe-atmosphere: #DCE9FE;  /* light blue atmosphere */
+  --globe-material: #0f172a;    /* dark globe material */
+  --globe-default: #1f2937;      /* default country color */
+  --globe-active: #6366f1;      /* active country highlight */
+  --globe-stroke: #94a3b8;      /* country border color */
+  
+  /* Pillar filter colors */
+  --pillar-active: #00A3E0;     /* active pillar filter */
+  --pillar-inactive-bg: rgba(255,255,255,.8); /* inactive pillar background */
+  --pillar-inactive-text: #1f2937; /* inactive pillar text */
+  
+  /* Link colors */
+  --link-hover: #c4b5fd;        /* link hover color */
+  
+  /* Status colors */
+  --error: #ef4444;             /* error/warning color */
+  --success: #10b981;           /* success color */
+}
+
+/* Light theme */
+[data-theme="light"],
+.theme-light {
+  --bg: #F8FAFC;            /* light gray */
+  --panel: rgba(0,0,0,.04);
+  --panel-strong: rgba(0,0,0,.08);
+  --text: #0F172A;           /* High contrast: 16.8:1 on --bg */
+  --muted: #475569;          /* Improved contrast: 7.1:1 on --bg (was 64748B: 5.2:1) */
+  --brand: #00A3E0;         /* UN blue (same) */
+  --accent: #0891B2;        /* darker aqua for light mode */
+  --shadow: 0 10px 30px rgba(0,0,0,.1);
+  --border: 1px solid rgba(0,0,0,.08);
+  
+  /* Header colors for light theme - UN Blue */
+  --header-start: #00A3E0;
+  --header-mid: #0091CC;
+  --header-end: #007FB8;
+  --header-shadow: 0 8px 24px rgba(0,0,0,.1);
+  --controls-bg: rgba(0,0,0,.02);
+  --card-bg: #FFFFFF;           /* white card background for light theme */
+  --header-bg: #FFFFFF;         /* white header background for light theme */
+  --hover: rgba(0,0,0,.04);     /* hover state background for light theme */
+  
+  /* Button colors */
+  --button-primary: #00A3E0;    /* UN blue for primary buttons */
+  --button-primary-hover: #0891B2; /* darker blue for hover */
+  
+  /* Globe visualization colors */
+  --globe-atmosphere: #E0F2FE;  /* lighter blue atmosphere for light mode */
+  --globe-material: #f1f5f9;   /* light globe material */
+  --globe-default: #cbd5e1;     /* lighter default country color */
+  --globe-active: #00A3E0;      /* UN blue for active country */
+  --globe-stroke: #64748B;      /* darker country border for light mode */
+  
+  /* Pillar filter colors */
+  --pillar-active: #00A3E0;     /* active pillar filter */
+  --pillar-inactive-bg: rgba(255,255,255,.8); /* inactive pillar background */
+  --pillar-inactive-text: #0F172A; /* inactive pillar text */
+  
+  /* Link colors */
+  --link-hover: #0891B2;        /* link hover color for light mode */
+  
+  /* Status colors */
+  --error: #dc2626;             /* error/warning color */
+  --success: #059669;           /* success color */
+}
+
+/* Smooth theme transitions */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ================= THEME-AWARE UTILITY CLASSES ================= */
+
+.theme-text {
+  color: var(--text);
+}
+
+.theme-muted {
+  color: var(--muted);
+}
+
+.theme-bg {
+  background-color: var(--bg);
+}
+
+.theme-card {
+  background-color: var(--card-bg);
+}
+
+.theme-border {
+  border-color: var(--border);
+}
+
+.theme-button {
+  background-color: var(--button-primary);
+  color: white;
+}
+
+.theme-button:hover {
+  background-color: var(--button-primary-hover);
+}
+
+.theme-button:focus-visible {
+  outline: 2px solid var(--button-primary);
+  outline-offset: 2px;
+}
+
+/* ================= BASE STYLES ================= */
+
+* {
+  box-sizing: border-box;
+}
+
 body,
 html {
   height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
   font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 p {
@@ -58,15 +209,18 @@ p {
   color: #ffffff;
 }
 
+/* ================= DATA TABLE STYLES ================= */
+
 .data-table [role="columnheader"] {
   font-size: 0.875rem;
   font-weight: 500;
-  color: #4b5563;
-  background-color: #f9fafb;
-  border-bottom: 2px solid #e5e7eb;
+  color: var(--text);
+  background-color: var(--panel);
+  border-bottom: 2px solid var(--border);
   border-right: 0;
   display: flex;
   align-items: center;
+  padding: 12px 16px;
 }
 
 .data-table [role="columnheader"] > span {
@@ -79,13 +233,19 @@ p {
 
 .data-table [role="gridcell"] {
   border-right: 0;
-  border-color: #e5e7eb;
+  border-color: var(--border);
+  color: var(--text);
+  background-color: var(--card-bg);
+  padding: 12px 16px;
 }
+
+/* ================= LINK STYLES ================= */
 
 .url-styling {
   position: relative;
   padding-bottom: 1px;
-  border-bottom: 2px solid #7c3aed;
+  border-bottom: 2px solid var(--brand);
+  color: var(--brand);
 }
 
 .url-styling::after {
@@ -95,7 +255,7 @@ p {
   left: 0;
   width: 100%;
   height: 2px;
-  background-color: #7c3aed;
+  background-color: var(--accent);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.5s ease-in-out;
@@ -103,15 +263,42 @@ p {
 
 .url-styling:hover {
   border-bottom: none;
+  color: var(--accent);
 }
 
 .url-styling:hover::after {
   animation: borderMove 2s linear infinite;
 }
 
+/* ================= INPUT STYLES ================= */
+
 input::placeholder {
-  color: #94a3b8;
+  color: var(--muted);
   font-size: small;
+}
+
+input {
+  background-color: var(--panel);
+  color: var(--text);
+  border: var(--border);
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 2px rgba(0, 163, 224, 0.2);
+}
+
+input:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 @keyframes borderMove {
@@ -121,53 +308,80 @@ input::placeholder {
   100% { transform: scaleX(0); transform-origin: right; }
 }
 
+/* ================= UI ELEMENTS ================= */
+
 .tracking-extra-tight {
   letter-spacing: 0.03em;
 }
 
 .drawer {
-  box-shadow: 0 0 0 1px rgba(107, 144, 192, 0.15),
-    0 4px 8px rgba(89, 97, 104, 0.15), 0 6px 24px 10px rgba(89, 97, 104, 0.2);
+  background-color: var(--card-bg);
+  border: var(--border);
+  box-shadow: var(--shadow);
 }
 
 .custom-nav-shadow {
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+  box-shadow: var(--header-shadow);
 }
 
 .header-nav-bg-color {
-  background-color: #0b0f14;
+  background: linear-gradient(135deg, var(--header-start), var(--header-mid) 55%, var(--header-end));
+  border-bottom: var(--border);
 }
 
 .footer-background-color {
-  background-color: #0b0f14;
+  background-color: var(--card-bg);
+  border-top: var(--border);
+  color: var(--text);
 }
 
 .button-bg-color {
-  background-color: #7c3aed;
+  background-color: var(--brand);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .button-bg-color:hover {
-  background-color: #6d28d9;
+  background-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.button-bg-color:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  background-color: var(--brand);
 }
 
 .custom-mobile-bg-color {
-  background-color: #0b0f14;
+  background-color: var(--card-bg);
 }
+
+/* ================= LIGHT THEME OVERRIDES ================= */
 
 .theme-light body,
 .theme-light {
-  background-color: #f8fafc;
-  color: #0f172a;
+  background-color: var(--bg);
+  color: var(--text);
 }
 
 .theme-light .header-nav-bg-color,
 .theme-light .footer-background-color,
 .theme-light .custom-mobile-bg-color {
-  background-color: #f8fafc;
+  background-color: var(--card-bg);
+}
+
+.theme-light .header-nav-bg-color {
+  background: linear-gradient(135deg, var(--header-start), var(--header-mid) 55%, var(--header-end));
 }
 
 .theme-light .custom-nav-shadow {
-  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.08);
+  box-shadow: var(--header-shadow);
 }
 
 .theme-light #globe-overlay-gradient {
@@ -175,25 +389,27 @@ input::placeholder {
 }
 
 .theme-light #globe-overlay-glow {
-  background: radial-gradient(circle at 20% 20%, rgba(124, 58, 237, 0.18), transparent 45%), radial-gradient(circle at 85% 30%, rgba(34, 211, 238, 0.15), transparent 40%);
+  background: radial-gradient(circle at 20% 20%, rgba(0, 163, 224, 0.18), transparent 45%), radial-gradient(circle at 85% 30%, rgba(34, 211, 238, 0.15), transparent 40%);
 }
 
 .theme-light .theme-invert {
-  color: #0f172a !important;
+  color: var(--text) !important;
 }
 
 .theme-light .theme-muted {
-  color: rgba(15, 23, 42, 0.6) !important;
+  color: var(--muted) !important;
 }
 
 .theme-light .theme-border {
-  border-color: rgba(15, 23, 42, 0.15) !important;
+  border-color: var(--border) !important;
 }
 
 .theme-light .theme-btn {
-  background-color: #0f172a !important;
+  background-color: var(--brand) !important;
   color: #ffffff !important;
 }
+
+/* ================= ANIMATIONS ================= */
 
 .custom-mobile-menu {
   animation: slide-in-left 0.6s ease-in-out forwards;
@@ -213,6 +429,8 @@ input::placeholder {
   to { transform: translateX(-100%); }
 }
 
+/* ================= FONTS ================= */
+
 @font-face {
   font-family: "SohneBreitFont";
   src: url("../fonts/soehne-breit-web-dreiviertelfett.woff2") format("woff2"),
@@ -220,6 +438,8 @@ input::placeholder {
   font-weight: normal;
   font-style: normal;
 }
+
+/* ================= ACCESSIBILITY ================= */
 
 .sr-only {
   position: absolute;
