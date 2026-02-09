@@ -527,16 +527,26 @@
     const globeDefault = getCSSVariable('--globe-default') || '#1f2937';
     const globeActive = getCSSVariable('--globe-active') || '#6366f1';
     const globeStroke = getCSSVariable('--globe-stroke') || '#94a3b8';
-    const polygonSideColor = getCSSVariable('--panel') || 'rgba(255, 255, 255, 0.08)';
+    
+    // Adjust globe settings for light mode
+    const isLightMode = document.documentElement.getAttribute('data-theme') === 'light' || 
+                       document.documentElement.classList.contains('theme-light');
+    const polygonSideColor = isLightMode 
+      ? (getCSSVariable('--panel') || 'rgba(0, 0, 0, 0.08)')
+      : (getCSSVariable('--panel') || 'rgba(255, 255, 255, 0.08)');
     
     const globe = new Globe(globeEl)
       .showGraticules(true)
       .showAtmosphere(true)
-      .atmosphereAltitude(0.23)
+      .atmosphereAltitude(isLightMode ? 0.15 : 0.18)
       .atmosphereColor(globeAtmosphere)
       .backgroundColor('rgba(0,0,0,0)')
       .showGlobe(true)
-      .globeMaterial(new THREE.MeshPhysicalMaterial({ color: globeMaterial }))
+      .globeMaterial(new THREE.MeshPhysicalMaterial({ 
+        color: globeMaterial,
+        roughness: isLightMode ? 0.3 : 0.5,
+        reflectivity: isLightMode ? 0.5 : 0.4
+      }))
       .polygonsData(merged)
       .polygonGeoJsonGeometry(function (d) {
         var g = d && d.geojson && d.geojson.geometry;
@@ -552,10 +562,11 @@
         var color = isActive ? (pillarScales[p] ? pillarScales[p](6) : globeActive) : (useScale ? pillarScales[p](numScore) : defaultColor);
         return new THREE.MeshPhysicalMaterial({
           color: color,
-          roughness: 0.65,
-          reflectivity: 0.35,
-          opacity: activeCountryIdRef.current ? (activeCountryIdRef.current === d.alpha3 ? 1 : 0.92) : 1,
-          side: THREE.DoubleSide
+          roughness: isLightMode ? 0.3 : 0.5,
+          reflectivity: isLightMode ? 0.5 : 0.4,
+          opacity: activeCountryIdRef.current ? (activeCountryIdRef.current === d.alpha3 ? 1 : (isLightMode ? 1 : 0.98)) : 1,
+          side: THREE.DoubleSide,
+          transparent: false
         });
       })
       .polygonAltitude(function (d) { return activeCountryIdRef.current === d.alpha3 ? 0.032 : 0.008; })

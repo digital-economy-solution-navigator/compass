@@ -76,11 +76,11 @@
   --button-primary-hover: #0891B2; /* darker blue for hover */
   
   /* Globe visualization colors */
-  --globe-atmosphere: #E0F2FE;  /* lighter blue atmosphere for light mode */
-  --globe-material: #f1f5f9;   /* light globe material */
-  --globe-default: #cbd5e1;     /* lighter default country color */
-  --globe-active: #00A3E0;      /* UN blue for active country */
-  --globe-stroke: #64748B;      /* darker country border for light mode */
+  --globe-atmosphere: #BFDBFE;  /* more visible blue atmosphere for light mode */
+  --globe-material: #E2E8F0;   /* darker globe material for better visibility */
+  --globe-default: #94A3B8;     /* darker default country color for contrast */
+  --globe-active: #007FB8;      /* darker UN blue for active country */
+  --globe-stroke: #475569;      /* darker country border for better visibility */
   
   /* Pillar filter colors */
   --pillar-active: #00A3E0;     /* active pillar filter */
@@ -327,6 +327,7 @@ a:focus-visible {
 .header-nav-bg-color {
   background: linear-gradient(135deg, var(--header-start), var(--header-mid) 55%, var(--header-end));
   border-bottom: var(--border);
+  opacity: 1;
 }
 
 .footer-background-color {
@@ -378,6 +379,25 @@ a:focus-visible {
 
 .theme-light .header-nav-bg-color {
   background: linear-gradient(135deg, var(--header-start), var(--header-mid) 55%, var(--header-end));
+  opacity: 1;
+}
+
+.theme-light .header-nav-bg-color * {
+  color: white !important;
+}
+
+.theme-light .header-nav-bg-color a,
+.theme-light .header-nav-bg-color button {
+  color: white !important;
+}
+
+.theme-light .header-nav-bg-color .theme-muted {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.theme-light .header-nav-bg-color a:hover,
+.theme-light .header-nav-bg-color button:hover {
+  color: white !important;
 }
 
 .theme-light .custom-nav-shadow {
@@ -385,11 +405,11 @@ a:focus-visible {
 }
 
 .theme-light #globe-overlay-gradient {
-  background: linear-gradient(90deg, rgba(248,250,252,0.95) 0%, rgba(248,250,252,0.65) 50%, rgba(248,250,252,0) 100%);
+  background: linear-gradient(90deg, rgba(248,250,252,0.4) 0%, rgba(248,250,252,0.2) 50%, rgba(248,250,252,0) 100%);
 }
 
 .theme-light #globe-overlay-glow {
-  background: radial-gradient(circle at 20% 20%, rgba(0, 163, 224, 0.18), transparent 45%), radial-gradient(circle at 85% 30%, rgba(34, 211, 238, 0.15), transparent 40%);
+  background: radial-gradient(circle at 20% 20%, rgba(0, 163, 224, 0.05), transparent 45%), radial-gradient(circle at 85% 30%, rgba(34, 211, 238, 0.03), transparent 40%);
 }
 
 .theme-light .theme-invert {
