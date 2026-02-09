@@ -1,8 +1,9 @@
 /**
- * Build data/demo.json and data/country-geojson.json from UNDP raw data.
+ * Build data/demo.json and data/country-geojson.json for AIDIN.
  * Run from repo root: node scripts/build-demo-data.js
  * Requires: undp/ui/database/raw/ (scores.csv, pillar-definitions.csv, definitions.csv,
  *   countries-manifest.csv, latlon.json, country-geojson.json)
+ * Uses: data/aidin-schema.json for AIDIN pillar and tier definitions
  */
 
 const fs = require('fs');
@@ -10,8 +11,21 @@ const path = require('path');
 
 const RAW_DIR = path.join(__dirname, '..', 'undp', 'ui', 'database', 'raw');
 const OUT_DIR = path.join(__dirname, '..', 'data');
+const SCHEMA_FILE = path.join(__dirname, '..', 'data', 'aidin-schema.json');
 
-const STAGE_NAMES = ['Basic', 'Opportunistic', 'Systematic', 'Differentiating', 'Transformational'];
+// Load AIDIN schema
+let AIDIN_SCHEMA = null;
+if (fs.existsSync(SCHEMA_FILE)) {
+  AIDIN_SCHEMA = JSON.parse(fs.readFileSync(SCHEMA_FILE, 'utf8'));
+}
+
+const TIER_NAMES = AIDIN_SCHEMA?.tiers?.names || ['Foundational', 'Emerging', 'Scaling', 'Frontier'];
+const TIER_THRESHOLDS = AIDIN_SCHEMA?.tiers?.thresholds || {
+  Foundational: { min: 0, max: 1.5 },
+  Emerging: { min: 1.5, max: 2.5 },
+  Scaling: { min: 2.5, max: 3.5 },
+  Frontier: { min: 3.5, max: 4.0 }
+};
 
 function parseCSV(content) {
   const lines = content.split(/\r?\n/).filter(Boolean);
@@ -54,10 +68,20 @@ function parseCSVLine(line) {
   return out;
 }
 
-function getStage(score) {
+function getTier(score) {
   const n = parseFloat(score);
-  if (!Number.isFinite(n)) return 1;
-  return Math.max(Math.floor(n), 1);
+  if (!Number.isFinite(n)) return 0;
+  // Convert 1-5.99 scale to 0-4 scale for AIDIN tiers
+  const normalizedScore = Math.max(0, Math.min(4, (n - 1) * (4 / 4.99)));
+  return normalizedScore;
+}
+
+function getTierFromScore(score) {
+  const normalizedScore = getTier(score);
+  if (normalizedScore < TIER_THRESHOLDS.Emerging.min) return 0; // Foundational
+  if (normalizedScore < TIER_THRESHOLDS.Scaling.min) return 1; // Emerging
+  if (normalizedScore < TIER_THRESHOLDS.Frontier.min) return 2; // Scaling
+  return 3; // Frontier
 }
 
 function roundNumber(num, decimals = 2) {
@@ -65,17 +89,17 @@ function roundNumber(num, decimals = 2) {
   return Math.round(num * Math.pow(10, decimals)) / Math.pow(10, decimals);
 }
 
-function getStageInfo(value, pillar, subpillar, definitions) {
+function getTierInfo(value, pillar, dimension) {
   if (value == null) return null;
-  const stage = Math.min(getStage(value), 5);
-  const stageName = STAGE_NAMES[stage - 1];
-  const def = definitions.find(
-    (d) =>
-      String(d['Pillar'] || '').toLowerCase() === String(pillar || '').toLowerCase() &&
-      (!subpillar || String(d['Sub-Pillar'] || '').toLowerCase() === String(subpillar || '').toLowerCase())
-  );
-  const description = def && def[stageName] ? def[stageName] : '';
-  return { number: stage, name: stageName, description: description || '' };
+  const tierIndex = getTierFromScore(value);
+  const tierName = TIER_NAMES[tierIndex];
+  const tierDesc = AIDIN_SCHEMA?.tiers?.descriptions?.[tierName] || '';
+  return { 
+    number: tierIndex + 1, 
+    name: tierName, 
+    description: tierDesc,
+    score: roundNumber(value)
+  };
 }
 
 function getPillarScore(scores, countryName, pillar) {
@@ -110,47 +134,46 @@ function getOverallScore(scores, countryName) {
 }
 
 function main() {
-  if (!fs.existsSync(RAW_DIR)) {
-    console.error('Raw data dir not found:', RAW_DIR);
-    process.exit(1);
-  }
-
-  const pillarDefs = parseCSV(fs.readFileSync(path.join(RAW_DIR, 'pillar-definitions.csv'), 'utf8'));
-  const definitions = parseCSV(fs.readFileSync(path.join(RAW_DIR, 'definitions.csv'), 'utf8'));
-  const countriesManifest = parseCSV(fs.readFileSync(path.join(RAW_DIR, 'countries-manifest.csv'), 'utf8'));
-  const scores = parseCSV(fs.readFileSync(path.join(RAW_DIR, 'scores.csv'), 'utf8'));
-  const latlon = JSON.parse(fs.readFileSync(path.join(RAW_DIR, 'latlon.json'), 'utf8'));
-  const geojson = JSON.parse(fs.readFileSync(path.join(RAW_DIR, 'country-geojson.json'), 'utf8'));
-
-  const pillarNames = pillarDefs.map((p) => (p['Pillar'] || '').trim()).filter(Boolean);
-  const pillarColorMap = {};
-  pillarDefs.forEach((p) => {
-    const name = (p['Pillar'] || '').trim();
-    if (!name) return;
-    pillarColorMap[name] = {
-      base: (p['ColorBase'] || '').trim(),
-      triple: [(p['ColorTriple1'] || '').trim(), (p['ColorTriple2'] || '').trim(), (p['ColorTriple3'] || '').trim()].filter(Boolean),
-    };
-  });
-
+  // Build AIDIN pillar structure from schema
+  const aidinPillars = {
+    enabling: AIDIN_SCHEMA?.pillars?.enabling || [],
+    outcome: AIDIN_SCHEMA?.pillars?.outcome || []
+  };
+  
+  const allPillarNames = [
+    ...aidinPillars.enabling.map(p => p.name),
+    ...aidinPillars.outcome.map(p => p.name)
+  ];
+  
+  const pillarColorMap = AIDIN_SCHEMA?.pillarColorMap || {};
   const pillars = {};
-  pillarNames.forEach((pillar) => {
-    const subpillars = [...new Set(
-      definitions
-        .filter((d) => String(d['Pillar'] || '').toLowerCase() === String(pillar || '').toLowerCase())
-        .map((d) => (d['Sub-Pillar'] || '').trim())
-        .filter(Boolean)
-    )];
-    pillars[pillar] = subpillars.length ? subpillars : (pillar === 'Overall' ? ['Overall'] : []);
+  
+  // Build pillar structure with dimensions
+  aidinPillars.enabling.forEach(pillar => {
+    pillars[pillar.name] = pillar.dimensions || [];
   });
-  if (pillars['Overall'] === undefined) pillars['Overall'] = ['Overall'];
+  aidinPillars.outcome.forEach(pillar => {
+    pillars[pillar.name] = pillar.dimensions || [];
+  });
 
-  const countriesWithOverall = new Set();
-  scores.forEach((s) => {
-    if (!(s['Pillar'] || '').trim() && !(s['Sub-Pillar'] || '').trim() && (s['Country Name'] || '').trim()) {
-      countriesWithOverall.add(String(s['Country Name']).trim());
+  // Try to load UNDP data if available (for country list and coordinates)
+  let countriesManifest = [];
+  let scores = [];
+  let latlon = [];
+  let geojson = { type: 'FeatureCollection', features: [] };
+  
+  if (fs.existsSync(RAW_DIR)) {
+    try {
+      countriesManifest = parseCSV(fs.readFileSync(path.join(RAW_DIR, 'countries-manifest.csv'), 'utf8'));
+      scores = parseCSV(fs.readFileSync(path.join(RAW_DIR, 'scores.csv'), 'utf8'));
+      latlon = JSON.parse(fs.readFileSync(path.join(RAW_DIR, 'latlon.json'), 'utf8'));
+      geojson = JSON.parse(fs.readFileSync(path.join(RAW_DIR, 'country-geojson.json'), 'utf8'));
+    } catch (err) {
+      console.warn('Warning: Could not load some UNDP data files:', err.message);
     }
-  });
+  } else {
+    console.warn('Warning: UNDP raw data directory not found. Using minimal data structure.');
+  }
 
   const countriesList = [];
   const globeData = [];
@@ -171,63 +194,96 @@ function main() {
   const latlonByAlpha2 = {};
   latlon.forEach((ll) => { latlonByAlpha2[ll.alpha2] = { latitude: ll.latitude, longitude: ll.longitude }; });
 
+  // Get unique country names from scores or manifest
   const countryNamesWithScores = new Set();
   scores.forEach((s) => {
     const cn = (s['Country Name'] || '').trim();
     if (cn) countryNamesWithScores.add(cn);
   });
+  
+  // If no scores, use manifest countries
+  if (countryNamesWithScores.size === 0) {
+    countriesManifest.forEach((c) => {
+      const name = (c['Country or Area'] || '').trim();
+      if (name) countryNamesWithScores.add(name);
+    });
+  }
 
+  // Process each country
   countryNamesWithScores.forEach((countryName) => {
     const manifestRow = countriesManifest.find(
       (c) => String(c['Country or Area'] || '').trim().toLowerCase() === countryName.toLowerCase()
     );
-    if (!manifestRow) return;
-    const alpha2 = (manifestRow['ISO-alpha2 Code'] || '').trim();
-    const alpha3 = (manifestRow['ISO-alpha3 Code'] || '').trim();
-    const name = (manifestRow['Country or Area'] || '').trim();
-    const region = (manifestRow['Region Name'] || '').trim();
-    const subregion = (manifestRow['Sub-region Name'] || '').trim();
-    const unMember = (manifestRow['UN Member States'] || '').trim().toLowerCase() === 'x';
+    
+    // Create country entry even without manifest (for demo purposes)
+    const alpha2 = manifestRow ? (manifestRow['ISO-alpha2 Code'] || '').trim() : '';
+    const alpha3 = manifestRow ? (manifestRow['ISO-alpha3 Code'] || '').trim() : countryName.substring(0, 3).toUpperCase();
+    const name = manifestRow ? (manifestRow['Country or Area'] || '').trim() : countryName;
+    const region = manifestRow ? (manifestRow['Region Name'] || '').trim() : '';
+    const subregion = manifestRow ? (manifestRow['Sub-region Name'] || '').trim() : '';
+    const unMember = manifestRow ? (manifestRow['UN Member States'] || '').trim().toLowerCase() === 'x' : false;
     const ll = latlonByAlpha2[alpha2];
+    
+    // Calculate overall score (average of all pillar scores or use existing)
     const overallScore = getOverallScore(scores, countryName);
-    if (overallScore == null) return;
-
+    
     const scoresOut = {};
-    const overallStage = getStageInfo(overallScore, null, null, definitions);
-    if (overallStage) {
-      const defOverall = definitions.find((d) => !(d['Pillar'] || '').trim() && !(d['Sub-Pillar'] || '').trim());
-      const desc = defOverall && defOverall[overallStage.name] ? defOverall[overallStage.name] : '';
-      scoresOut['Overall'] = {
-        score: roundNumber(overallScore),
-        stage: { number: overallStage.number, name: overallStage.name, description: desc || '' },
-      };
-    }
-
-    pillarNames.filter((p) => p !== 'Overall').forEach((pillar) => {
-      const pillarScore = getPillarScore(scores, countryName, pillar);
-      const stageInfo = getStageInfo(pillarScore, pillar, null, definitions);
-      const subpillarList = pillars[pillar] || [];
-      const pillarScores = {};
-      if (stageInfo) {
-        pillarScores.stage = {
-          number: stageInfo.number,
-          name: stageInfo.name,
-          description: stageInfo.description || '',
+    
+    // Calculate overall tier
+    if (overallScore != null) {
+      const overallTier = getTierInfo(overallScore, null, null);
+      if (overallTier) {
+        scoresOut['Overall'] = {
+          score: overallTier.score,
+          tier: { 
+            number: overallTier.number, 
+            name: overallTier.name, 
+            description: overallTier.description 
+          },
         };
       }
-      subpillarList.forEach((sp) => {
-        const subScore = getSubpillarScore(scores, countryName, pillar, sp);
-        const spStage = getStageInfo(subScore, pillar, sp, definitions);
-        if (spStage) {
-          pillarScores[sp] = {
-            stage: {
-              number: spStage.number,
-              name: spStage.name,
-              description: spStage.description || '',
+    }
+
+    // Process AIDIN pillars
+    // Since UNDP data has different pillar names, we'll generate tier data based on overall score
+    // with some variation to make it realistic
+    const baseScore = overallScore || 2.5;
+    
+    allPillarNames.forEach((pillar) => {
+      // Generate a score with some variation from overall (for demo purposes)
+      // In production, this would come from actual AIDIN data
+      const variation = (Math.random() - 0.5) * 1.0; // ±0.5 variation
+      const pillarScore = Math.max(0, Math.min(4, baseScore + variation));
+      const tierInfo = getTierInfo(pillarScore, pillar, null);
+      const dimensionList = pillars[pillar] || [];
+      const pillarScores = {};
+      
+      if (tierInfo) {
+        pillarScores.tier = {
+          number: tierInfo.number,
+          name: tierInfo.name,
+          description: tierInfo.description,
+          score: roundNumber(pillarScore)
+        };
+      }
+      
+      // Process dimensions - generate scores with smaller variation
+      dimensionList.forEach((dimension) => {
+        const dimVariation = (Math.random() - 0.5) * 0.6; // ±0.3 variation
+        const dimensionScore = Math.max(0, Math.min(4, pillarScore + dimVariation));
+        const dimTier = getTierInfo(dimensionScore, pillar, dimension);
+        if (dimTier) {
+          pillarScores[dimension] = {
+            tier: {
+              number: dimTier.number,
+              name: dimTier.name,
+              description: dimTier.description,
+              score: roundNumber(dimensionScore)
             },
           };
         }
       });
+      
       if (Object.keys(pillarScores).length) scoresOut[pillar] = pillarScores;
     });
 
@@ -244,28 +300,39 @@ function main() {
     });
   });
 
-  const countriesForSearch = countriesList.filter((c) => countryNamesWithScores.has(c.name));
-  if (countriesForSearch.length === 0) {
-    countriesForSearch.push(...countriesList.slice(0, 50));
-  }
 
   const demo = {
-    countries: countriesForSearch.map((c) => ({ name: c.name, alpha2: c.alpha2, alpha3: c.alpha3 })),
-    ancillary: {
-      pillarNames,
-      pillarColorMap,
-      pillars,
-    },
-    definitions: definitions.map((d) => ({
-      Pillar: d['Pillar'],
-      'Sub-Pillar': d['Sub-Pillar'],
-      Definition: d['Definition'],
-      Basic: d['Basic'],
-      Opportunistic: d['Opportunistic'],
-      Systematic: d['Systematic'],
-      Differentiating: d['Differentiating'],
-      Transformational: d['Transformational'],
+    countries: countriesList.filter((c) => countryNamesWithScores.has(c.name)).map((c) => ({ 
+      name: c.name, 
+      alpha2: c.alpha2, 
+      alpha3: c.alpha3 
     })),
+    ancillary: {
+      pillarNames: allPillarNames,
+      pillarColorMap: pillarColorMap,
+      pillars: pillars,
+      pillarCategories: {
+        enabling: aidinPillars.enabling.map(p => p.name),
+        outcome: aidinPillars.outcome.map(p => p.name)
+      },
+      tiers: {
+        names: TIER_NAMES,
+        thresholds: TIER_THRESHOLDS,
+        descriptions: AIDIN_SCHEMA?.tiers?.descriptions || {}
+      }
+    },
+    definitions: allPillarNames.map((pillarName) => {
+      const pillarDef = [...aidinPillars.enabling, ...aidinPillars.outcome].find(p => p.name === pillarName);
+      return {
+        Pillar: pillarName,
+        'Sub-Pillar': '',
+        Definition: pillarDef ? `${pillarName} pillar for industrial AI and digital transformation` : '',
+        Foundational: TIER_THRESHOLDS.Foundational ? AIDIN_SCHEMA?.tiers?.descriptions?.Foundational || '' : '',
+        Emerging: TIER_THRESHOLDS.Emerging ? AIDIN_SCHEMA?.tiers?.descriptions?.Emerging || '' : '',
+        Scaling: TIER_THRESHOLDS.Scaling ? AIDIN_SCHEMA?.tiers?.descriptions?.Scaling || '' : '',
+        Frontier: TIER_THRESHOLDS.Frontier ? AIDIN_SCHEMA?.tiers?.descriptions?.Frontier || '' : ''
+      };
+    }),
     globeData: globeData.filter((c) => c.latitude != null && c.longitude != null),
   };
 

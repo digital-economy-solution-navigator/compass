@@ -42,6 +42,25 @@
         </div>
       </section>
       <section id="pillars-section" class="container px-4 mx-auto py-8"></section>
+      <section id="visualizations-section" class="container px-4 mx-auto py-8" style="border-top: var(--border);">
+        <h2 class="text-2xl font-bold mb-6">Visualizations</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="border rounded-lg p-4 theme-border theme-card">
+            <h3 class="font-semibold mb-4">Pillar Radar Chart</h3>
+            <div id="radar-chart-container"></div>
+          </div>
+          <div class="border rounded-lg p-4 theme-border theme-card">
+            <h3 class="font-semibold mb-4">Pillar Bar Chart</h3>
+            <div id="bar-chart-container"></div>
+          </div>
+        </div>
+      </section>
+      <section id="benchmarking-section" class="container px-4 mx-auto py-8" style="border-top: var(--border);">
+        <div id="benchmarking-container"></div>
+      </section>
+      <section id="pathways-section" class="container px-4 mx-auto py-8" style="border-top: var(--border);">
+        <div id="pathways-container"></div>
+      </section>
     </main>
     <footer class="footer-background-color theme-text" id="footer"></footer>
   </div>
@@ -58,7 +77,91 @@
   <div id="mobile-menu" class="fixed top-[75px] left-0 h-full w-full custom-mobile-bg-color z-50 shadow-lg transform -translate-x-full transition-transform duration-300" style="top: 75px;"></div>
   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
   <script src="js/app.js"></script>
+  <script src="js/visualizations.js"></script>
+  <script src="js/benchmarking.js"></script>
+  <script src="js/pathway-navigator.js"></script>
   <script>
+    // Store country data globally for pathway navigator
+    let countryData = null;
+    let currentCountry = null;
+    
+    // Override initCountryPage to store data
+    const originalInitCountryPage = window.initCountryPage;
+    window.initCountryPage = function() {
+      if (originalInitCountryPage) originalInitCountryPage();
+      
+      // Wait for data to load, then render new components
+      setTimeout(() => {
+        const data = window.getData && window.getData();
+        if (data) {
+          countryData = data;
+          const urlParams = new URLSearchParams(window.location.search);
+          const code = urlParams.get('code') || window.location.hash.replace('#', '');
+          if (code && data.globeData) {
+            currentCountry = data.globeData.find(c => c.alpha3 === code.toUpperCase());
+            if (currentCountry) {
+              renderNewComponents();
+            }
+          }
+        }
+      }, 1000);
+    };
+    
+    function renderNewComponents() {
+      if (!currentCountry || !countryData) return;
+      
+      // Load solutions mapping and render pathway navigator
+      fetch('data/solutions-mapping.json')
+        .then(res => res.json())
+        .then(solutionsMapping => {
+          // Render pathway navigator
+          const pathwaysContainer = document.getElementById('pathways-container');
+          if (pathwaysContainer && window.PathwayNavigator) {
+            window.PathwayNavigator.render(currentCountry, countryData, solutionsMapping, 'pathways-container');
+          }
+          
+          // Render visualizations
+          if (window.Visualizations) {
+            const radarContainer = document.getElementById('radar-chart-container');
+            const barContainer = document.getElementById('bar-chart-container');
+            if (radarContainer) {
+              window.Visualizations.renderRadarChart(currentCountry, countryData, 'radar-chart-container');
+            }
+            if (barContainer) {
+              window.Visualizations.renderBarChart(currentCountry, countryData, 'bar-chart-container');
+            }
+          }
+          
+          // Render benchmarking
+          if (window.Benchmarking) {
+            const benchmarkingContainer = document.getElementById('benchmarking-container');
+            if (benchmarkingContainer) {
+              window.Benchmarking.render(currentCountry, countryData, 'benchmarking-container');
+            }
+          }
+        })
+        .catch(err => {
+          console.error('Error loading solutions mapping:', err);
+          // Still render other components even if solutions fail
+          if (window.Visualizations) {
+            const radarContainer = document.getElementById('radar-chart-container');
+            const barContainer = document.getElementById('bar-chart-container');
+            if (radarContainer) {
+              window.Visualizations.renderRadarChart(currentCountry, countryData, 'radar-chart-container');
+            }
+            if (barContainer) {
+              window.Visualizations.renderBarChart(currentCountry, countryData, 'bar-chart-container');
+            }
+          }
+          if (window.Benchmarking) {
+            const benchmarkingContainer = document.getElementById('benchmarking-container');
+            if (benchmarkingContainer) {
+              window.Benchmarking.render(currentCountry, countryData, 'benchmarking-container');
+            }
+          }
+        });
+    }
+    
     document.addEventListener('DOMContentLoaded', function() {
       if (window.initCountryPage) window.initCountryPage();
     });

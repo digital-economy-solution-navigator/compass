@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="description" content="AI & Digital for Industry Navigator - Evidence Submission" />
+  <title>Submit Evidence | AI & Digital for Industry Navigator</title>
+  <link rel="shortcut icon" href="https://www.unido.org/themes/custom/unido_radix/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        screens: { sm: '300px', md: '768px', lg: '1024px' },
+        extend: {
+          colors: {
+            accent: { DEFAULT: '#00A3E0', hover: '#0891B2' }
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="css/global.css" />
+</head>
+<body class="flex flex-col h-full">
+  <div id="app" class="flex flex-col h-full">
+    <header class="flex-shrink-0 border-b custom-nav-shadow header-nav-bg-color" id="header"></header>
+    <main class="flex-1 theme-bg theme-text py-8">
+      <div class="container mx-auto px-4 max-w-3xl">
+        <div class="mb-8">
+          <h1 class="text-3xl font-bold mb-2">Submit Evidence</h1>
+          <p class="text-gray-600">Help improve the accuracy of country assessments by submitting evidence such as national strategies, budget allocations, or policy documents.</p>
+        </div>
+        
+        <form id="evidence-form" class="space-y-6">
+          <div class="border rounded-lg p-6 theme-border theme-card">
+            <h2 class="text-xl font-semibold mb-4">Evidence Details</h2>
+            
+            <div class="space-y-4">
+              <div>
+                <label for="country" class="block text-sm font-medium mb-2">Country *</label>
+                <select id="country" name="country" required class="w-full rounded-lg border px-4 py-2 theme-border theme-text" style="background-color: var(--controls-bg);">
+                  <option value="">Select a country</option>
+                </select>
+              </div>
+              
+              <div>
+                <label for="evidence-type" class="block text-sm font-medium mb-2">Evidence Type *</label>
+                <select id="evidence-type" name="evidenceType" required class="w-full rounded-lg border px-4 py-2 theme-border theme-text" style="background-color: var(--controls-bg);">
+                  <option value="">Select evidence type</option>
+                  <option value="national-strategy">National Strategy Document</option>
+                  <option value="budget-allocation">Budget Allocation</option>
+                  <option value="policy-document">Policy Document</option>
+                  <option value="legislation">Legislation</option>
+                  <option value="research-report">Research Report</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              
+              <div>
+                <label for="pillar" class="block text-sm font-medium mb-2">Relevant Pillar(s)</label>
+                <select id="pillar" name="pillar" multiple class="w-full rounded-lg border px-4 py-2 theme-border theme-text" style="background-color: var(--controls-bg);">
+                  <option value="Infrastructure">Infrastructure</option>
+                  <option value="Data">Data</option>
+                  <option value="Innovation Ecosystem">Innovation Ecosystem</option>
+                  <option value="Capital">Capital</option>
+                  <option value="Governance">Governance</option>
+                  <option value="Digital Adoption">Digital Adoption</option>
+                  <option value="AI Adoption">AI Adoption</option>
+                  <option value="Digital Development">Digital Development</option>
+                  <option value="AI Development">AI Development</option>
+                </select>
+                <p class="text-xs text-gray-500 mt-1">Hold Ctrl/Cmd to select multiple</p>
+              </div>
+              
+              <div>
+                <label for="title" class="block text-sm font-medium mb-2">Title *</label>
+                <input type="text" id="title" name="title" required class="w-full rounded-lg border px-4 py-2 theme-border theme-text" style="background-color: var(--controls-bg);" placeholder="e.g., National AI Strategy 2024" />
+              </div>
+              
+              <div>
+                <label for="description" class="block text-sm font-medium mb-2">Description *</label>
+                <textarea id="description" name="description" required rows="4" class="w-full rounded-lg border px-4 py-2 theme-border theme-text" style="background-color: var(--controls-bg);" placeholder="Provide a brief description of the evidence"></textarea>
+              </div>
+              
+              <div>
+                <label for="document" class="block text-sm font-medium mb-2">Document (PDF, DOCX)</label>
+                <input type="file" id="document" name="document" accept=".pdf,.docx,.doc" class="w-full rounded-lg border px-4 py-2 theme-border theme-text" style="background-color: var(--controls-bg);" />
+                <p class="text-xs text-gray-500 mt-1">Maximum file size: 10MB</p>
+              </div>
+              
+              <div>
+                <label for="url" class="block text-sm font-medium mb-2">Source URL (if available)</label>
+                <input type="url" id="url" name="url" class="w-full rounded-lg border px-4 py-2 theme-border theme-text" style="background-color: var(--controls-bg);" placeholder="https://..." />
+              </div>
+            </div>
+          </div>
+          
+          <div class="border rounded-lg p-6 theme-border theme-card">
+            <h2 class="text-xl font-semibold mb-4">Contact Information</h2>
+            
+            <div class="space-y-4">
+              <div>
+                <label for="submitter-name" class="block text-sm font-medium mb-2">Your Name *</label>
+                <input type="text" id="submitter-name" name="submitterName" required class="w-full rounded-lg border px-4 py-2 theme-border theme-text" style="background-color: var(--controls-bg);" />
+              </div>
+              
+              <div>
+                <label for="submitter-email" class="block text-sm font-medium mb-2">Email Address *</label>
+                <input type="email" id="submitter-email" name="submitterEmail" required class="w-full rounded-lg border px-4 py-2 theme-border theme-text" style="background-color: var(--controls-bg);" />
+              </div>
+              
+              <div>
+                <label for="submitter-organization" class="block text-sm font-medium mb-2">Organization</label>
+                <input type="text" id="submitter-organization" name="submitterOrganization" class="w-full rounded-lg border px-4 py-2 theme-border theme-text" style="background-color: var(--controls-bg);" />
+              </div>
+            </div>
+          </div>
+          
+          <div class="flex items-center gap-4">
+            <button type="submit" class="px-6 py-3 rounded-full text-white font-semibold theme-button" style="background-color: var(--button-primary);">
+              Submit Evidence
+            </button>
+            <a href="index.html" class="px-6 py-3 rounded-full border theme-border theme-text">
+              Cancel
+            </a>
+          </div>
+          
+          <div id="submission-status" class="hidden"></div>
+        </form>
+      </div>
+    </main>
+    <footer class="footer-background-color theme-text" id="footer"></footer>
+  </div>
+  <script src="js/app.js"></script>
+  <script src="js/evidence-portal.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.initEvidencePage) window.initEvidencePage();
+    });
+  </script>
+</body>
+</html>
+

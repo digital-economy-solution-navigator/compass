@@ -1,0 +1,107 @@
+{
+  "tiers": {
+    "names": ["Foundational", "Emerging", "Scaling", "Frontier"],
+    "thresholds": {
+      "Foundational": { "min": 0, "max": 1.5 },
+      "Emerging": { "min": 1.5, "max": 2.5 },
+      "Scaling": { "min": 2.5, "max": 3.5 },
+      "Frontier": { "min": 3.5, "max": 4.0 }
+    },
+    "descriptions": {
+      "Foundational": "Lacks most enabling factors; very limited adoption.",
+      "Emerging": "Some enabling factors present; early signs of adoption.",
+      "Scaling": "Strong enabling factors, but limited capacity in outcome areas.",
+      "Frontier": "Advanced ecosystems with widespread use and export capacity."
+    }
+  },
+  "pillars": {
+    "enabling": [
+      {
+        "name": "Infrastructure",
+        "dimensions": ["Connectivity", "Compute Capacity", "Energy"],
+        "color": "#4C9F38"
+      },
+      {
+        "name": "Data",
+        "dimensions": ["Availability", "Interoperability", "Digital Public Infrastructure (DPI)"],
+        "color": "#0A97D9"
+      },
+      {
+        "name": "Innovation Ecosystem",
+        "dimensions": ["Talent", "Research Institutions", "Corporate market structure"],
+        "color": "#FD6925"
+      },
+      {
+        "name": "Capital",
+        "dimensions": ["Public", "Private (Domestic vs. Foreign)"],
+        "color": "#A21942"
+      },
+      {
+        "name": "Governance",
+        "dimensions": ["National Strategy", "Regulatory Environment", "Enforcement"],
+        "color": "#19486A"
+      }
+    ],
+    "outcome": [
+      {
+        "name": "Digital Adoption",
+        "dimensions": ["Cyber-Physical Systems (CPS)", "Automation Maturity", "Digital Twins"],
+        "color": "#DE1568"
+      },
+      {
+        "name": "AI Adoption",
+        "dimensions": ["Operations Optimization", "Smart Logistics"],
+        "color": "#6366f1"
+      },
+      {
+        "name": "Digital Development",
+        "dimensions": ["Servitisation", "Digital Product Innovation"],
+        "color": "#00A3E0"
+      },
+      {
+        "name": "AI Development",
+        "dimensions": ["AI Product Innovation"],
+        "color": "#0891B2"
+      }
+    ]
+  },
+  "pillarColorMap": {
+    "Infrastructure": {
+      "base": "#4C9F38",
+      "triple": ["#FFFFFF", "#79ed8a", "#4C9F38"]
+    },
+    "Data": {
+      "base": "#0A97D9",
+      "triple": ["#FFFFFF", "#12c0c9", "#0A97D9"]
+    },
+    "Innovation Ecosystem": {
+      "base": "#FD6925",
+      "triple": ["#FFFFFF", "#edc26d", "#FD6925"]
+    },
+    "Capital": {
+      "base": "#A21942",
+      "triple": ["#FFFFFF", "#d67240", "#A21942"]
+    },
+    "Governance": {
+      "base": "#19486A",
+      "triple": ["#FFFFFF", "#54deeb", "#19486A"]
+    },
+    "Digital Adoption": {
+      "base": "#DE1568",
+      "triple": ["#FFFFFF", "#ffab8a", "#DE1568"]
+    },
+    "AI Adoption": {
+      "base": "#6366f1",
+      "triple": ["#FFFFFF", "#a2e0f5", "#6366f1"]
+    },
+    "Digital Development": {
+      "base": "#00A3E0",
+      "triple": ["#FFFFFF", "#7dd3fc", "#00A3E0"]
+    },
+    "AI Development": {
+      "base": "#0891B2",
+      "triple": ["#FFFFFF", "#5eead4", "#0891B2"]
+    }
+  }
+}
+

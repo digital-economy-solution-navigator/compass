@@ -1,0 +1,138 @@
+{
+  "Infrastructure": [
+    {
+      "title": "Digital Infrastructure Development Program",
+      "description": "Comprehensive program to build connectivity, compute capacity, and energy infrastructure",
+      "category": "Infrastructure Development",
+      "pillars": ["Infrastructure"],
+      "tiers": ["Foundational", "Emerging"],
+      "dimensions": ["Connectivity", "Compute Capacity", "Energy"],
+      "url": "https://www.unido.org/solutions/digital-infrastructure"
+    },
+    {
+      "title": "Connectivity Enhancement Initiative",
+      "description": "Focus on improving broadband and mobile connectivity",
+      "category": "Infrastructure Development",
+      "pillars": ["Infrastructure"],
+      "tiers": ["Foundational", "Emerging"],
+      "dimensions": ["Connectivity"],
+      "url": "https://www.unido.org/solutions/connectivity"
+    }
+  ],
+  "Data": [
+    {
+      "title": "Data Governance Framework",
+      "description": "Establish data availability, interoperability, and DPI standards",
+      "category": "Policy Frameworks",
+      "pillars": ["Data"],
+      "tiers": ["Foundational", "Emerging", "Scaling"],
+      "dimensions": ["Availability", "Interoperability", "Digital Public Infrastructure (DPI)"],
+      "url": "https://www.unido.org/solutions/data-governance"
+    },
+    {
+      "title": "Digital Public Infrastructure Setup",
+      "description": "Implement foundational DPI components",
+      "category": "Infrastructure Development",
+      "pillars": ["Data"],
+      "tiers": ["Foundational", "Emerging"],
+      "dimensions": ["Digital Public Infrastructure (DPI)"],
+      "url": "https://www.unido.org/solutions/dpi"
+    }
+  ],
+  "Innovation Ecosystem": [
+    {
+      "title": "Tech Talent Development Program",
+      "description": "Build talent pipeline through education and training",
+      "category": "Upskilling Programs",
+      "pillars": ["Innovation Ecosystem"],
+      "tiers": ["Foundational", "Emerging", "Scaling"],
+      "dimensions": ["Talent"],
+      "url": "https://www.unido.org/solutions/talent-development"
+    },
+    {
+      "title": "Research Institution Partnership",
+      "description": "Strengthen research institutions and corporate partnerships",
+      "category": "Center of Excellence Setups",
+      "pillars": ["Innovation Ecosystem"],
+      "tiers": ["Emerging", "Scaling", "Frontier"],
+      "dimensions": ["Research Institutions", "Corporate market structure"],
+      "url": "https://www.unido.org/solutions/research-partnerships"
+    }
+  ],
+  "Capital": [
+    {
+      "title": "Investment Facilitation Framework",
+      "description": "Attract public and private capital for digital transformation",
+      "category": "Policy Frameworks",
+      "pillars": ["Capital"],
+      "tiers": ["Foundational", "Emerging", "Scaling"],
+      "dimensions": ["Public", "Private (Domestic vs. Foreign)"],
+      "url": "https://www.unido.org/solutions/investment-facilitation"
+    }
+  ],
+  "Governance": [
+    {
+      "title": "National Digital Strategy Development",
+      "description": "Create comprehensive national strategy for AI and digital transformation",
+      "category": "Policy Frameworks",
+      "pillars": ["Governance"],
+      "tiers": ["Foundational", "Emerging"],
+      "dimensions": ["National Strategy"],
+      "url": "https://www.unido.org/solutions/national-strategy"
+    },
+    {
+      "title": "Regulatory Environment Enhancement",
+      "description": "Strengthen regulatory framework and enforcement",
+      "category": "Policy Frameworks",
+      "pillars": ["Governance"],
+      "tiers": ["Foundational", "Emerging", "Scaling"],
+      "dimensions": ["Regulatory Environment", "Enforcement"],
+      "url": "https://www.unido.org/solutions/regulatory-enhancement"
+    }
+  ],
+  "Digital Adoption": [
+    {
+      "title": "Industry 4.0 Adoption Program",
+      "description": "Promote adoption of cyber-physical systems, automation, and digital twins",
+      "category": "Upskilling Programs",
+      "pillars": ["Digital Adoption"],
+      "tiers": ["Emerging", "Scaling", "Frontier"],
+      "dimensions": ["Cyber-Physical Systems (CPS)", "Automation Maturity", "Digital Twins"],
+      "url": "https://www.unido.org/solutions/industry-4"
+    }
+  ],
+  "AI Adoption": [
+    {
+      "title": "AI Operations Optimization",
+      "description": "Implement AI for operations optimization and smart logistics",
+      "category": "Upskilling Programs",
+      "pillars": ["AI Adoption"],
+      "tiers": ["Scaling", "Frontier"],
+      "dimensions": ["Operations Optimization", "Smart Logistics"],
+      "url": "https://www.unido.org/solutions/ai-operations"
+    }
+  ],
+  "Digital Development": [
+    {
+      "title": "Digital Product Innovation Hub",
+      "description": "Support servitisation and digital product innovation",
+      "category": "Center of Excellence Setups",
+      "pillars": ["Digital Development"],
+      "tiers": ["Scaling", "Frontier"],
+      "dimensions": ["Servitisation", "Digital Product Innovation"],
+      "url": "https://www.unido.org/solutions/digital-innovation"
+    }
+  ],
+  "AI Development": [
+    {
+      "title": "AI Product Innovation Lab",
+      "description": "Establish center for AI product development and innovation",
+      "category": "Center of Excellence Setups",
+      "pillars": ["AI Development"],
+      "tiers": ["Scaling", "Frontier"],
+      "dimensions": ["AI Product Innovation"],
+      "url": "https://www.unido.org/solutions/ai-innovation"
+    }
+  ]
+}
+

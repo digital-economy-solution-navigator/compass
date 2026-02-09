@@ -36,6 +36,7 @@
           <a href="about.html" class="text-sm text-white/70 hover:text-white font-medium theme-muted">About</a>
           <a href="data.html" class="text-sm text-white/70 hover:text-white font-medium theme-muted">Data</a>
           <a href="methodology.html" class="text-sm text-white/70 hover:text-white font-medium theme-muted">Methodology</a>
+          <a href="evidence.html" class="text-sm text-white/70 hover:text-white font-medium theme-muted">Submit Evidence</a>
         </div>
         <div class="flex items-center justify-end gap-3">
           <button type="button" id="search-trigger" class="px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/70 hover:text-white theme-muted" aria-label="Search">Search</button>
@@ -68,6 +69,7 @@
         <a href="about.html" class="text-base w-full font-medium text-white/80 hover:text-white theme-muted">About</a>
         <a href="data.html" class="text-base w-full font-medium text-white/80 hover:text-white theme-muted">Data</a>
         <a href="methodology.html" class="text-base w-full font-medium text-white/80 hover:text-white theme-muted">Methodology</a>
+        <a href="evidence.html" class="text-base w-full font-medium text-white/80 hover:text-white theme-muted">Submit Evidence</a>
       </nav>
     `;
   }
@@ -107,7 +109,7 @@
     hero.innerHTML = `
       <div>
         <h1 class="text-[38px] sm:text-[40px] md:text-[42px] lg:text-[44px] leading-[1.05] font-semibold theme-text">Search a country to start the analysis.</h1>
-        <p class="text-[15px] sm:text-[16px] md:text-[17px] lg:text-[18px] leading-7 mt-4 text-left theme-muted">Jump directly into a country snapshot, then explore pillars, stages, and regional benchmarks.</p>
+        <p class="text-[15px] sm:text-[16px] md:text-[17px] lg:text-[18px] leading-7 mt-4 text-left theme-muted">Jump directly into a country snapshot, then explore pillars, tiers, and regional benchmarks.</p>
         <div class="mt-6 space-y-3">
           <div class="flex flex-col sm:flex-row gap-3">
             <input type="text" id="hero-search-input" class="w-full flex-1 rounded-2xl border px-4 py-3 text-sm theme-text theme-border" style="background-color: var(--controls-bg);" placeholder="Search country or ISO3 code" />
@@ -127,16 +129,41 @@
     const container = document.getElementById('pillar-filter');
     if (!container || !data) return;
     const ancillary = data.ancillary;
+    const categories = ancillary.pillarCategories || { enabling: [], outcome: [] };
+    const enablingPillars = categories.enabling || [];
+    const outcomePillars = categories.outcome || [];
+    const allPillars = [...enablingPillars, ...outcomePillars];
+    
     container.innerHTML = `
       <fieldset>
-        <div class="overflow-x-auto">
-          <div class="flex gap-2 min-w-max" id="pillar-radios"></div>
+        <div class="space-y-4">
+          ${enablingPillars.length > 0 ? `
+            <div>
+              <p class="text-xs uppercase tracking-[0.2em] mb-2 theme-muted">Enabling Pillars</p>
+              <div class="overflow-x-auto">
+                <div class="flex gap-2 min-w-max" id="pillar-radios-enabling"></div>
+              </div>
+            </div>
+          ` : ''}
+          ${outcomePillars.length > 0 ? `
+            <div>
+              <p class="text-xs uppercase tracking-[0.2em] mb-2 theme-muted">Outcome Pillars</p>
+              <div class="overflow-x-auto">
+                <div class="flex gap-2 min-w-max" id="pillar-radios-outcome"></div>
+              </div>
+            </div>
+          ` : ''}
+          ${allPillars.length === 0 ? `
+            <div class="overflow-x-auto">
+              <div class="flex gap-2 min-w-max" id="pillar-radios"></div>
+            </div>
+          ` : ''}
         </div>
       </fieldset>
     `;
-    const radios = document.getElementById('pillar-radios');
-    ancillary.pillarNames.forEach(function (pillar) {
-      const color = ancillary.pillarColorMap[pillar].base;
+    
+    function addPillarRadio(pillar, containerEl) {
+      const color = ancillary.pillarColorMap[pillar]?.base || '#6366f1';
       const checked = pillar === selectedPillar;
       const label = document.createElement('label');
       if (checked) {
@@ -161,8 +188,26 @@
         <p class="${checked ? 'font-semibold' : ''}" style="color: inherit;" id="${pillar}">${pillar}</p>
       `;
       label.querySelector('input').addEventListener('change', function () { onChange(pillar); });
-      radios.appendChild(label);
-    });
+      containerEl.appendChild(label);
+    }
+    
+    if (enablingPillars.length > 0) {
+      const enablingContainer = document.getElementById('pillar-radios-enabling');
+      enablingPillars.forEach(pillar => addPillarRadio(pillar, enablingContainer));
+    }
+    
+    if (outcomePillars.length > 0) {
+      const outcomeContainer = document.getElementById('pillar-radios-outcome');
+      outcomePillars.forEach(pillar => addPillarRadio(pillar, outcomeContainer));
+    }
+    
+    // Fallback for old data structure
+    if (allPillars.length === 0 && ancillary.pillarNames) {
+      const radios = document.getElementById('pillar-radios');
+      if (radios) {
+        ancillary.pillarNames.forEach(pillar => addPillarRadio(pillar, radios));
+      }
+    }
   }
 
   function arcPath(innerR, outerR, startDeg, endDeg) {
@@ -172,15 +217,15 @@
     return arc();
   }
 
-  function renderStageGauge(country, pillar, definitions, containerId) {
+  function renderTierGauge(country, pillar, definitions, containerId) {
     const container = document.getElementById(containerId);
     if (!container || !data || !country || !country.scores) return;
     const ancillary = data.ancillary;
     const scores = country.scores;
     const pillarInfo = scores[pillar];
-    const primaryColor = ancillary.pillarColorMap[pillar].base;
-    const subpillars = ancillary.pillars[pillar] || ['Overall'];
-    const numSub = pillar === 'Overall' ? ancillary.pillarNames.filter(function (p) { return p !== 'Overall'; }).length : subpillars.length;
+    const primaryColor = ancillary.pillarColorMap[pillar]?.base || '#6366f1';
+    const dimensions = ancillary.pillars[pillar] || [];
+    const numSub = pillar === 'Overall' ? ancillary.pillarNames.filter(function (p) { return p !== 'Overall'; }).length : dimensions.length;
     const size = 250;
     const ringSize = size / 4;
     const innerSize = ringSize / 1.5;
@@ -192,21 +237,22 @@
     for (let i = 0; i < numSub; i++) {
       const startRad = -110 + angleStep * i + offset;
       const endRad = startRad + angleStep - offset * 2;
-      const stageInfo = pillar === 'Overall' ? (scores[ancillary.pillarNames[i + 1]]?.stage) : (pillarInfo[subpillars[i]]?.stage);
-      const num = (stageInfo && stageInfo.number) ? stageInfo.number : 0;
-      const fillR = innerSize + (arcSize / 5) * num;
+      const tierInfo = pillar === 'Overall' ? (scores[ancillary.pillarNames[i + 1]]?.tier) : (pillarInfo[dimensions[i]]?.tier);
+      const num = (tierInfo && tierInfo.number) ? tierInfo.number : 0;
+      // Scale for 4 tiers instead of 5 stages
+      const fillR = innerSize + (arcSize / 4) * num;
       const outerPath = arcPath(innerSize, outerSize, startRad, endRad);
       const fillPath = arcPath(innerSize, fillR, startRad, endRad);
       paths += `<path d="${outerPath}" fill="${primaryColor}" opacity="0.2" /><path d="${fillPath}" fill="${primaryColor}" />`;
-      for (let s = 0; s < 5; s++) {
-        const r = innerSize + (arcSize / 5) * s;
+      for (let s = 0; s < 4; s++) {
+        const r = innerSize + (arcSize / 4) * s;
         const linePath = arcPath(r, r, startRad, endRad);
         paths += `<path d="${linePath}" fill="none" stroke="white" stroke-width="2" />`;
       }
     }
-    const overallStage = pillar === 'Overall' ? (scores.Overall?.stage) : (pillarInfo?.stage);
-    const stageNum = overallStage?.number || 0;
-    const stageName = overallStage?.name || 'No Data';
+    const overallTier = pillar === 'Overall' ? (scores.Overall?.tier) : (pillarInfo?.tier);
+    const tierNum = overallTier?.number || 0;
+    const tierName = overallTier?.name || 'No Data';
     container.innerHTML = `
       <div style="width:${size}px">
         <svg width="${size}" height="${size/2}" viewBox="0 0 ${size} ${size/6}" class="overflow-visible p-2">
@@ -214,7 +260,7 @@
         </svg>
         <div class="text-center relative">
           <div class="pt-3"><span class="text-xs text-white font-medium uppercase tracking-widest py-0.5 px-3 rounded-full" style="background:${primaryColor}">${pillar}</span></div>
-          <div class="mt-4"><p class="text-sm font-medium uppercase tracking-widest" style="color:${primaryColor}">Stage ${stageNum}: ${stageName}</p><p class="font-medium text-lg">${pillar === 'Overall' ? 'Overall' : pillar}</p><p class="text-sm text-gray-600">${overallStage?.description || ''}</p></div>
+          <div class="mt-4"><p class="text-sm font-medium uppercase tracking-widest" style="color:${primaryColor}">Tier ${tierNum}: ${tierName}</p><p class="font-medium text-lg">${pillar === 'Overall' ? 'Overall' : pillar}</p><p class="text-sm text-gray-600">${overallTier?.description || ''}</p></div>
         </div>
       </div>
     `;
@@ -223,17 +269,18 @@
   function renderReadinessScale(scores, activePillar, onPillarClick) {
     if (!data) return '';
     const ancillary = data.ancillary;
-    const pillars = ancillary.pillarNames;
+    const pillars = ancillary.pillarNames || [];
     let html = '<div class="flex h-6 border-t px-1 theme-border">';
     pillars.forEach(function (pillar) {
       const info = scores && scores[pillar];
-      const stage = info?.stage;
-      const percent = (stage && stage.number) ? stage.number * 20 : 0;
-      const color = ancillary.pillarColorMap[pillar].base;
+      const tier = info?.tier;
+      // Scale for 4 tiers: 0-25% per tier
+      const percent = (tier && tier.number) ? tier.number * 25 : 0;
+      const color = ancillary.pillarColorMap[pillar]?.base || '#6366f1';
       const active = pillar === activePillar;
       const borderStyle = active ? 'border-color: var(--panel-strong);' : 'border-color: var(--border);';
       const bgStyle = active ? 'background-color: var(--panel-strong);' : '';
-      html += `<button type="button" class="relative flex-1 h-full appearance-none focus:outline-none transition-opacity border border-b-0" style="${borderStyle} ${bgStyle}" title="${pillar}: ${stage ? stage.name : 'No Data'}" data-pillar="${pillar}"><div class="absolute left-0 bottom-0 right-0" style="height:${percent}%;background:${color}"></div></button>`;
+      html += `<button type="button" class="relative flex-1 h-full appearance-none focus:outline-none transition-opacity border border-b-0" style="${borderStyle} ${bgStyle}" title="${pillar}: ${tier ? tier.name : 'No Data'}" data-pillar="${pillar}"><div class="absolute left-0 bottom-0 right-0" style="height:${percent}%;background:${color}"></div></button>`;
     });
     html += '</div>';
     return html;
@@ -279,11 +326,11 @@
       ${renderCountryCard(country, pillar, true)}
     `;
     const gaugeWrap = container.querySelector('#country-card-gauge');
-    if (gaugeWrap && typeof renderStageGauge === 'function') {
+    if (gaugeWrap && typeof renderTierGauge === 'function') {
       const gaugeDiv = document.createElement('div');
-      gaugeDiv.id = 'inline-stage-gauge';
+      gaugeDiv.id = 'inline-tier-gauge';
       gaugeWrap.appendChild(gaugeDiv);
-      renderStageGauge(country, pillar, data.definitions, 'inline-stage-gauge');
+      renderTierGauge(country, pillar, data.definitions, 'inline-tier-gauge');
     }
     document.getElementById('close-country-card')?.addEventListener('click', function () {
       if (window.setActiveCountry) window.setActiveCountry(null);
@@ -437,8 +484,8 @@
       const geojsonFeature = featuresByCode[c.alpha3];
       const scores = c.scores || {};
       ancillary.pillarNames.forEach(function (p) {
-        if (scores[p] && scores[p].stage && scores[p].stage.number !== undefined && scores[p].score === undefined) {
-          scores[p].score = scores[p].stage.number;
+        if (scores[p] && scores[p].tier && scores[p].tier.number !== undefined && scores[p].score === undefined) {
+          scores[p].score = scores[p].tier.number;
         }
       });
       return { geojson: geojsonFeature, name: c.name, alpha2: c.alpha2, alpha3: c.alpha3, latitude: c.latitude, longitude: c.longitude, unMember: c.unMember !== false, scores: scores };
@@ -594,7 +641,7 @@
           var gf = featuresByCode[c.alpha3];
           var scores = c.scores || {};
           (data.ancillary.pillarNames || []).forEach(function (p) {
-            if (scores[p] && scores[p].stage && scores[p].stage.number !== undefined && scores[p].score === undefined) scores[p].score = scores[p].stage.number;
+            if (scores[p] && scores[p].tier && scores[p].tier.number !== undefined && scores[p].score === undefined) scores[p].score = scores[p].tier.number;
           });
           return { geojson: gf, name: c.name, alpha2: c.alpha2, alpha3: c.alpha3, latitude: c.latitude, longitude: c.longitude, unMember: c.unMember !== false, scores: scores };
         }).filter(function (d) {
@@ -748,8 +795,8 @@
             const color = ancillary.pillarColorMap[pillar].base;
             subpillars.forEach(function (sub) {
               const info = country.scores[pillar] && country.scores[pillar][sub];
-              const num = (info && info.stage && info.stage.number) ? info.stage.number : 0;
-              const fillOuter = innerRing[1] + (outerRing[1] - innerRing[1]) * (num / 5);
+              const num = (info && info.tier && info.tier.number) ? info.tier.number : 0;
+              const fillOuter = innerRing[1] + (outerRing[1] - innerRing[1]) * (num / 4);
               const arc = d3.arc().innerRadius(innerRing[0]).outerRadius(outerRing[1]).startAngle(a).endAngle(a + step);
               paths += '<path d="' + arc() + '" fill="' + color + '" opacity="0.2" />';
               const fillArc = d3.arc().innerRadius(innerRing[1]).outerRadius(fillOuter).startAngle(a).endAngle(a + step);
@@ -768,11 +815,11 @@
           const pillars = ancillary.pillarNames.filter(function (p) { return p !== 'Overall'; });
           let html = '<h2 class="text-2xl font-bold mb-4">Pillars</h2><div class="space-y-4">';
           pillars.forEach(function (p) {
-            const color = ancillary.pillarColorMap[p].base;
-            const stage = country.scores[p] && country.scores[p].stage;
-            const name = (stage && stage.name) ? stage.name : 'No Data';
-            const num = (stage && stage.number) ? stage.number : 0;
-            html += '<div class="border rounded-lg p-4" style="border-left:4px solid ' + color + '"><h3 class="font-bold" style="color:' + color + '">' + p + '</h3><p class="text-sm text-gray-600">Stage ' + num + ': ' + name + '</p></div>';
+            const color = ancillary.pillarColorMap[p]?.base || '#6366f1';
+            const tier = country.scores[p] && country.scores[p].tier;
+            const name = (tier && tier.name) ? tier.name : 'No Data';
+            const num = (tier && tier.number) ? tier.number : 0;
+            html += '<div class="border rounded-lg p-4" style="border-left:4px solid ' + color + '"><h3 class="font-bold" style="color:' + color + '">' + p + '</h3><p class="text-sm text-gray-600">Tier ' + num + ': ' + name + '</p></div>';
           });
           html += '</div>';
           pillarsSection.innerHTML = html;
@@ -807,4 +854,5 @@
   window.openSearch = openSearch;
   window.closeSearch = closeSearch;
   window.initCountryPage = initCountryPage;
+  window.getData = getData;
 })();
