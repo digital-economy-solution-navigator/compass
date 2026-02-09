@@ -1,0 +1,172 @@
+{
+  "version": "1.0",
+  "description": "Schema for AIDIN indicator-level data structure",
+  "indicatorFields": [
+    "countryName",
+    "countryAlpha3",
+    "pillar",
+    "dimension",
+    "indicator",
+    "indicatorDescription",
+    "score",
+    "rawValue",
+    "unit",
+    "year",
+    "sourceName",
+    "sourceURL",
+    "dataAvailability",
+    "higherIsBetter",
+    "lastUpdated"
+  ],
+  "exampleIndicators": {
+    "Infrastructure": {
+      "Connectivity": [
+        {
+          "indicator": "Fixed broadband subscriptions per 100 inhabitants",
+          "description": "Number of fixed broadband subscriptions per 100 inhabitants",
+          "unit": "per 100",
+          "sourceType": "ITU",
+          "higherIsBetter": true
+        },
+        {
+          "indicator": "Mobile network coverage (% of population)",
+          "description": "Percentage of population covered by mobile network",
+          "unit": "percentage",
+          "sourceType": "ITU",
+          "higherIsBetter": true
+        },
+        {
+          "indicator": "5G network coverage (% of population)",
+          "description": "Proportion of population covered by 5G network",
+          "unit": "percentage",
+          "sourceType": "Mobile Connectivity Index",
+          "higherIsBetter": true
+        }
+      ],
+      "Compute Capacity": [
+        {
+          "indicator": "Data center density",
+          "description": "Number of data centers per million population",
+          "unit": "per million",
+          "sourceType": "Industry Report",
+          "higherIsBetter": true
+        },
+        {
+          "indicator": "Cloud computing adoption rate",
+          "description": "Percentage of enterprises using cloud computing services",
+          "unit": "percentage",
+          "sourceType": "Survey",
+          "higherIsBetter": true
+        }
+      ],
+      "Energy": [
+        {
+          "indicator": "Electricity access (% of population)",
+          "description": "Percentage of population with access to electricity",
+          "unit": "percentage",
+          "sourceType": "World Bank",
+          "higherIsBetter": true
+        },
+        {
+          "indicator": "Renewable energy share",
+          "description": "Percentage of electricity from renewable sources",
+          "unit": "percentage",
+          "sourceType": "IEA",
+          "higherIsBetter": true
+        }
+      ]
+    },
+    "Data": {
+      "Availability": [
+        {
+          "indicator": "Open data portal exists",
+          "description": "Whether country has an operational open data portal",
+          "unit": "boolean",
+          "sourceType": "ODIN",
+          "higherIsBetter": true
+        },
+        {
+          "indicator": "Data catalog coverage",
+          "description": "Number of datasets available in open data portal",
+          "unit": "count",
+          "sourceType": "ODIN",
+          "higherIsBetter": true
+        }
+      ],
+      "Interoperability": [
+        {
+          "indicator": "Data standards adoption",
+          "description": "Adoption of international data standards",
+          "unit": "index",
+          "sourceType": "Assessment",
+          "higherIsBetter": true
+        }
+      ],
+      "Digital Public Infrastructure (DPI)": [
+        {
+          "indicator": "Digital ID coverage",
+          "description": "Percentage of population with digital ID",
+          "unit": "percentage",
+          "sourceType": "Government",
+          "higherIsBetter": true
+        }
+      ]
+    },
+    "Innovation Ecosystem": {
+      "Talent": [
+        {
+          "indicator": "STEM graduates per 1000 population",
+          "description": "Number of STEM graduates per 1000 population",
+          "unit": "per 1000",
+          "sourceType": "UNESCO",
+          "higherIsBetter": true
+        },
+        {
+          "indicator": "AI/ML courses available",
+          "description": "Number of AI/ML courses offered in universities",
+          "unit": "count",
+          "sourceType": "Survey",
+          "higherIsBetter": true
+        }
+      ],
+      "Research Institutions": [
+        {
+          "indicator": "R&D expenditure (% of GDP)",
+          "description": "Research and development expenditure as percentage of GDP",
+          "unit": "percentage",
+          "sourceType": "UNESCO",
+          "higherIsBetter": true
+        }
+      ],
+      "Corporate market structure": [
+        {
+          "indicator": "Tech startup density",
+          "description": "Number of tech startups per million population",
+          "unit": "per million",
+          "sourceType": "Industry Report",
+          "higherIsBetter": true
+        }
+      ]
+    }
+  },
+  "scoringRules": {
+    "scoreRange": [0, 4],
+    "tierThresholds": {
+      "Foundational": [0, 1.5],
+      "Emerging": [1.5, 2.5],
+      "Scaling": [2.5, 3.5],
+      "Frontier": [3.5, 4.0]
+    },
+    "aggregationMethod": "weighted_average",
+    "missingDataHandling": "exclude_from_aggregation"
+  },
+  "dataAvailability": {
+    "calculationMethod": "percentage_of_indicators_with_data",
+    "thresholds": {
+      "high": 80,
+      "medium": 50,
+      "low": 0
+    }
+  }
+}
+

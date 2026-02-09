@@ -787,8 +787,6 @@
         renderHeader(countries, true);
         initThemeToggle();
         renderFooter();
-        const breadcrumb = document.getElementById('breadcrumb');
-        if (breadcrumb) breadcrumb.innerHTML = '<a href="index.html" class="mr-4 theme-muted" style="color: var(--muted);" onmouseover="this.style.color=\'var(--button-primary)\'" onmouseout="this.style.color=\'var(--muted)\'">Home</a><span class="theme-muted" style="color: var(--muted); opacity: 0.6;">/</span><span class="ml-4 font-medium" style="color: var(--button-primary);">' + (country ? country.name : (code ? 'Not found' : 'Country')) + '</span>';
         const flagEl = document.getElementById('country-flag');
         if (flagEl) {
           flagEl.innerHTML = '';
@@ -796,14 +794,53 @@
             const img = document.createElement('img');
             img.src = 'https://flagcdn.com/w160/' + (country.alpha2 || '').toLowerCase() + '.png';
             img.alt = '';
-            img.width = 80;
-            img.height = 60;
+            img.width = 32;
+            img.height = 24;
             img.style.objectFit = 'cover';
             flagEl.appendChild(img);
           }
         }
-        document.getElementById('country-name').textContent = country ? country.name : (code ? 'Country not found' : 'Select a country');
-        document.getElementById('country-region').textContent = country ? (country.region || '') + (country.subregion ? ' | ' + country.subregion : '') : 'Use the search or home page to open a country.';
+        const nameEl = document.getElementById('country-name');
+        if (nameEl) {
+          if (country) {
+            nameEl.textContent = country.name;
+            // Get computed colors for gradient (CSS variables don't work in gradients)
+            const computedStyle = getComputedStyle(document.documentElement);
+            const textColor = computedStyle.getPropertyValue('--text').trim() || '#EAF4FF';
+            const brandColor = computedStyle.getPropertyValue('--brand').trim() || '#00A3E0';
+            nameEl.style.background = `linear-gradient(135deg, ${textColor} 0%, ${brandColor} 100%)`;
+            nameEl.style.webkitBackgroundClip = 'text';
+            nameEl.style.webkitTextFillColor = 'transparent';
+            nameEl.style.backgroundClip = 'text';
+            // Fallback for browsers that don't support background-clip: text
+            if (!CSS.supports('background-clip', 'text')) {
+              nameEl.style.color = brandColor;
+              nameEl.style.background = 'none';
+            }
+          } else {
+            nameEl.textContent = code ? 'Country not found' : 'Select a country';
+            nameEl.style.background = 'none';
+            nameEl.style.webkitBackgroundClip = 'unset';
+            nameEl.style.webkitTextFillColor = 'unset';
+            nameEl.style.backgroundClip = 'unset';
+            nameEl.style.color = 'var(--text)';
+          }
+        }
+        const regionEl = document.getElementById('country-region');
+        if (regionEl && country) {
+          let metadataParts = [];
+          if (country.region) metadataParts.push(country.region);
+          if (country.subregion) metadataParts.push(country.subregion);
+          if (country.incomeLevel) metadataParts.push(country.incomeLevel);
+          const flags = [];
+          if (country.ldc) flags.push('LDC');
+          if (country.lldc) flags.push('LLDC');
+          if (country.sids) flags.push('SIDS');
+          if (flags.length > 0) metadataParts.push(flags.join(', '));
+          regionEl.textContent = metadataParts.join(' | ') || 'Region information not available';
+        } else if (regionEl) {
+          regionEl.textContent = 'Use the search or home page to open a country.';
+        }
         const ringContainer = document.getElementById('score-ring-container');
         const pillarsSection = document.getElementById('pillars-section');
         if (!country) {
@@ -827,38 +864,110 @@
           const step = Math.PI / totalSub;
           let paths = '';
           let a = -Math.PI / 2;
+          let segmentIndex = 0;
+          const segmentLabels = [];
           pillars.forEach(function (pillar) {
             const subpillars = ancillary.pillars[pillar] || [];
             const color = ancillary.pillarColorMap[pillar].base;
             subpillars.forEach(function (sub) {
               const info = country.scores[pillar] && country.scores[pillar][sub];
+              // Use actual score (0-4) instead of tier number for height
+              const score = (info && info.tier && info.tier.score !== undefined) ? info.tier.score : 
+                          (info && info.score !== undefined) ? info.score : 0;
               const num = (info && info.tier && info.tier.number) ? info.tier.number : 0;
-              const fillOuter = innerRing[1] + (outerRing[1] - innerRing[1]) * (num / 4);
+              const tierName = (info && info.tier && info.tier.name) ? info.tier.name : 'No Data';
+              // Use score (0-4) for height calculation, normalized to 0-1
+              const scoreRatio = Math.max(0, Math.min(1, score / 4));
+              const fillOuter = innerRing[1] + (outerRing[1] - innerRing[1]) * scoreRatio;
               const arc = d3.arc().innerRadius(innerRing[0]).outerRadius(outerRing[1]).startAngle(a).endAngle(a + step);
-              paths += '<path d="' + arc() + '" fill="' + color + '" opacity="0.2" />';
               const fillArc = d3.arc().innerRadius(innerRing[1]).outerRadius(fillOuter).startAngle(a).endAngle(a + step);
-              paths += '<path d="' + fillArc() + '" fill="' + color + '" />';
+              const midAngle = a + step / 2;
+              const labelRadius = outerRing[1] + 8;
+              const labelX = Math.cos(midAngle) * labelRadius;
+              const labelY = Math.sin(midAngle) * labelRadius;
+              const tooltip = pillar + ' - ' + sub + ': ' + tierName + ' (Score: ' + score.toFixed(2) + ', Tier ' + num + ')';
+              paths += '<path d="' + arc() + '" fill="' + color + '" opacity="0.2" class="cursor-pointer" title="' + tooltip + '" />';
+              paths += '<path d="' + fillArc() + '" fill="' + color + '" class="cursor-pointer" title="' + tooltip + '" />';
+              // Add score label
+              if (score > 0) {
+                paths += '<text x="' + labelX + '" y="' + labelY + '" text-anchor="middle" dominant-baseline="middle" font-size="8" font-weight="600" fill="' + color + '" opacity="0.9">' + score.toFixed(1) + '</text>';
+              }
+              segmentLabels.push({ pillar: pillar, dimension: sub, score: score, tier: num, tierName: tierName });
               a += step;
+              segmentIndex++;
             });
           });
-          ringContainer.innerHTML = '<svg width="' + size + '" height="' + (size * 0.55) + '" viewBox="0 0 ' + size + ' ' + (size * 0.55) + '"><g transform="translate(' + (size / 2) + ',' + (size * 0.45) + ')">' + paths + '</g></svg>';
+          // Add legend and title with summary stats
+          const avgScore = segmentLabels.length > 0 ? 
+            (segmentLabels.reduce((sum, s) => sum + s.score, 0) / segmentLabels.length).toFixed(2) : '0.00';
+          const legendHtml = '<div class="text-xs text-center mt-3" style="color: var(--muted);"><p class="mb-1 font-semibold" style="color: var(--text);">Pillar Performance Overview</p><p class="text-xs mb-1">Average Score: <span class="font-semibold" style="color: var(--text);">' + avgScore + '</span> / 4.0</p><p class="text-xs opacity-75">Each segment = dimension. Height = score (0-4). Hover for details.</p></div>';
+          ringContainer.innerHTML = '<div class="flex flex-col items-center"><svg width="' + size + '" height="' + (size * 0.55) + '" viewBox="0 0 ' + size + ' ' + (size * 0.55) + '" class="mb-2"><g transform="translate(' + (size / 2) + ',' + (size * 0.45) + ')">' + paths + '</g></svg>' + legendHtml + '</div>';
           }
         }
         if (pillarsSection && data.ancillary) {
           if (!country.scores) {
-            pillarsSection.innerHTML = '<h2 class="text-2xl font-bold mb-4">Pillars</h2><p class="text-gray-500">No score data for this country in the demo.</p>';
+            pillarsSection.innerHTML = '<div class="mb-8"><h2 class="text-3xl font-bold mb-2" style="color: var(--text);">Pillars</h2><p class="text-sm" style="color: var(--muted);">Comprehensive assessment across 9 key dimensions</p></div><p class="text-gray-500">No score data for this country in the demo.</p>';
           } else {
           const ancillary = data.ancillary;
           const pillars = ancillary.pillarNames.filter(function (p) { return p !== 'Overall'; });
-          let html = '<h2 class="text-2xl font-bold mb-4">Pillars</h2><div class="space-y-4">';
-          pillars.forEach(function (p) {
+          const enablingPillars = pillars.filter(p => ancillary.pillarCategories?.enabling?.includes(p));
+          const outcomePillars = pillars.filter(p => ancillary.pillarCategories?.outcome?.includes(p));
+          
+          // Create arc visualization
+          let arcHtml = '<div class="mb-12 flex justify-center"><svg width="600" height="120" viewBox="0 0 600 120" class="max-w-full">';
+          const arcRadius = 50;
+          const arcCenterX = 300;
+          const arcCenterY = 100;
+          const startAngle = -Math.PI;
+          const endAngle = 0;
+          const angleStep = (endAngle - startAngle) / pillars.length;
+          
+          pillars.forEach(function(p, idx) {
             const color = ancillary.pillarColorMap[p]?.base || '#6366f1';
-            const tier = country.scores[p] && country.scores[p].tier;
-            const name = (tier && tier.name) ? tier.name : 'No Data';
-            const num = (tier && tier.number) ? tier.number : 0;
-            html += '<div class="border rounded-lg p-4" style="border-left:4px solid ' + color + '"><h3 class="font-bold" style="color:' + color + '">' + p + '</h3><p class="text-sm text-gray-600">Tier ' + num + ': ' + name + '</p></div>';
+            const angle1 = startAngle + (idx * angleStep);
+            const angle2 = startAngle + ((idx + 1) * angleStep);
+            const x1 = arcCenterX + arcRadius * Math.cos(angle1);
+            const y1 = arcCenterY + arcRadius * Math.sin(angle1);
+            const x2 = arcCenterX + arcRadius * Math.cos(angle2);
+            const y2 = arcCenterY + arcRadius * Math.sin(angle2);
+            const largeArc = angleStep > Math.PI ? 1 : 0;
+            arcHtml += `<path d="M ${arcCenterX} ${arcCenterY} L ${x1} ${y1} A ${arcRadius} ${arcRadius} 0 ${largeArc} 1 ${x2} ${y2} Z" fill="${color}" opacity="0.9" />`;
           });
-          html += '</div>';
+          arcHtml += '</svg></div>';
+          
+          let html = '<div class="mb-8"><h2 class="text-3xl font-bold mb-2" style="color: var(--text);">Pillars</h2><p class="text-sm mb-6" style="color: var(--muted);">Comprehensive assessment across 9 key dimensions</p></div>';
+          html += arcHtml;
+          
+          // Enabling pillars section
+          if (enablingPillars.length > 0) {
+            html += '<div class="mb-8"><h3 class="text-xl font-semibold mb-4 uppercase tracking-wider" style="color: var(--muted);">Enabling Factors</h3><div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">';
+            enablingPillars.forEach(function (p) {
+              const color = ancillary.pillarColorMap[p]?.base || '#6366f1';
+              const tier = country.scores[p] && country.scores[p].tier;
+              const name = (tier && tier.name) ? tier.name : 'No Data';
+              const num = (tier && tier.number) ? tier.number : 0;
+              const score = (tier && tier.score !== undefined) ? tier.score.toFixed(2) : '-';
+              const description = (tier && tier.description) ? tier.description : '';
+              html += '<div class="border rounded-xl p-5 transition-all duration-300 hover:shadow-lg hover:-translate-y-1" style="border-color: ' + color + '40; background: var(--card-bg); box-shadow: var(--shadow); border-left: 4px solid ' + color + ';"><div class="flex items-start justify-between mb-3"><h4 class="font-bold text-lg" style="color:' + color + '">' + p + '</h4><span class="text-xs font-semibold px-2 py-1 rounded-full" style="background: ' + color + '20; color: ' + color + ';">Tier ' + num + '</span></div><p class="text-sm font-medium mb-2" style="color: var(--text);">' + name + '</p><p class="text-xs mb-2" style="color: var(--muted);">Score: ' + score + '</p>' + (description ? '<p class="text-xs mt-2 leading-relaxed" style="color: var(--muted); opacity: 0.8;">' + description.substring(0, 100) + (description.length > 100 ? '...' : '') + '</p>' : '') + '</div>';
+            });
+            html += '</div></div>';
+          }
+          
+          // Outcome pillars section
+          if (outcomePillars.length > 0) {
+            html += '<div class="mb-8"><h3 class="text-xl font-semibold mb-4 uppercase tracking-wider" style="color: var(--muted);">Outcome Pillars</h3><div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">';
+            outcomePillars.forEach(function (p) {
+              const color = ancillary.pillarColorMap[p]?.base || '#6366f1';
+              const tier = country.scores[p] && country.scores[p].tier;
+              const name = (tier && tier.name) ? tier.name : 'No Data';
+              const num = (tier && tier.number) ? tier.number : 0;
+              const score = (tier && tier.score !== undefined) ? tier.score.toFixed(2) : '-';
+              const description = (tier && tier.description) ? tier.description : '';
+              html += '<div class="border rounded-xl p-5 transition-all duration-300 hover:shadow-lg hover:-translate-y-1" style="border-color: ' + color + '40; background: var(--card-bg); box-shadow: var(--shadow); border-left: 4px solid ' + color + ';"><div class="flex items-start justify-between mb-3"><h4 class="font-bold text-lg" style="color:' + color + '">' + p + '</h4><span class="text-xs font-semibold px-2 py-1 rounded-full" style="background: ' + color + '20; color: ' + color + ';">Tier ' + num + '</span></div><p class="text-sm font-medium mb-2" style="color: var(--text);">' + name + '</p><p class="text-xs mb-2" style="color: var(--muted);">Score: ' + score + '</p>' + (description ? '<p class="text-xs mt-2 leading-relaxed" style="color: var(--muted); opacity: 0.8;">' + description.substring(0, 100) + (description.length > 100 ? '...' : '') + '</p>' : '') + '</div>';
+            });
+            html += '</div></div>';
+          }
+          
           pillarsSection.innerHTML = html;
           }
         }

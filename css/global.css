@@ -100,6 +100,30 @@
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Country detail page enhancements */
+#country-meta {
+  position: relative;
+}
+
+#country-meta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--brand), transparent);
+  opacity: 0.3;
+}
+
+.theme-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.theme-card:hover {
+  transform: translateY(-2px);
+}
+
 /* ================= THEME-AWARE UTILITY CLASSES ================= */
 
 .theme-text {

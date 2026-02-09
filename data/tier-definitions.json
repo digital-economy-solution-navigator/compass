@@ -1,0 +1,235 @@
+{
+  "version": "1.0",
+  "description": "Detailed tier definitions for AIDIN maturity model",
+  "tiers": {
+    "Foundational": {
+      "number": 1,
+      "min": 0,
+      "max": 1.5,
+      "generalDescription": "Lacks most enabling factors; very limited adoption.",
+      "pillarDescriptions": {
+        "Infrastructure": {
+          "general": "Basic infrastructure is limited or non-existent. Connectivity is sparse, compute capacity is minimal, and energy access is unreliable.",
+          "Connectivity": "Limited or no broadband infrastructure. Mobile coverage is patchy. Most of the population lacks reliable internet access.",
+          "Compute Capacity": "Minimal data center infrastructure. Cloud services are largely unavailable or unaffordable.",
+          "Energy": "Unreliable electricity supply. Frequent outages limit digital infrastructure deployment."
+        },
+        "Data": {
+          "general": "Data infrastructure is minimal. Limited data availability, no interoperability standards, and no digital public infrastructure.",
+          "Availability": "No open data portals. Government data is largely paper-based or inaccessible.",
+          "Interoperability": "No data standards in place. Systems operate in silos with no data exchange.",
+          "Digital Public Infrastructure (DPI)": "No digital ID systems. No digital payment infrastructure. Citizens rely on paper-based systems."
+        },
+        "Innovation Ecosystem": {
+          "general": "Very limited innovation capacity. Scarce talent, weak research institutions, and underdeveloped corporate structures.",
+          "Talent": "Few STEM graduates. Limited technical skills in the workforce. No specialized AI/ML training programs.",
+          "Research Institutions": "Minimal R&D investment. Universities lack research capacity in digital technologies.",
+          "Corporate market structure": "Few tech companies. No startup ecosystem. Traditional industries dominate."
+        },
+        "Capital": {
+          "general": "Limited access to capital for digital transformation. Both public and private investment are minimal.",
+          "Public": "No dedicated digital transformation budget. Limited public investment in digital infrastructure.",
+          "Private (Domestic vs. Foreign)": "Minimal private investment. No venture capital ecosystem. Foreign investment is rare."
+        },
+        "Governance": {
+          "general": "No coherent digital strategy. Weak regulatory framework and limited enforcement capacity.",
+          "National Strategy": "No national digital transformation strategy. Ad-hoc initiatives without coordination.",
+          "Regulatory Environment": "Outdated or non-existent digital regulations. No data protection laws.",
+          "Enforcement": "Weak regulatory enforcement. No dedicated digital governance institutions."
+        },
+        "Digital Adoption": {
+          "general": "Very limited adoption of digital technologies in industry. No cyber-physical systems, minimal automation.",
+          "Cyber-Physical Systems (CPS)": "No integration of physical and digital systems. Manufacturing is largely manual.",
+          "Automation Maturity": "Minimal automation. Most processes are manual with no digital integration.",
+          "Digital Twins": "No digital twin implementations. No virtual modeling of physical systems."
+        },
+        "AI Adoption": {
+          "general": "No meaningful AI adoption. Companies lack awareness and capacity for AI implementation.",
+          "Operations Optimization": "No AI-powered optimization. Operations rely on traditional methods.",
+          "Smart Logistics": "No smart logistics systems. Supply chains operate without AI assistance."
+        },
+        "Digital Development": {
+          "general": "No digital product innovation. Companies focus on traditional products and services.",
+          "Servitisation": "No shift to service-based business models. Products are sold as standalone items.",
+          "Digital Product Innovation": "No digital products or services. Companies lack digital innovation capacity."
+        },
+        "AI Development": {
+          "general": "No AI product development. No domestic AI capabilities or products.",
+          "AI Product Innovation": "No AI products developed domestically. Complete reliance on foreign AI solutions."
+        }
+      }
+    },
+    "Emerging": {
+      "number": 2,
+      "min": 1.5,
+      "max": 2.5,
+      "generalDescription": "Some enabling factors present; early signs of adoption.",
+      "pillarDescriptions": {
+        "Infrastructure": {
+          "general": "Basic infrastructure is developing. Some connectivity improvements, emerging compute capacity, and improving energy access.",
+          "Connectivity": "Growing broadband coverage, primarily in urban areas. Mobile networks expanding but gaps remain.",
+          "Compute Capacity": "Some data centers emerging. Cloud services becoming available but limited adoption.",
+          "Energy": "Improving electricity reliability. Some regions have stable power supply."
+        },
+        "Data": {
+          "general": "Early data infrastructure development. Some data becoming available, initial interoperability efforts, and pilot DPI projects.",
+          "Availability": "Pilot open data portals. Some government data digitized but limited coverage.",
+          "Interoperability": "Initial data standards discussions. Some systems beginning to connect.",
+          "Digital Public Infrastructure (DPI)": "Pilot digital ID programs. Early digital payment systems in development."
+        },
+        "Innovation Ecosystem": {
+          "general": "Emerging innovation capacity. Growing talent pool, developing research institutions, and early corporate engagement.",
+          "Talent": "Increasing STEM graduates. Some technical training programs. Early AI/ML course offerings.",
+          "Research Institutions": "Growing R&D investment. Universities developing digital research programs.",
+          "Corporate market structure": "Emerging tech companies. Early startup ecosystem development."
+        },
+        "Capital": {
+          "general": "Growing capital availability. Public investment increasing, private sector beginning to engage.",
+          "Public": "Initial digital transformation budgets. Some public investment in key infrastructure.",
+          "Private (Domestic vs. Foreign)": "Early private investment. Some venture capital activity. Foreign investment increasing."
+        },
+        "Governance": {
+          "general": "Developing digital strategy and regulatory framework. Some coordination and enforcement beginning.",
+          "National Strategy": "Draft digital transformation strategies. Some coordination across ministries.",
+          "Regulatory Environment": "New digital regulations being developed. Data protection laws in draft.",
+          "Enforcement": "Regulatory institutions being established. Some enforcement capacity developing."
+        },
+        "Digital Adoption": {
+          "general": "Early digital technology adoption. Some automation, pilot CPS projects, and initial digital transformation.",
+          "Cyber-Physical Systems (CPS)": "Pilot CPS implementations. Some integration of physical and digital systems.",
+          "Automation Maturity": "Basic automation in some sectors. Early digital integration of processes.",
+          "Digital Twins": "Pilot digital twin projects. Early virtual modeling initiatives."
+        },
+        "AI Adoption": {
+          "general": "Early AI awareness and pilot projects. Some companies experimenting with AI.",
+          "Operations Optimization": "Pilot AI optimization projects. Some companies testing AI for operations.",
+          "Smart Logistics": "Early smart logistics pilots. Some AI-assisted supply chain initiatives."
+        },
+        "Digital Development": {
+          "general": "Early digital product development. Some companies beginning digital innovation.",
+          "Servitisation": "Early service-based models. Some companies adding digital services to products.",
+          "Digital Product Innovation": "Initial digital products. Some companies developing digital services."
+        },
+        "AI Development": {
+          "general": "Early AI development efforts. Some domestic AI capabilities emerging.",
+          "AI Product Innovation": "Pilot AI product development. Some domestic AI solutions in early stages."
+        }
+      }
+    },
+    "Scaling": {
+      "number": 3,
+      "min": 2.5,
+      "max": 3.5,
+      "generalDescription": "Strong enabling factors, but limited capacity in outcome areas.",
+      "pillarDescriptions": {
+        "Infrastructure": {
+          "general": "Solid infrastructure foundation. Good connectivity coverage, established compute capacity, and reliable energy supply.",
+          "Connectivity": "Broadband widely available in urban areas. Mobile networks cover most of population. Some rural gaps remain.",
+          "Compute Capacity": "Established data center infrastructure. Cloud services widely available and adopted.",
+          "Energy": "Reliable electricity supply in most areas. Some renewable energy integration."
+        },
+        "Data": {
+          "general": "Well-developed data infrastructure. Good data availability, interoperability standards in place, and functional DPI.",
+          "Availability": "Operational open data portals. Significant government data available digitally.",
+          "Interoperability": "Data standards implemented. Good system integration and data exchange.",
+          "Digital Public Infrastructure (DPI)": "Functional digital ID systems. Established digital payment infrastructure."
+        },
+        "Innovation Ecosystem": {
+          "general": "Strong innovation capacity. Good talent pool, active research institutions, and vibrant corporate engagement.",
+          "Talent": "Strong STEM graduate pipeline. Good technical training. Established AI/ML programs.",
+          "Research Institutions": "Significant R&D investment. Active digital research. Good university-industry collaboration.",
+          "Corporate market structure": "Vibrant tech sector. Active startup ecosystem. Good corporate innovation."
+        },
+        "Capital": {
+          "general": "Strong capital availability. Substantial public investment and active private sector participation.",
+          "Public": "Dedicated digital transformation budgets. Significant public investment in infrastructure.",
+          "Private (Domestic vs. Foreign)": "Active private investment. Established venture capital. Good foreign investment."
+        },
+        "Governance": {
+          "general": "Strong digital governance. Clear strategies, comprehensive regulations, and effective enforcement.",
+          "National Strategy": "Comprehensive digital transformation strategies. Good cross-ministerial coordination.",
+          "Regulatory Environment": "Comprehensive digital regulations. Strong data protection framework.",
+          "Enforcement": "Effective regulatory institutions. Good enforcement capacity and compliance."
+        },
+        "Digital Adoption": {
+          "general": "Moderate digital adoption. Some sectors well-digitized, but adoption is uneven across industries.",
+          "Cyber-Physical Systems (CPS)": "CPS implemented in some sectors. Good integration in key industries.",
+          "Automation Maturity": "Moderate automation levels. Digital integration in many processes.",
+          "Digital Twins": "Digital twins used in some industries. Good virtual modeling capabilities."
+        },
+        "AI Adoption": {
+          "general": "Moderate AI adoption. Some companies using AI effectively, but adoption is not widespread.",
+          "Operations Optimization": "AI optimization in some companies. Good results but limited scale.",
+          "Smart Logistics": "Smart logistics in some supply chains. AI assistance improving efficiency."
+        },
+        "Digital Development": {
+          "general": "Moderate digital product development. Some successful digital products, but innovation is limited.",
+          "Servitisation": "Service-based models in some sectors. Companies adding value through digital services.",
+          "Digital Product Innovation": "Some successful digital products. Good innovation in certain areas."
+        },
+        "AI Development": {
+          "general": "Moderate AI development. Some domestic AI products, but capabilities are still developing.",
+          "AI Product Innovation": "Some domestic AI products. Good capabilities but limited scale and scope."
+        }
+      }
+    },
+    "Frontier": {
+      "number": 4,
+      "min": 3.5,
+      "max": 4.0,
+      "generalDescription": "Advanced ecosystems with widespread use and export capacity.",
+      "pillarDescriptions": {
+        "Infrastructure": {
+          "general": "World-class infrastructure. Universal connectivity, advanced compute capacity, and sustainable energy systems.",
+          "Connectivity": "Universal broadband access. Advanced mobile networks including 5G. High-speed connectivity everywhere.",
+          "Compute Capacity": "Advanced data center infrastructure. Widespread cloud adoption. Edge computing deployment.",
+          "Energy": "Reliable, sustainable energy supply. High renewable energy share. Smart grid infrastructure."
+        },
+        "Data": {
+          "general": "Advanced data infrastructure. Comprehensive data availability, seamless interoperability, and mature DPI.",
+          "Availability": "Comprehensive open data ecosystem. Extensive government data available. High data quality.",
+          "Interoperability": "Seamless data exchange. Advanced standards. Full system integration.",
+          "Digital Public Infrastructure (DPI)": "Mature digital ID systems. Advanced digital payment infrastructure. Comprehensive DPI."
+        },
+        "Innovation Ecosystem": {
+          "general": "World-leading innovation capacity. Exceptional talent, top research institutions, and dynamic corporate structures.",
+          "Talent": "Exceptional STEM talent. World-class technical skills. Advanced AI/ML expertise.",
+          "Research Institutions": "High R&D investment. Leading digital research. Strong international collaboration.",
+          "Corporate market structure": "World-class tech sector. Vibrant startup ecosystem. Global innovation leaders."
+        },
+        "Capital": {
+          "general": "Abundant capital availability. Strong public investment and highly active private sector.",
+          "Public": "Substantial digital transformation budgets. Strategic public investment. Long-term funding.",
+          "Private (Domestic vs. Foreign)": "Highly active private investment. Mature venture capital. Strong foreign investment."
+        },
+        "Governance": {
+          "general": "Exemplary digital governance. Visionary strategies, cutting-edge regulations, and world-class enforcement.",
+          "National Strategy": "Visionary digital transformation strategies. Excellent coordination. Long-term vision.",
+          "Regulatory Environment": "Cutting-edge digital regulations. Leading data protection. Adaptive regulatory framework.",
+          "Enforcement": "World-class regulatory institutions. Excellent enforcement. High compliance rates."
+        },
+        "Digital Adoption": {
+          "general": "Widespread digital adoption. Advanced CPS, high automation maturity, and extensive digital twin use.",
+          "Cyber-Physical Systems (CPS)": "Widespread CPS implementation. Advanced integration across industries.",
+          "Automation Maturity": "High automation levels. Advanced digital integration. Smart manufacturing.",
+          "Digital Twins": "Extensive digital twin use. Advanced virtual modeling. Industry-wide adoption."
+        },
+        "AI Adoption": {
+          "general": "Widespread AI adoption. Companies using AI effectively across operations and logistics.",
+          "Operations Optimization": "Widespread AI optimization. Advanced AI-powered operations. High efficiency gains.",
+          "Smart Logistics": "Advanced smart logistics. AI-powered supply chains. High efficiency and optimization."
+        },
+        "Digital Development": {
+          "general": "Strong digital product development. Successful digital products and services, strong innovation capacity.",
+          "Servitisation": "Widespread service-based models. Companies thriving through digital services.",
+          "Digital Product Innovation": "Strong digital product innovation. Successful digital products. Export capacity."
+        },
+        "AI Development": {
+          "general": "Strong AI development. Domestic AI products competing globally. Export capacity.",
+          "AI Product Innovation": "Strong domestic AI products. Global competitiveness. Export of AI solutions."
+        }
+      }
+    }
+  }
+}
+

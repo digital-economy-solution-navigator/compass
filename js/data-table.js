@@ -170,6 +170,7 @@
       { key: 'name', label: 'Country', width: 200, frozen: true },
       { key: 'region', label: 'Region', width: 120 },
       { key: 'subregion', label: 'Sub-region', width: 150 },
+      { key: 'incomeLevel', label: 'Income', width: 120 },
       { key: 'Overall', label: 'Overall', width: 100 },
       ...pillarNames.map(p => ({ key: p, label: p, width: 120 }))
     ];
@@ -229,22 +230,43 @@
           } else if (col.key === 'subregion') {
             cell.textContent = country.subregion || '-';
             cell.style.color = 'var(--text)';
+          } else if (col.key === 'incomeLevel') {
+            let incomeText = country.incomeLevel || '-';
+            const flags = [];
+            if (country.ldc) flags.push('LDC');
+            if (country.lldc) flags.push('LLDC');
+            if (country.sids) flags.push('SIDS');
+            if (flags.length > 0) {
+              incomeText += ` (${flags.join(', ')})`;
+            }
+            cell.textContent = incomeText;
+            cell.style.color = 'var(--text)';
           } else {
             // Score column (Overall or pillar)
             const score = getScore(country, col.key);
             const tierName = getTierName(country, col.key);
             
+            // Get data availability for this pillar
+            let dataAvail = null;
+            if (country.scores && country.scores[col.key]) {
+              if (country.scores[col.key].tier && country.scores[col.key].tier.dataAvailability !== undefined) {
+                dataAvail = country.scores[col.key].tier.dataAvailability;
+              }
+            }
+            
             if (score !== null && score !== undefined && !isNaN(score)) {
               const heatmapColor = getHeatmapColor(col.key, score);
               cell.innerHTML = `
-                <div class="score-cell flex items-center justify-between gap-2" style="background-color: ${heatmapColor}; padding: 4px 8px; border-radius: 4px;">
-                  <span class="score-value font-medium" style="color: ${getTextColorForBackground(heatmapColor)};">${parseFloat(score).toFixed(2)}</span>
-                  <span class="tier-badge text-xs opacity-75" style="color: ${getTextColorForBackground(heatmapColor)};">${tierName}</span>
+                <div class="score-cell flex flex-col gap-1" style="background-color: ${heatmapColor}; padding: 4px 8px; border-radius: 4px;">
+                  <div class="flex items-center justify-between gap-2">
+                    <span class="score-value font-medium" style="color: ${getTextColorForBackground(heatmapColor)};">${parseFloat(score).toFixed(2)}</span>
+                    <span class="tier-badge text-xs opacity-75" style="color: ${getTextColorForBackground(heatmapColor)};">${tierName}</span>
+                  </div>
+                  ${dataAvail !== null ? `<div class="text-xs opacity-60" style="color: ${getTextColorForBackground(heatmapColor)};">${dataAvail.toFixed(0)}% data</div>` : ''}
                 </div>
               `;
             } else {
-              cell.textContent = '-';
-              cell.style.color = 'var(--muted)';
+              cell.innerHTML = `<div class="text-sm" style="color: var(--muted);">-${dataAvail !== null ? `<br><span class="text-xs">${dataAvail.toFixed(0)}% data</span>` : ''}</div>`;
             }
           }
           

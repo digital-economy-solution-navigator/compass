@@ -11,6 +11,10 @@
     country: '',
     region: '*',
     subregion: '*',
+    incomeLevel: '*',
+    ldc: false,
+    lldc: false,
+    sids: false,
     pillarRanges: {}
   };
   let onFilterChange = null;
@@ -93,6 +97,23 @@
           </select>
         </div>
 
+        <div>
+          <label class="block text-sm font-semibold mb-2 uppercase tracking-wider" style="color: var(--muted);">
+            Income Level
+          </label>
+          <select 
+            id="filter-income" 
+            class="w-full rounded-lg border px-3 py-2 text-sm theme-border theme-text" 
+            style="background-color: var(--controls-bg);"
+          >
+            <option value="*">All Income Levels</option>
+            <option value="High Income" ${filters.incomeLevel === 'High Income' ? 'selected' : ''}>High Income</option>
+            <option value="Upper Middle Income" ${filters.incomeLevel === 'Upper Middle Income' ? 'selected' : ''}>Upper Middle Income</option>
+            <option value="Lower Middle Income" ${filters.incomeLevel === 'Lower Middle Income' ? 'selected' : ''}>Lower Middle Income</option>
+            <option value="Low Income" ${filters.incomeLevel === 'Low Income' ? 'selected' : ''}>Low Income</option>
+          </select>
+        </div>
+
         <div class="border-t pt-4" style="border-color: var(--border);">
           <label class="block text-sm font-semibold mb-4 uppercase tracking-wider" style="color: var(--muted);">
             Pillar Score Ranges
@@ -141,10 +162,19 @@
       applyFilters();
     });
 
+    document.getElementById('filter-income')?.addEventListener('change', (e) => {
+      filters.incomeLevel = e.target.value;
+      applyFilters();
+    });
+
     document.getElementById('clear-filters')?.addEventListener('click', () => {
       filters.country = '';
       filters.region = '*';
       filters.subregion = '*';
+      filters.incomeLevel = '*';
+      filters.ldc = false;
+      filters.lldc = false;
+      filters.sids = false;
       pillarNames.forEach(pillar => {
         filters.pillarRanges[pillar] = null;
       });
@@ -298,6 +328,22 @@
     // Sub-region filter
     if (filters.subregion !== '*') {
       filtered = filtered.filter(c => c.subregion === filters.subregion);
+    }
+
+    // Income level filter
+    if (filters.incomeLevel !== '*') {
+      filtered = filtered.filter(c => c.incomeLevel === filters.incomeLevel);
+    }
+
+    // LDC/LLDC/SIDS filters
+    if (filters.ldc) {
+      filtered = filtered.filter(c => c.ldc === true);
+    }
+    if (filters.lldc) {
+      filtered = filtered.filter(c => c.lldc === true);
+    }
+    if (filters.sids) {
+      filtered = filtered.filter(c => c.sids === true);
     }
 
     // Pillar score range filters

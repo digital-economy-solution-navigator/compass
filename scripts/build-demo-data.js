@@ -187,8 +187,23 @@ function main() {
     const unMember = (c['UN Member States'] || '').trim().toLowerCase() === 'x';
     const region = (c['Region Name'] || '').trim();
     const subregion = (c['Sub-region Name'] || '').trim();
+    const incomeLevel = (c['World Bank Income Level'] || '').trim();
+    const ldc = (c['Least Developed Countries (LDC)'] || '').trim().toLowerCase() === 'x';
+    const lldc = (c['Land Locked Developing Countries (LLDC)'] || '').trim().toLowerCase() === 'x';
+    const sids = (c['Small Island Developing States (SIDS)'] || '').trim().toLowerCase() === 'x';
     countriesList.push({ name, alpha2, alpha3 });
-    alpha3ToCountry[alpha3] = { name, alpha2, alpha3, region, subregion, unMember };
+    alpha3ToCountry[alpha3] = { 
+      name, 
+      alpha2, 
+      alpha3, 
+      region, 
+      subregion, 
+      unMember,
+      incomeLevel,
+      ldc,
+      lldc,
+      sids
+    };
   });
 
   const latlonByAlpha2 = {};
@@ -222,6 +237,10 @@ function main() {
     const region = manifestRow ? (manifestRow['Region Name'] || '').trim() : '';
     const subregion = manifestRow ? (manifestRow['Sub-region Name'] || '').trim() : '';
     const unMember = manifestRow ? (manifestRow['UN Member States'] || '').trim().toLowerCase() === 'x' : false;
+    const incomeLevel = manifestRow ? (manifestRow['World Bank Income Level'] || '').trim() : '';
+    const ldc = manifestRow ? (manifestRow['Least Developed Countries (LDC)'] || '').trim().toLowerCase() === 'x' : false;
+    const lldc = manifestRow ? (manifestRow['Land Locked Developing Countries (LLDC)'] || '').trim().toLowerCase() === 'x' : false;
+    const sids = manifestRow ? (manifestRow['Small Island Developing States (SIDS)'] || '').trim().toLowerCase() === 'x' : false;
     const ll = latlonByAlpha2[alpha2];
     
     // Calculate overall score (average of all pillar scores or use existing)
@@ -249,6 +268,36 @@ function main() {
     // with some variation to make it realistic
     const baseScore = overallScore || 2.5;
     
+    // Calculate data availability per pillar/dimension from indicators
+    const pillarDataAvailability = {};
+    const dimensionDataAvailability = {};
+    
+    if (countryIndicators.length > 0) {
+      countryIndicators.forEach(ind => {
+        const pillar = ind.pillar;
+        const dimension = ind.dimension;
+        
+        if (!pillarDataAvailability[pillar]) {
+          pillarDataAvailability[pillar] = { total: 0, withData: 0 };
+        }
+        pillarDataAvailability[pillar].total++;
+        if (ind.score !== null && !isNaN(ind.score)) {
+          pillarDataAvailability[pillar].withData++;
+        }
+        
+        if (dimension) {
+          const key = `${pillar}:${dimension}`;
+          if (!dimensionDataAvailability[key]) {
+            dimensionDataAvailability[key] = { total: 0, withData: 0 };
+          }
+          dimensionDataAvailability[key].total++;
+          if (ind.score !== null && !isNaN(ind.score)) {
+            dimensionDataAvailability[key].withData++;
+          }
+        }
+      });
+    }
+    
     allPillarNames.forEach((pillar) => {
       // Generate a score with some variation from overall (for demo purposes)
       // In production, this would come from actual AIDIN data
@@ -258,6 +307,12 @@ function main() {
       const dimensionList = pillars[pillar] || [];
       const pillarScores = {};
       
+      // Calculate pillar-level data availability
+      const pillarAvail = pillarDataAvailability[pillar];
+      const pillarDataAvailPercent = pillarAvail && pillarAvail.total > 0 
+        ? (pillarAvail.withData / pillarAvail.total) * 100 
+        : null;
+      
       if (tierInfo) {
         pillarScores.tier = {
           number: tierInfo.number,
@@ -265,6 +320,9 @@ function main() {
           description: tierInfo.description,
           score: roundNumber(pillarScore)
         };
+        if (pillarDataAvailPercent !== null) {
+          pillarScores.tier.dataAvailability = roundNumber(pillarDataAvailPercent);
+        }
       }
       
       // Process dimensions - generate scores with smaller variation
@@ -272,6 +330,14 @@ function main() {
         const dimVariation = (Math.random() - 0.5) * 0.6; // ±0.3 variation
         const dimensionScore = Math.max(0, Math.min(4, pillarScore + dimVariation));
         const dimTier = getTierInfo(dimensionScore, pillar, dimension);
+        
+        // Calculate dimension-level data availability
+        const dimKey = `${pillar}:${dimension}`;
+        const dimAvail = dimensionDataAvailability[dimKey];
+        const dimDataAvailPercent = dimAvail && dimAvail.total > 0 
+          ? (dimAvail.withData / dimAvail.total) * 100 
+          : null;
+        
         if (dimTier) {
           pillarScores[dimension] = {
             tier: {
@@ -281,12 +347,62 @@ function main() {
               score: roundNumber(dimensionScore)
             },
           };
+          if (dimDataAvailPercent !== null) {
+            pillarScores[dimension].tier.dataAvailability = roundNumber(dimDataAvailPercent);
+          }
         }
       });
       
       if (Object.keys(pillarScores).length) scoresOut[pillar] = pillarScores;
     });
 
+    // Process indicators from scores.csv if available
+    const countryIndicators = [];
+    const indicatorSources = new Set();
+    let indicatorCount = 0;
+    let indicatorCountWithData = 0;
+    
+    if (scores && scores.length > 0) {
+      scores.forEach((s) => {
+        const scoreCountryName = (s['Country Name'] || '').trim();
+        if (scoreCountryName.toLowerCase() === countryName.toLowerCase()) {
+          const pillar = (s['Pillar'] || '').trim();
+          const subPillar = (s['Sub-Pillar'] || '').trim();
+          const indicator = (s['Indicator'] || '').trim();
+          const score = s['new_rank_score'] ? parseFloat(s['new_rank_score']) : null;
+          const year = (s['Year'] || '').trim();
+          const sourceName = (s['Source Name'] || '').trim();
+          const sourceURL = (s['Source URL'] || '').trim();
+          const dataAvail = s['data_availability'] ? parseFloat(s['data_availability']) : null;
+          
+          if (indicator && pillar) {
+            indicatorCount++;
+            if (score !== null && !isNaN(score)) {
+              indicatorCountWithData++;
+            }
+            
+            if (sourceName) indicatorSources.add(sourceName);
+            
+            countryIndicators.push({
+              pillar,
+              dimension: subPillar || pillar,
+              indicator,
+              score,
+              rawValue: s['raw_data_col'] || null,
+              year: year || null,
+              sourceName: sourceName || null,
+              sourceURL: sourceURL || null,
+              dataAvailability: dataAvail || null,
+              higherIsBetter: (s['higher_is_better'] || '').trim().toLowerCase() === 'yes'
+            });
+          }
+        }
+      });
+    }
+    
+    // Calculate data availability percentage
+    const dataAvailability = indicatorCount > 0 ? (indicatorCountWithData / indicatorCount) * 100 : null;
+    
     globeData.push({
       name,
       alpha2,
@@ -296,7 +412,14 @@ function main() {
       region,
       subregion,
       unMember,
+      incomeLevel: incomeLevel || null,
+      ldc: ldc || false,
+      lldc: lldc || false,
+      sids: sids || false,
       scores: scoresOut,
+      indicators: countryIndicators.length > 0 ? countryIndicators : undefined,
+      dataAvailability: dataAvailability !== null ? roundNumber(dataAvailability) : undefined,
+      sources: indicatorSources.size > 0 ? Array.from(indicatorSources) : undefined
     });
   });
 
@@ -336,9 +459,23 @@ function main() {
     globeData: globeData.filter((c) => c.latitude != null && c.longitude != null),
   };
 
+  // Add metadata
+  demo.metadata = {
+    lastUpdated: new Date().toISOString(),
+    dataVersion: "1.0",
+    indicatorCount: globeData.reduce((sum, c) => sum + (c.indicators ? c.indicators.length : 0), 0),
+    sourceCount: new Set(globeData.flatMap(c => c.sources || [])).size,
+    countryCount: globeData.length
+  };
+
   fs.mkdirSync(OUT_DIR, { recursive: true });
   fs.writeFileSync(path.join(OUT_DIR, 'demo.json'), JSON.stringify(demo, null, 2), 'utf8');
-  console.log('Wrote data/demo.json: countries=%d, globeData=%d', demo.countries.length, demo.globeData.length);
+  console.log('Wrote data/demo.json: countries=%d, globeData=%d, indicators=%d, sources=%d', 
+    demo.countries.length, 
+    demo.globeData.length,
+    demo.metadata.indicatorCount,
+    demo.metadata.sourceCount
+  );
 
   const globeAlpha3 = new Set(demo.globeData.map((c) => c.alpha3));
   const featuresFiltered = (geojson.features || []).filter(

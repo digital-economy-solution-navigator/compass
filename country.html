@@ -37,40 +37,59 @@
   <div id="app" class="flex flex-col h-full">
     <header class="flex-shrink-0 border-b custom-nav-shadow header-nav-bg-color" id="header"></header>
     <main class="flex-shrink-0 main">
-      <section class="pt-8 pb-3" id="country-meta" style="border-bottom: var(--border);">
-        <div class="sm:px-4 sm:mx-auto sm:text-center md:pl-[115px]">
-          <nav id="breadcrumb" class="flex items-center justify-start p-4 text-[11.44px] font-bold" style="color: var(--text);"></nav>
-        </div>
-        <div class="container px-4 mx-auto text-center">
-          <div class="mb-10 text-center">
-            <div class="mb-2"><span id="country-flag" class="fp fp-lg"></span></div>
-            <div>
-              <h1 id="country-name" class="text-4xl lg:text-5xl font-semibold tracking-tight" style="color: var(--text);"></h1>
-              <p id="country-region" class="text-sm mt-1" style="color: var(--muted);"></p>
+      <section class="pt-6 pb-6 relative overflow-hidden" id="country-meta" style="background: linear-gradient(135deg, var(--card-bg) 0%, rgba(0,163,224,0.05) 100%); border-bottom: var(--border);">
+        <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(circle at 20% 50%, var(--brand) 0%, transparent 50%), radial-gradient(circle at 80% 80%, var(--accent) 0%, transparent 50%);"></div>
+        <div class="relative z-10">
+          <div class="container px-4 mx-auto">
+            <div class="flex items-center justify-center gap-4 mb-4">
+              <div class="rounded-full p-1.5 flex-shrink-0" style="background: var(--panel-strong); backdrop-filter: blur(10px); box-shadow: var(--shadow);">
+                <span id="country-flag" class="fp fp-sm"></span>
+              </div>
+              <div class="text-left">
+                <h1 id="country-name" class="text-2xl lg:text-3xl font-bold tracking-tight mb-0.5" style="color: var(--text);"></h1>
+                <p id="country-region" class="text-xs mt-0.5 font-medium" style="color: var(--muted);"></p>
+              </div>
             </div>
-          </div>
-          <div id="score-ring-container"></div>
-        </div>
-      </section>
-      <section id="pillars-section" class="container px-4 mx-auto py-8"></section>
-      <section id="visualizations-section" class="container px-4 mx-auto py-8" style="border-top: var(--border);">
-        <h2 class="text-2xl font-bold mb-6">Visualizations</h2>
-        <div class="grid md:grid-cols-2 gap-6">
-          <div class="border rounded-lg p-4 theme-border theme-card">
-            <h3 class="font-semibold mb-4">Pillar Radar Chart</h3>
-            <div id="radar-chart-container"></div>
-          </div>
-          <div class="border rounded-lg p-4 theme-border theme-card">
-            <h3 class="font-semibold mb-4">Pillar Bar Chart</h3>
-            <div id="bar-chart-container"></div>
+            <div id="score-ring-container" class="flex justify-center items-center"></div>
           </div>
         </div>
       </section>
-      <section id="benchmarking-section" class="container px-4 mx-auto py-8" style="border-top: var(--border);">
+      <section id="pillars-section" class="container px-4 mx-auto py-12"></section>
+      <section id="visualizations-section" class="container px-4 mx-auto py-12" style="border-top: var(--border);">
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold mb-2" style="color: var(--text);">Visualizations</h2>
+          <p class="text-sm" style="color: var(--muted);">Interactive charts showing pillar performance</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="border rounded-2xl p-6 theme-border theme-card transition-all duration-300 hover:shadow-xl" style="background: var(--card-bg); box-shadow: var(--shadow);">
+            <h3 class="font-semibold mb-6 text-lg" style="color: var(--text);">Pillar Radar Chart</h3>
+            <div id="radar-chart-container" class="min-h-[300px]"></div>
+          </div>
+          <div class="border rounded-2xl p-6 theme-border theme-card transition-all duration-300 hover:shadow-xl" style="background: var(--card-bg); box-shadow: var(--shadow);">
+            <h3 class="font-semibold mb-6 text-lg" style="color: var(--text);">Pillar Bar Chart</h3>
+            <div id="bar-chart-container" class="min-h-[300px]"></div>
+          </div>
+        </div>
+      </section>
+      <section id="benchmarking-section" class="container px-4 mx-auto py-12" style="border-top: var(--border);">
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold mb-2" style="color: var(--text);">Benchmarking</h2>
+          <p class="text-sm" style="color: var(--muted);">Compare performance against peer groups</p>
+        </div>
         <div id="benchmarking-container"></div>
       </section>
-      <section id="pathways-section" class="container px-4 mx-auto py-8" style="border-top: var(--border);">
+      <section id="pathways-section" class="container px-4 mx-auto py-12" style="border-top: var(--border);">
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold mb-2" style="color: var(--text);">Transformation Pathways</h2>
+          <p class="text-sm" style="color: var(--muted);">Recommended pathways for digital transformation</p>
+        </div>
         <div id="pathways-container"></div>
+      </section>
+      <section id="indicators-section" class="container px-4 mx-auto py-12" style="border-top: var(--border);">
+        <div id="indicators-container"></div>
+      </section>
+      <section id="sources-section" class="container px-4 mx-auto py-12" style="border-top: var(--border);">
+        <div id="sources-container"></div>
       </section>
     </main>
     <footer class="footer-background-color theme-text" id="footer"></footer>
@@ -91,6 +110,7 @@
   <script src="js/visualizations.js"></script>
   <script src="js/benchmarking.js"></script>
   <script src="js/pathway-navigator.js"></script>
+  <script src="js/indicators-display.js"></script>
   <script>
     // Store country data globally for pathway navigator
     let countryData = null;
@@ -150,6 +170,22 @@
               window.Benchmarking.render(currentCountry, countryData, 'benchmarking-container');
             }
           }
+          
+          // Render indicators and sources
+          if (window.IndicatorsDisplay) {
+            window.IndicatorsDisplay.renderIndicators(currentCountry, countryData.ancillary);
+            
+            // Load sources data
+            fetch('data/sources.json')
+              .then(res => res.json())
+              .then(sourcesData => {
+                window.IndicatorsDisplay.renderSources(currentCountry, sourcesData);
+              })
+              .catch(err => {
+                console.error('Error loading sources data:', err);
+                window.IndicatorsDisplay.renderSources(currentCountry, null);
+              });
+          }
         })
         .catch(err => {
           console.error('Error loading solutions mapping:', err);
@@ -169,6 +205,20 @@
             if (benchmarkingContainer) {
               window.Benchmarking.render(currentCountry, countryData, 'benchmarking-container');
             }
+          }
+          
+          // Render indicators and sources
+          if (window.IndicatorsDisplay) {
+            window.IndicatorsDisplay.renderIndicators(currentCountry, countryData.ancillary);
+            fetch('data/sources.json')
+              .then(res => res.json())
+              .then(sourcesData => {
+                window.IndicatorsDisplay.renderSources(currentCountry, sourcesData);
+              })
+              .catch(err => {
+                console.error('Error loading sources data:', err);
+                window.IndicatorsDisplay.renderSources(currentCountry, null);
+              });
           }
         });
     }

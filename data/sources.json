@@ -1,0 +1,94 @@
+{
+  "version": "1.0",
+  "description": "Data source metadata for AIDIN indicators",
+  "sources": {
+    "ITU": {
+      "name": "International Telecommunication Union",
+      "url": "https://www.itu.int",
+      "description": "UN specialized agency for information and communication technologies",
+      "dataTypes": ["Connectivity", "Infrastructure"],
+      "license": "Open",
+      "updateFrequency": "Annual"
+    },
+    "World Bank": {
+      "name": "World Bank",
+      "url": "https://data.worldbank.org",
+      "description": "World Bank Open Data",
+      "dataTypes": ["Economic", "Development", "Infrastructure"],
+      "license": "Open",
+      "updateFrequency": "Annual"
+    },
+    "Mobile Connectivity Index": {
+      "name": "GSMA Mobile Connectivity Index",
+      "url": "https://www.mobileconnectivityindex.com",
+      "description": "Mobile connectivity and infrastructure data",
+      "dataTypes": ["Connectivity", "Mobile"],
+      "license": "Open",
+      "updateFrequency": "Annual"
+    },
+    "ODIN": {
+      "name": "Open Data Inventory",
+      "url": "https://odin.opendatawatch.com",
+      "description": "Assessment of open data portals and data availability",
+      "dataTypes": ["Data", "Open Data"],
+      "license": "Open",
+      "updateFrequency": "Biennial"
+    },
+    "UNESCO": {
+      "name": "UNESCO Institute for Statistics",
+      "url": "https://uis.unesco.org",
+      "description": "Education and science statistics",
+      "dataTypes": ["Education", "Research", "Talent"],
+      "license": "Open",
+      "updateFrequency": "Annual"
+    },
+    "IEA": {
+      "name": "International Energy Agency",
+      "url": "https://www.iea.org",
+      "description": "Energy statistics and analysis",
+      "dataTypes": ["Energy", "Infrastructure"],
+      "license": "Open",
+      "updateFrequency": "Annual"
+    },
+    "Government": {
+      "name": "National Government Sources",
+      "url": null,
+      "description": "Data from national government agencies and ministries",
+      "dataTypes": ["Policy", "Strategy", "DPI"],
+      "license": "Varies",
+      "updateFrequency": "Varies"
+    },
+    "Industry Report": {
+      "name": "Industry Reports and Surveys",
+      "url": null,
+      "description": "Data from industry associations and research organizations",
+      "dataTypes": ["Innovation", "Adoption", "Market"],
+      "license": "Varies",
+      "updateFrequency": "Varies"
+    },
+    "Survey": {
+      "name": "Primary Surveys",
+      "url": null,
+      "description": "Data collected through primary research and surveys",
+      "dataTypes": ["Adoption", "Usage", "Capacity"],
+      "license": "Varies",
+      "updateFrequency": "Varies"
+    },
+    "Assessment": {
+      "name": "Expert Assessments",
+      "url": null,
+      "description": "Data from expert assessments and evaluations",
+      "dataTypes": ["Policy", "Regulation", "Governance"],
+      "license": "Varies",
+      "updateFrequency": "Varies"
+    }
+  },
+  "defaultSource": {
+    "name": "Multiple Sources",
+    "url": null,
+    "description": "Aggregated from multiple data sources",
+    "license": "Varies",
+    "updateFrequency": "Varies"
+  }
+}
+
