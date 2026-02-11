@@ -685,3 +685,23 @@ a:focus-visible {
 .theme-light .score-cell {
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
+
+/* Search dialog results styling */
+#search-results {
+  min-height: 100px;
+}
+
+#search-results a {
+  display: block;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+#search-results a:hover {
+  text-decoration: none;
+}
+
+#search-results p {
+  margin: 0;
+  padding: 1rem;
+}

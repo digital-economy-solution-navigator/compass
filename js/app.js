@@ -348,6 +348,10 @@
     if (backdrop) backdrop.classList.remove('hidden');
     const input = document.getElementById('search-input');
     if (input) { input.value = ''; input.focus(); }
+    // Ensure we have the latest data before showing results
+    if (!data && window.getData) {
+      data = window.getData();
+    }
     fillSearchResults('');
   }
 
@@ -468,12 +472,30 @@
     const resultsEl = document.getElementById('search-results');
     if (!resultsEl) return;
     const searchData = data || (window.getData && window.getData()) || window._tempSearchData;
-    if (!searchData || !searchData.countries) return;
+    if (!searchData) {
+      resultsEl.innerHTML = '<p class="p-4 text-center" style="color: var(--muted);">Loading countries...</p>';
+      return;
+    }
+    // Use globeData if available (has more info), otherwise fall back to countries
+    const countryList = searchData.globeData || searchData.countries || [];
+    if (!countryList || countryList.length === 0) {
+      resultsEl.innerHTML = '<p class="p-4 text-center" style="color: var(--muted);">No country data available</p>';
+      return;
+    }
     const q = (query || '').toLowerCase().trim();
-    const list = q ? searchData.countries.filter(function (c) { return c.name.toLowerCase().indexOf(q) !== -1; }) : searchData.countries.slice(0, 20);
+    const list = q ? countryList.filter(function (c) { 
+      return c.name && c.name.toLowerCase().indexOf(q) !== -1; 
+    }) : countryList.slice(0, 20);
+    
+    if (list.length === 0) {
+      resultsEl.innerHTML = '<p class="p-4 text-center" style="color: var(--muted);">No countries found matching "' + (query || '') + '"</p>';
+      return;
+    }
+    
     resultsEl.innerHTML = list.map(function (c) {
-      return '<a href="country.html?code=' + c.alpha3 + '#' + c.alpha3 + '" class="block px-4 py-3 border-b border-white/10 text-white/80 hover:bg-white/5 hover:text-white">' + c.name + '</a>';
-    }).join('') || '<p class="p-4 text-white/60">No countries found</p>';
+      if (!c.alpha3) return '';
+      return '<a href="country.html?code=' + c.alpha3 + '#' + c.alpha3 + '" class="block px-4 py-3 border-b hover:bg-opacity-10 transition-colors" style="border-color: var(--border); color: var(--text);" onmouseover="this.style.backgroundColor=\'var(--panel)\'" onmouseout="this.style.backgroundColor=\'transparent\'">' + (c.name || 'Unknown') + '</a>';
+    }).join('');
   }
 
   function toHex(s) {
