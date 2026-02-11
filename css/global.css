@@ -428,13 +428,6 @@ a:focus-visible {
   box-shadow: var(--header-shadow);
 }
 
-.theme-light #globe-overlay-gradient {
-  background: linear-gradient(90deg, rgba(248,250,252,0.4) 0%, rgba(248,250,252,0.2) 50%, rgba(248,250,252,0) 100%);
-}
-
-.theme-light #globe-overlay-glow {
-  background: radial-gradient(circle at 20% 20%, rgba(0, 163, 224, 0.05), transparent 45%), radial-gradient(circle at 85% 30%, rgba(34, 211, 238, 0.03), transparent 40%);
-}
 
 .theme-light .theme-invert {
   color: var(--text) !important;
