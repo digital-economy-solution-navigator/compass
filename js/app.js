@@ -40,6 +40,7 @@
           <a href="about.html" class="text-sm text-white/70 hover:text-white font-medium theme-muted">About</a>
           <a href="data.html" class="text-sm text-white/70 hover:text-white font-medium theme-muted">Data</a>
           <a href="methodology.html" class="text-sm text-white/70 hover:text-white font-medium theme-muted">Methodology</a>
+          <a href="fourlevel.html" class="text-sm text-white/70 hover:text-white font-medium theme-muted">Four-Level Framework</a>
           <a href="evidence.html" class="text-sm text-white/70 hover:text-white font-medium theme-muted">Submit Evidence</a>
         </div>
         <div class="flex items-center justify-end gap-3">
@@ -73,6 +74,7 @@
         <a href="about.html" class="text-base w-full font-medium text-white/80 hover:text-white theme-muted">About</a>
         <a href="data.html" class="text-base w-full font-medium text-white/80 hover:text-white theme-muted">Data</a>
         <a href="methodology.html" class="text-base w-full font-medium text-white/80 hover:text-white theme-muted">Methodology</a>
+        <a href="fourlevel.html" class="text-base w-full font-medium text-white/80 hover:text-white theme-muted">Four-Level Framework</a>
         <a href="evidence.html" class="text-base w-full font-medium text-white/80 hover:text-white theme-muted">Submit Evidence</a>
       </nav>
     `;
@@ -1027,4 +1029,5 @@
   window.renderHeader = renderHeader;
   window.renderFooter = renderFooter;
   window.fillSearchResults = fillSearchResults;
+  window.initThemeToggle = initThemeToggle;
 })();

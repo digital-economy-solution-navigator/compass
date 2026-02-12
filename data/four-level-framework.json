@@ -1,0 +1,179 @@
+{
+  "metadata": {
+    "name": "Four-Level Framework",
+    "version": "1.0.0",
+    "source": "fourlevel.md",
+    "lastUpdated": "2026-02-12"
+  },
+  "scoreBands": [
+    { "name": "Foundational", "min": 0, "max": 20, "description": "Core prerequisites are largely missing." },
+    { "name": "Emerging", "min": 21, "max": 40, "description": "Initial capabilities exist but are inconsistent." },
+    { "name": "Scaling", "min": 41, "max": 60, "description": "Capabilities are repeatable and scaling." },
+    { "name": "Frontier", "min": 61, "max": 80, "description": "Advanced capabilities drive measurable results." },
+    { "name": "Strategic Impact", "min": 81, "max": 100, "description": "Capabilities are optimized and mission-aligned." }
+  ],
+  "level2": {
+    "axis": {
+      "x": "Competitiveness",
+      "y": "AI Penetration",
+      "bubble": "Opportunity Size"
+    },
+    "countries": [
+      {
+        "alpha3": "ZMB",
+        "name": "Zambia",
+        "region": "Africa",
+        "sectors": [
+          { "name": "Agriculture", "competitiveness": 62, "aiPenetration": 58, "opportunity": 74, "priority": "primary" },
+          { "name": "Livestock", "competitiveness": 54, "aiPenetration": 61, "opportunity": 79, "priority": "primary" },
+          { "name": "Energy", "competitiveness": 49, "aiPenetration": 68, "opportunity": 67, "priority": "capability" },
+          { "name": "Healthcare", "competitiveness": 44, "aiPenetration": 72, "opportunity": 65, "priority": "capability" }
+        ]
+      },
+      {
+        "alpha3": "ETH",
+        "name": "Ethiopia",
+        "region": "Africa",
+        "sectors": [
+          { "name": "Leather", "competitiveness": 66, "aiPenetration": 47, "opportunity": 64, "priority": "optimize" },
+          { "name": "Agriculture", "competitiveness": 59, "aiPenetration": 53, "opportunity": 70, "priority": "primary" },
+          { "name": "Textiles", "competitiveness": 61, "aiPenetration": 42, "opportunity": 55, "priority": "optimize" },
+          { "name": "Logistics", "competitiveness": 45, "aiPenetration": 66, "opportunity": 69, "priority": "capability" }
+        ]
+      },
+      {
+        "alpha3": "GHA",
+        "name": "Ghana",
+        "region": "Africa",
+        "sectors": [
+          { "name": "Rice Value Chain", "competitiveness": 57, "aiPenetration": 55, "opportunity": 68, "priority": "primary" },
+          { "name": "Fintech", "competitiveness": 63, "aiPenetration": 74, "opportunity": 76, "priority": "primary" },
+          { "name": "Manufacturing", "competitiveness": 52, "aiPenetration": 60, "opportunity": 63, "priority": "primary" },
+          { "name": "Healthcare", "competitiveness": 41, "aiPenetration": 70, "opportunity": 62, "priority": "capability" }
+        ]
+      }
+    ]
+  },
+  "level3": {
+    "dimensions": [
+      { "id": "infrastructure", "name": "Digital and Compute Infrastructure", "weight": 15 },
+      { "id": "dataAssets", "name": "AI-Linked Data Assets", "weight": 15 },
+      { "id": "engineering", "name": "AI Engineering and Deployment", "weight": 15 },
+      { "id": "innovation", "name": "Innovation and Ecosystem", "weight": 15 },
+      { "id": "humanCapital", "name": "Human Capital and Workforce Capability", "weight": 15 },
+      { "id": "governance", "name": "AI Governance and Risk Management", "weight": 15 },
+      { "id": "value", "name": "Value Realization and Impact", "weight": 10 }
+    ],
+    "modes": {
+      "enterprise": {
+        "label": "Enterprise Full Assessment",
+        "indicators": [
+          { "id": "e01", "dimension": "infrastructure", "label": "Compute capacity per 100 staff" },
+          { "id": "e02", "dimension": "infrastructure", "label": "Real-time telemetry coverage" },
+          { "id": "e03", "dimension": "infrastructure", "label": "Platform reliability and uptime" },
+          { "id": "e04", "dimension": "infrastructure", "label": "Secure cloud/on-prem architecture" },
+          { "id": "e05", "dimension": "dataAssets", "label": "Curated datasets for priority use cases" },
+          { "id": "e06", "dimension": "dataAssets", "label": "Labeling process efficiency" },
+          { "id": "e07", "dimension": "dataAssets", "label": "Feature store adoption" },
+          { "id": "e08", "dimension": "dataAssets", "label": "Data lineage and versioning coverage" },
+          { "id": "e09", "dimension": "engineering", "label": "MLOps CI/CD automation level" },
+          { "id": "e10", "dimension": "engineering", "label": "Model registry governance" },
+          { "id": "e11", "dimension": "engineering", "label": "Production monitoring for drift and latency" },
+          { "id": "e12", "dimension": "engineering", "label": "Incident response for model failures" },
+          { "id": "e13", "dimension": "innovation", "label": "R&D spend share" },
+          { "id": "e14", "dimension": "innovation", "label": "Patent and publication output" },
+          { "id": "e15", "dimension": "innovation", "label": "Pilot-to-production conversion rate" },
+          { "id": "e16", "dimension": "innovation", "label": "External partnership depth" },
+          { "id": "e17", "dimension": "humanCapital", "label": "Annual AI literacy coverage" },
+          { "id": "e18", "dimension": "humanCapital", "label": "Depth of advanced technical roles" },
+          { "id": "e19", "dimension": "humanCapital", "label": "Reskilling enrolment ratio" },
+          { "id": "e20", "dimension": "humanCapital", "label": "Talent retention in critical AI roles" },
+          { "id": "e21", "dimension": "governance", "label": "ISO 42001 AI management alignment" },
+          { "id": "e22", "dimension": "governance", "label": "NIST-style AI risk assessment cadence" },
+          { "id": "e23", "dimension": "governance", "label": "Data protection compliance maturity" },
+          { "id": "e24", "dimension": "governance", "label": "Model explainability controls" },
+          { "id": "e25", "dimension": "value", "label": "AI portfolio ROI" },
+          { "id": "e26", "dimension": "value", "label": "Operational productivity gain" },
+          { "id": "e27", "dimension": "value", "label": "Environmental impact improvements" },
+          { "id": "e28", "dimension": "value", "label": "Customer/service quality impact" },
+          { "id": "e29", "dimension": "dataAssets", "label": "Cross-team data reuse rate" },
+          { "id": "e30", "dimension": "engineering", "label": "Model deployment lead time" },
+          { "id": "e31", "dimension": "governance", "label": "Ethics review process coverage" }
+        ]
+      },
+      "sme": {
+        "label": "SME Rapid Assessment",
+        "indicators": [
+          { "id": "s01", "dimension": "infrastructure", "label": "Reliable connectivity for operations" },
+          { "id": "s02", "dimension": "infrastructure", "label": "Basic digital workflow tools in use" },
+          { "id": "s03", "dimension": "dataAssets", "label": "Data captured in reusable format" },
+          { "id": "s04", "dimension": "dataAssets", "label": "Data quality checks in routine practice" },
+          { "id": "s05", "dimension": "engineering", "label": "Ability to run simple analytics/AI tools" },
+          { "id": "s06", "dimension": "innovation", "label": "Engagement in pilots/innovation partnerships" },
+          { "id": "s07", "dimension": "humanCapital", "label": "Staff with practical AI/data skills" },
+          { "id": "s08", "dimension": "humanCapital", "label": "Reskilling and on-the-job training activity" },
+          { "id": "s09", "dimension": "governance", "label": "Basic governance and risk controls defined" },
+          { "id": "s10", "dimension": "governance", "label": "Data/privacy compliance awareness" },
+          { "id": "s11", "dimension": "value", "label": "Measured productivity/value from digital tools" },
+          { "id": "s12", "dimension": "value", "label": "Digital activities aligned with business goals" }
+        ]
+      }
+    }
+  },
+  "level4": {
+    "projects": [
+      {
+        "id": "zambia-livestock-aits",
+        "country": "Zambia",
+        "alpha3": "ZMB",
+        "name": "Animal Identification and Traceability System (AITS)",
+        "phase": "Garage",
+        "technicalReadiness": {
+          "digitalInfrastructure": 62,
+          "dataGovernance": 54,
+          "aiMlReadiness": 48
+        },
+        "socialReadiness": {
+          "policyRegulatory": 72,
+          "institutionalGovernance": 58,
+          "userAdoption": 55
+        },
+        "metrics": [
+          "Cycle-time reduction between risk detection and response",
+          "Coverage of monitored livestock value-chain actors",
+          "Critical feed uptime and response SLA adherence"
+        ],
+        "evidence": [
+          { "title": "Livestock workflow baseline and data map", "url": "https://www.unido.org/" },
+          { "title": "Draft interoperability and governance blueprint", "url": "https://www.unido.org/" }
+        ]
+      },
+      {
+        "id": "ghana-rice-earlywarning",
+        "country": "Ghana",
+        "alpha3": "GHA",
+        "name": "Rice Value Chain Early Warning",
+        "phase": "Development and Implementation",
+        "technicalReadiness": {
+          "digitalInfrastructure": 58,
+          "dataGovernance": 51,
+          "aiMlReadiness": 52
+        },
+        "socialReadiness": {
+          "policyRegulatory": 69,
+          "institutionalGovernance": 60,
+          "userAdoption": 57
+        },
+        "metrics": [
+          "Yield variance prediction performance",
+          "Scale and farmer coverage in supported districts",
+          "Mean time to act on alerts"
+        ],
+        "evidence": [
+          { "title": "Pilot implementation learning report", "url": "https://www.unido.org/" }
+        ]
+      }
+    ]
+  }
+}
+

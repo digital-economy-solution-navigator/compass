@@ -23,7 +23,9 @@ Because the demo loads `data/demo.json` via `fetch()`, use a local server (avoid
 - **index.html** – Home: hero, pillar filter, country selector, country card overlay.
 - **country.html** – Country detail (use `?code=SGP` etc.); breadcrumb, flag, score ring, pillars.
 - **about.html**, **data.html**, **methodology.html** – Minimal pages with same header/footer.
+- **fourlevel.html** – Four-Level Framework hub (Level 1 to Level 4 workflow).
 - **data/demo.json** – Countries, pillars, scores, and definitions (generated from UNDP raw data).
+- **data/four-level-framework.json** – Shared schema + starter datasets for Levels 2-4.
 - **css/global.css** – Global styles (no Tailwind; Tailwind is loaded via CDN in the HTML).
 - **js/app.js** – Vanilla JS for header, footer, hero, pillar filter, stage gauge, readiness scale, search, mobile menu, country page.
 - **assets/** – Optional; logos are loaded from UNIDO’s official site (header/footer). Header search and menu use text buttons when assets are empty.

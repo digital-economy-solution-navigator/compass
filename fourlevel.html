@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="description" content="AI & Digital for Industry Navigator - Four-Level Framework" />
+  <title>AI & Digital for Industry Navigator | Four-Level Framework</title>
+  <link rel="shortcut icon" href="https://www.unido.org/themes/custom/unido_radix/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        screens: { sm: "300px", md: "768px", lg: "1024px" },
+        extend: { colors: { accent: { DEFAULT: "#00A3E0", hover: "#0891B2" } } }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="css/global.css" />
+  <script>
+    // Apply theme immediately to prevent flash
+    (function () {
+      try {
+        var theme = localStorage.getItem("theme") || "dark";
+        document.documentElement.setAttribute("data-theme", theme);
+        document.documentElement.classList.toggle("theme-light", theme === "light");
+        document.documentElement.classList.toggle("theme-dark", theme !== "light");
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body class="flex flex-col h-full">
+  <div id="app" class="flex flex-col h-full">
+    <header class="flex-shrink-0 border-b custom-nav-shadow header-nav-bg-color" id="header"></header>
+    
+    <main class="flex-1 theme-bg theme-text">
+      <!-- Hero Section -->
+      <section class="relative overflow-hidden pt-12 pb-16" style="background: linear-gradient(135deg, var(--card-bg) 0%, rgba(0,163,224,0.05) 100%); border-bottom: var(--border);">
+        <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(circle at 20% 50%, var(--brand) 0%, transparent 50%), radial-gradient(circle at 80% 80%, var(--accent) 0%, transparent 50%);"></div>
+        <div class="relative z-10 container px-4 lg:px-8 mx-auto">
+          <div class="max-w-4xl">
+            <p class="text-xs uppercase tracking-[0.24em] mb-3 font-semibold" style="color: var(--brand);">Framework</p>
+            <h1 class="text-4xl lg:text-5xl font-bold mb-4 leading-tight" style="color: var(--text);">Four-Level Framework</h1>
+            <p class="text-lg leading-relaxed max-w-3xl" style="color: var(--muted);">
+              Navigate from country strategic posture to sector priorities, enterprise or SME operational maturity, and lighthouse project feasibility.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Level Navigation Cards -->
+      <section class="container px-4 lg:px-8 mx-auto -mt-8 relative z-20 mb-12">
+        <div id="framework-level-nav" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="rounded-2xl p-6 text-center" style="background: var(--card-bg); border: var(--border); color: var(--muted);" id="nav-loading">Loading navigation...</div>
+        </div>
+      </section>
+
+      <!-- Framework Levels -->
+      <section class="container px-4 lg:px-8 mx-auto pb-16 space-y-12">
+        <div id="level-1-panel" class="rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl" style="background: var(--card-bg); border: var(--border); box-shadow: var(--shadow);">
+          <div class="p-8 text-center" style="color: var(--muted);">Loading Level 1...</div>
+        </div>
+        <div id="level-2-panel" class="rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl" style="background: var(--card-bg); border: var(--border); box-shadow: var(--shadow);">
+          <div class="p-8 text-center" style="color: var(--muted);">Loading Level 2...</div>
+        </div>
+        <div id="level-3-panel" class="rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl" style="background: var(--card-bg); border: var(--border); box-shadow: var(--shadow);">
+          <div class="p-8 text-center" style="color: var(--muted);">Loading Level 3...</div>
+        </div>
+        <div id="level-4-panel" class="rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl" style="background: var(--card-bg); border: var(--border); box-shadow: var(--shadow);">
+          <div class="p-8 text-center" style="color: var(--muted);">Loading Level 4...</div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer-background-color theme-text" id="footer"></footer>
+  </div>
+
+  <div id="search-dialog-backdrop" class="fixed inset-0 bg-black/30 z-40 hidden"></div>
+  <div id="search-dialog" class="fixed inset-0 z-50 flex items-start justify-center pt-20 hidden">
+    <div class="rounded-2xl shadow-2xl max-w-md w-full mx-4 max-h-[80vh] overflow-hidden" style="background: var(--card-bg); color: var(--text); border: var(--border);">
+      <div class="p-4" style="border-bottom: var(--border); background: var(--panel);">
+        <label class="text-xs uppercase tracking-[0.2em] block mb-2" style="color: var(--muted);">Search countries</label>
+        <input type="text" id="search-input" class="w-full rounded-xl px-3 py-2 text-sm" style="border: var(--border); color: var(--text); background: var(--controls-bg);" placeholder="Enter country name" />
+      </div>
+      <div id="search-results" class="overflow-y-auto max-h-64"></div>
+    </div>
+  </div>
+  <div id="mobile-menu" class="fixed top-[75px] left-0 h-full w-full custom-mobile-bg-color z-50 shadow-lg transform -translate-x-full transition-transform duration-300"></div>
+
+  <script src="js/app.js"></script>
+  <script src="js/four-level-framework.js"></script>
+</body>
+</html>
+
